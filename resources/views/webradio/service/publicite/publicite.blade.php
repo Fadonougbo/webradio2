@@ -13,8 +13,10 @@
         
        @include('webradio.service.publicite.info_table')
 
-        <form action="" class="bg-gray-200 rounded-md shadow p-6 my-8 flex flex-col items-center mx-auto lg:w-[90%] xl:w-[80%] ">
+        <form action="" method="POST" class="bg-gray-200 rounded-md shadow p-6 my-8 flex flex-col items-center mx-auto lg:w-[90%] xl:w-[80%] ">
             
+            @csrf
+
             @include('webradio.service.publicite.info_demandeur')
 
             @include('webradio.service.publicite.info_programme')

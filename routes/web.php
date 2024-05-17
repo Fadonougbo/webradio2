@@ -28,6 +28,8 @@ Route::prefix('/service')->name('service.')->group(function() {
     
     Route::get('/publicite',[PubliciteController::class,'index'])->middleware(['auth','verified'])->name('publicite');
 
+    Route::post('/publicite',[PubliciteController::class,'create'])->middleware(['auth','verified'])->name('publicite.create');
+
 });
 
 Route::get('/dashboard', function () {

@@ -1,4 +1,4 @@
-@extends('webradio.home.base')
+@extends('webradio.service.base')
 
 @section('title',"Nos services")
 

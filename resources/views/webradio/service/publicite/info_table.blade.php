@@ -20,7 +20,6 @@
                             
                              <ul class="list-disc list-inside" >
                                     <li class="my-1" >5000f (diffusion normal) </li>
-                                    <li>7500f (diffusion hors des heures de programmation classique)</li>
                                 </ul>
                             </td>
                             <td class="border-solid border-2 p-2 border-black text-center text-lg" > 60 secondes </td>

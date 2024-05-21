@@ -7,7 +7,7 @@
 
             <label for="pub_file" class='my-3 text-lg  font-bold' >Veuillez télécharger les fichiers nécessaires à la réalisation du spot (required) </label>
 
-            <input type="file" name="pub_file" id="pub_file" multiple >
+            <input type="file" name="pub_file" id="pub_file" >
 
             @error('pub_file')
                 <p class="text-basic_primary_color my-2" >{{$message}}</p>

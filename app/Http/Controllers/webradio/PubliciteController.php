@@ -4,78 +4,124 @@ namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\PubliciteRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PubliciteController extends Controller
 {
-    public function index() {
-        
+    public function index(Request $request) {
+
+
         return view('webradio.service.publicite.publicite');
     }
 
     public function create(PubliciteRequest $request) {
-        $request->validated();
-        
-        $userDate=$request->validated('pub_date');
-
-        $periode=$request->validated('pub_periode');
 
 
-        $user_period=new \DateTime('6:45:00 2024-5-17');
-
-        /* $valide_periode=new \DateTime('6:45:00 2024-5-18');
-
-        $res=now()->setDateTimeFrom($valide_periode)->diff($user_period); */
-
-       /*  if(now('africa/porto-novo')->setDateTimeFrom($user_period)->isToday()) { */
+        $fields=$request->validated();
             
-            $user_period=new \DateTime('00:00:00 2024-5-17',new \DateTimeZone('africa/porto-novo') );
+        $store_files_directory_name="user.".Auth::id();
 
-            //$valide_periode=new \DateTime('19:45:00 2024-5-17');
 
-            $res=now('africa/porto-novo')->diff($user_period);
+        //Create directory
+        if( Storage::disk('public')->directoryMissing($store_files_directory_name)) {
 
-            /* if($res->invert===1 && $res->h>=3) {
+            Storage::disk('public')->makeDirectory($store_files_directory_name);
+        }
 
-                dump('isValide 1');
+        /**
+         * @var UploadedFile
+         */
+        $store_image=$request->validated("pub_file")??null;
 
-            }else if */if ($res->invert===0 && $res->h>=3) {
 
-                dump('isValide 2','');
+        //generate image path
+        $imagePath=$this->getImagePath($store_image,$store_files_directory_name);
 
-            }else {
+        //merge fields data with image path
+        $fields=array_merge($fields,$imagePath);
+      
 
-                dump('invalide',"n'est plus possible");
-            }
+        dd($fields);
 
-            /* if($res->invert===0 && $res->h>=3) {
-                dump('isValide 2','');
-            }else {
-                dump('invalide',"");
-            } */
+        ///////////////////////////////////////////
+        /* $user_period=new \DateTime('6:45:00 2024-5-17');
 
-            /* if($res->invert===0 ) {
-                dump('invalide','date superieur');
-            } */
+        $user_period=new \DateTime('00:00:00 2024-5-17',new \DateTimeZone('africa/porto-novo') );
 
-            dump($res);
+        $res=now('africa/porto-novo')->diff($user_period);
 
-       /*  }else {
+        
+        if ($res->invert===0 && $res->h>=3) {
 
-            $user_period=new \DateTime('00:45:00 2024-5-18');
+            dump('isValide 2','');
 
-            $res=now()->diff($user_period);
+        }else {
 
-            if($res->h>=3) {
-                dump('isValide','pour demain');
-            }else {
-                dump('invalide','pour demain');
-            }
+            dump('invalide',"n'est plus possible");
+        }
 
-        } */
-
-       /* invet ok */
+            
+        dump($res); */
 
 
     }
+
+
+    private function getImagePath(UploadedFile|null $store_image,string $store_files_directory_name):array {
+
+        $imagePath=[];
+
+        //Case: image is not uploaded and store is not configured or image not exist in DB
+        if(empty($store_image)) {
+
+            $imagePath["pub_file"]=null;
+
+        }
+
+        //Case:image is not uploaded and old image exist in DB
+        if(empty($store_image) && !empty(Auth::user()->store->store_image) ) {
+
+           unset($imagePath["pub_file"]);
+
+        }
+
+        //Case image is uploades and any image not exist in DB
+
+        if( 
+            $store_image && 
+            $store_image->isValid() && 
+            $store_image->getError()===UPLOAD_ERR_OK &&
+            empty(Auth::user()->store?->store_image)
+        ) {
+            $imagePath["pub_file"]=$store_image->store($store_files_directory_name,'public');
+
+        }
+
+
+        //Case:image is uploaded and old image exist in DB
+  
+        if( 
+            $store_image && 
+            $store_image->isValid() && 
+            $store_image->getError()===UPLOAD_ERR_OK &&
+            !empty(Auth::user()->store->store_image)
+        ) {
+
+            $path=Auth::user()->store->store_image;
+
+            //Delete old image
+            Storage::disk('public')->delete($path);
+
+            $imagePath["pub_file"]=$store_image->store($store_files_directory_name,'public');
+
+        }
+
+        return $imagePath;
+
+    }
+
 }

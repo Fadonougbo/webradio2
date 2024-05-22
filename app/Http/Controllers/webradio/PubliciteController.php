@@ -4,6 +4,7 @@ namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\PubliciteRequest;
+use App\Models\Publicite;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -18,10 +19,20 @@ class PubliciteController extends Controller
         return view('webradio.service.publicite.publicite');
     }
 
+    public function paiment(Request $request) {
+        dump($request->all());
+        return view('webradio.service.shared.paiment.paiment');
+    }
+
     public function create(PubliciteRequest $request) {
 
 
         $fields=$request->validated();
+
+        
+
+        // si le paiment est valider j'enregistre et j'envoi id de la demande et le nombre de demande
+        //return redirect()->route('service.publicite.paiment')->with(['demande_id'=>1,'backUrl'=>route('service.publicite'),'nb_demande'=>3,'amount'=>5000]);
             
         $store_files_directory_name="user.".Auth::id();
 
@@ -44,8 +55,16 @@ class PubliciteController extends Controller
         //merge fields data with image path
         $fields=array_merge($fields,$imagePath);
       
+        $publication=Publicite::create($fields);
 
-        dd($fields);
+        if($publication->exists()) {
+            
+        }
+
+
+       
+
+        //dd($fields);
 
         ///////////////////////////////////////////
         /* $user_period=new \DateTime('6:45:00 2024-5-17');

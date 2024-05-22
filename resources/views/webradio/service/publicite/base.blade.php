@@ -16,9 +16,9 @@
     
     ])
 
-    <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7" >
+    <!-- <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7" >
 
-    </script>
+    </script> -->
 
 </head>
 <body>

@@ -39,9 +39,8 @@ class PubliciteRequest extends FormRequest
         $dateOfDay=now('africa/porto-novo')->format('Y-m-d');
 
         return [
-            'pub_user_name'=>['required','string'],
 
-            'pub_email'=>['required','email','string'],
+            'pub_email'=>['nullable','email','string'],
 
             'pub_tel'=>['required','numeric','min_digits:8','max_digits:8','numeric'],
 

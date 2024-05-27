@@ -3,55 +3,77 @@ import "https://cdn.fedapay.com/checkout.js?v=1.1.7";
 import { define } from "hybrids";
 
 type PaimentModule = {
-	name: string;
-	demande_id: string;
-	nb_demande: string;
+	name: string,
+	demande_id: string,
     amount:string,
-    backurl:string
+	email:string,
+	tel:string,
+    on_error_url:string,
+	on_success_url:string
 };
 
 define<PaimentModule>({
 	tag: "paiment-module",
 	demande_id: "",
-	nb_demande: "",
     amount:'',
-    backurl:'',
+	tel:'',
+	email:'',
+    on_error_url:'',
+	on_success_url:'',
 	name: {
 		value: "paiment_module",
 		connect(host) {
-			const { demande_id, nb_demande,amount,backurl } = host;
 
-			const demandeId = Number.parseInt(demande_id);
+			
+			const { demande_id, tel,email,amount,on_error_url} = host;
 
-			const nbDemande = Number.parseInt(nb_demande);
+			console.log({ demande_id, tel,email,amount,on_error_url});
 
-            const price = Number.parseInt(amount);
-
-			if(Number.isNaN(demandeId) || Number.isNaN(nbDemande) || Number.isNaN(price) ) {
+			if(Number.isNaN(Number.parseInt(demande_id)) || Number.isNaN(Number.parseInt(tel)) || Number.isNaN(Number.parseInt(amount)) ) {
+				
                 return '';
             }
 
+			
+			
            
 			const x = FedaPay.init("paiment-module", {
-				public_key: "pk_sandbox_cSCumLLKmrzKFwWvB61E6WRW",
+
+				public_key: "pk_live_R_6_AGsm-9nQTcwZ2kLXTbd-",
+
                 transaction: {
-                    amount: price,
-                    description: 'Acheter mon produit'
+
+                    amount: amount,
+
+                    description: 'Paiement pour un service chez la RTU'
+
                   },
+
+				  customer: {
+					email: email,
+					firstname:'john',
+					lastname:'doe',
+					phone_number: {
+						number:tel
+					}
+				  },
+
 				onComplete(x) {
-					/* if (x.reason === "DIALOG DISMISSED") {
-						const p = host.previousElementSibling as HTMLFormElement;
-						p.submit();
-					} */
+					
 
                     if (x.reason === "DIALOG DISMISSED") {
-						location.assign(backurl)
+						location.assign(on_error_url)
+						
+					}else {
+						const form = host.previousElementSibling as HTMLFormElement;
+
+						form.submit();
 					}
 				},
+				
 			});
 
 			x[0].open();
-			console.log(x[0]);
 		},
 	},
 });

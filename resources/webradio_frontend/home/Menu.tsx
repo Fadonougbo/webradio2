@@ -34,12 +34,16 @@ export const Menu = ({ csrf, user_status }: MenuType) => {
 					<div className="items-center border-basic_white_color text-lg">
             {
               userExist?
-              <form action="/logout" method="POST" >
-                <input type="hidden" name="_token" value={csrf}  />
-                <button type="submit" className="bg-basic_primary_color p-1 rounded font-bold" >
-                  Deconnexion
-                </button>
-              </form>:
+			  <div className="flex flex-wrap justify-center items-center w-full" >
+				<a href="/dashboard" className="mx-2 font-bold hover:text-basic_primary_color transition-all" >dashboard</a>
+				<form action="/logout" method="POST" >
+					<input type="hidden" name="_token" value={csrf}  />
+					<button type="submit" className="bg-basic_primary_color p-1 rounded font-bold" >
+					Deconnexion
+					</button>
+				</form>
+			  </div>
+              :
               <>
                   <a
                     href="/login"

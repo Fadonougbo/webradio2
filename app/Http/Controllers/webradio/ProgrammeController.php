@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 
 class ProgrammeController extends Controller
 {
-    public function index(Request $request) {
+    public function index() {
         
         return view('webradio.programme.programme');
     }

@@ -1,29 +1,30 @@
+import { define } from "hybrids";
+import { createRoot } from "react-dom/client";
+import { Toast } from "./Toast";
 
-import { define } from "hybrids"
-import { createRoot } from "react-dom/client"
-import { Toast } from "./Toast"
-
-
-
-interface BasicInterface{
-    data:string,
-
+interface BasicInterface {
+	data: string;
+	type: "info" | "error" | "warn" | "success";
+	msg: string;
+	delay: string;
 }
 
-
-
 define<BasicInterface>({
-    tag:'message-toast',
-    data:{
-        value:'message_toast',
-        connect(host) {
-            createRoot(host).render(<Toast/>)
+	tag: "message-toast",
+	type: "info",
+	msg: "",
+	delay: "1000",
+	data: {
+		value: "message_toast",
+		connect(host) {
+			const { msg, delay, type } = host;
+			const Delay = Number.parseInt(delay);
 
-            return ()=> {
-                createRoot(host).unmount()
-            }
-        },
+			createRoot(host).render(<Toast msg={msg} delay={Delay} type={type} />);
 
-    }
-})
-
+			return () => {
+				createRoot(host).unmount();
+			};
+		},
+	},
+});

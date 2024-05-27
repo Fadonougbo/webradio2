@@ -1,18 +1,23 @@
 
-import { useEffect } from 'react';
+import { type PropsWithChildren, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
 // minified version is also included
-// import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 
-export const Toast=()=> {
+type ToastType=PropsWithChildren<{
+  msg:string,
+  type:'info'|'error'|'warn'|'success',
+  delay:number
+}>
+
+export const Toast=({msg,type,delay}:ToastType)=> {
 
     useEffect(()=> {
 
-        toast.info("Le formulaire n'est pas valide, veuillez vérifier vos informations et réessayer à nouveau.  ", {
+        toast[type](msg, {
             position: "top-right",
-            autoClose: 15000,
+            autoClose: delay,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -21,7 +26,9 @@ export const Toast=()=> {
             theme: "dark"
             });
 
-    },[])
+
+
+    },[type,msg,delay])
 
   return (
     <div>

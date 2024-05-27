@@ -7,14 +7,23 @@
 
     <main class="p-4" >
 
-        <form action="" method="POST" class="bg-gray-200 rounded-md shadow p-6 my-8 flex flex-col items-center mx-auto lg:w-[90%] xl:w-[80%] " enctype="multipart/form-data">
-
-           
+        <form action="" method="POST" >
             @csrf
+            @method('patch')
+            <input type="hidden" name="demande_id" value="{{session('demande_id')}}">
+            <input type="hidden" name="demande_type" value="{{session('demande_type')}}">
            
         </form>
-
-        <paiment-module demande_id="{{session('demande_id')}}" backurl="{{session('backUrl')}}" amount="{{session('amount')}}" nb_demande="{{session('nb_demande')}}"></paiment-module>
+        
+        <paiment-module 
+            demande_id="{{session('demande_id')}}" 
+            demande_type="{{session('demande_type')}}" 
+            on_error_url="{{session('on_error_url')}}" 
+            on_success_url="{{session('on_success_url')}}" 
+            amount="{{session('amount')}}" 
+            tel="{{session('tel')}}" 
+            email="{{session('email')}}"  >
+        </paiment-module>
     </main>
 
 @endsection

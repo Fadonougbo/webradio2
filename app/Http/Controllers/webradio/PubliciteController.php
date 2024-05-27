@@ -5,7 +5,7 @@ namespace App\Http\Controllers\webradio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\PubliciteRequest;
 use App\Models\Publicite;
-use Illuminate\Contracts\Validation\Validator;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -13,26 +13,17 @@ use Illuminate\Support\Facades\Storage;
 
 class PubliciteController extends Controller
 {
-    public function index(Request $request) {
-
+    public function index() {
 
         return view('webradio.service.publicite.publicite');
     }
 
-    public function paiment(Request $request) {
-        dump($request->all());
-        return view('webradio.service.shared.paiment.paiment');
-    }
+
 
     public function create(PubliciteRequest $request) {
 
 
         $fields=$request->validated();
-
-        
-
-        // si le paiment est valider j'enregistre et j'envoi id de la demande et le nombre de demande
-        //return redirect()->route('service.publicite.paiment')->with(['demande_id'=>1,'backUrl'=>route('service.publicite'),'nb_demande'=>3,'amount'=>5000]);
             
         $store_files_directory_name="user.".Auth::id();
 
@@ -54,12 +45,57 @@ class PubliciteController extends Controller
 
         //merge fields data with image path
         $fields=array_merge($fields,$imagePath);
-      
-        $publication=Publicite::create($fields);
 
-        if($publication->exists()) {
+      
+      
+        //create publicite
+        $publicite=Publicite::create($fields);
+
+        $response=false;
+
+        if($publicite->exists()) {
             
+            //associate publicite with user
+            $response=$publicite->user()->associate(Auth::user())->save();
         }
+
+        $programmes=$fields['programme'];
+
+        if($response) {
+            
+            $programmeFields=array_map(function($programme) {
+    
+                $programmeField['periode_hour']=$programme['periode'];
+                $programmeField['periode_date']=$programme['date'];
+    
+                return $programmeField;
+    
+            },$programmes);
+               
+          //Inserte date and hour in periodes table
+           $publicite->periodes()->createMany($programmeFields);
+               
+
+        }
+
+
+        $price=Service::where('name','=','publicité')->get()->first()->price;
+        $amount=$price*count($programmes);
+
+         return redirect()->route('service.paiment')->with(
+        [
+            'demande_id'=>$publicite->id,
+            'tel'=>$publicite->pub_tel,
+            'email'=>$publicite->pub_email,
+            'demande_type'=>'publicite',
+            'on_error_url'=>route('dashboard',['ispaid'=>'no']),
+            'on_success_url'=>route('dashboard',['ispaid'=>'yes']),
+            'amount'=>$amount
+        ]);
+ 
+
+        //return redirect()->route('dashboard');
+        
 
 
        
@@ -87,6 +123,17 @@ class PubliciteController extends Controller
         dump($res); */
 
 
+    }
+
+    public function delete(Publicite $publicite) {
+        
+        $isDeleted=$publicite->delete();
+
+        if($isDeleted) {
+            return redirect()->route('dashboard')->with('is_delete',true);
+        }
+
+        return redirect()->route('dashboard')->with('is_delete',false);
     }
 
 

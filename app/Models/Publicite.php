@@ -9,6 +9,15 @@ class Publicite extends Model
 {
     use HasFactory;
 
-    public $fillable=['pub_email','pub_tel','pub_detail','pub_file'];
+    public $fillable=['pub_email','pub_tel','pub_detail','pub_file','isPaid'];
+
+    public function user() {
+
+        return $this->belongsTo(User::class);
+    }
+
+    public function periodes() {
+        return $this->hasMany(Periode::class);
+    }
 
 }

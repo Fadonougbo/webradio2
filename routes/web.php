@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\webradio\HomeController;
+use App\Http\Controllers\webradio\PaimentController;
 use App\Http\Controllers\webradio\ProgrammeController;
 use App\Http\Controllers\webradio\PubliciteController;
 use App\Http\Controllers\webradio\ServiceController;
+use App\Models\Publicite;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,12 +32,23 @@ Route::prefix('/service')->name('service.')->group(function() {
 
     Route::post('/publicite',[PubliciteController::class,'create'])->middleware(['auth','verified'])->name('publicite.create');
 
-    Route::get('/paiment',[PubliciteController::class,'paiment'])->middleware(['auth','verified'])->name('publicite.paiment');
+    Route::delete('/publicite/delete/{publicite}',[PubliciteController::class,'delete'])->middleware(['auth','verified'])->name('publicite.delete');
+
+    Route::get('/paiment',[PaimentController::class,'paiment'])->middleware(['auth','verified'])->name('paiment');
+
+    Route::get('/paiment/redirect/{publicite}',[PaimentController::class,'redirect'])->middleware(['auth','verified'])->name('paiment.redirect');
+
+    Route::patch('/paiment',[PaimentController::class,'paimentValidation'])->middleware(['auth','verified'])->name('paiment_validation');
 
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    $publicites=Publicite::all();
+
+    return view('dashboard',[
+        'publicites'=>$publicites
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

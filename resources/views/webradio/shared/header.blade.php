@@ -27,10 +27,14 @@
 
                     @auth
                     
-                        <form action="/logout" method="POST" class="border-l items-center border-solid hidden border-basic_white_color text-sm xl:flex" >
+                        <div class="border-l items-center border-solid hidden border-basic_white_color text-sm xl:flex " >
+                            <a href="/dashboard" class="mx-2 transition-all font-bold hover:text-basic_primary_color" >dashboard</a>
+
+                            <form action="/logout" method="POST" class=" items-center " >
                             @csrf
-                            <button class="font-bold mx-3 bg-basic_primary_color p-1 rounded" >Deconnexion</button>
-                        </form>
+                                <button class="font-bold mx-3 bg-basic_primary_color p-1 rounded" >Deconnexion</but>
+                            </form>
+                        </div>
                     @endauth
 
                     @guest

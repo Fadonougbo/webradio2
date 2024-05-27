@@ -49,6 +49,7 @@ Route::get('/dashboard', function () {
     return view('dashboard',[
         'publicites'=>$publicites
     ]);
+    
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

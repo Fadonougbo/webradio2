@@ -1,4 +1,4 @@
-import { CircleUserRound, Clock,Facebook,Info,Mail,Phone,Youtube,createIcons} from 'lucide';
+import { ArrowBigRight, CircleUserRound,Clock,Facebook,Info,Mail,Phone,Youtube,createIcons} from 'lucide';
 
 createIcons({
   icons: {
@@ -8,6 +8,7 @@ createIcons({
     Clock,
     Facebook,
     Youtube,
-    Info
+    Info,
+    ArrowBigRight
   }
 });

@@ -13,7 +13,7 @@
 
         <!-- Scripts -->
         @viteReactRefresh
-        @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx'])
+        @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts'])
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">

@@ -12,7 +12,7 @@
             <ul class="text-basic_white_color my-2" >
                 <li class="flex items-center my-2" > <i data-lucide="phone" class="mx-1 size-4" ></i> 928289292 </li>
                 <li class="flex items-center my-2" > <i data-lucide="mail" class="mx-1 size-4" ></i> rtu@gmail.com </li>
-                <li class="flex items-center my-2" > <i data-lucide="clock" class="mx-1 size-4" ></i> Lundu-Dimanche 8h-22h </li>
+                <li class="flex items-center my-2" > <i data-lucide="clock" class="mx-1 size-4" ></i> Lundi au Dimanche 8h-22h </li>
             </ul>
         </div>
 

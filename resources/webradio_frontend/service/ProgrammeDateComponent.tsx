@@ -7,7 +7,8 @@ type ProgrammeDateType={
     name:string,
     date_error:string
     periode_error:string,
-    old:string
+    old:string,
+    data:string
 }
 
 define<ProgrammeDateType>({
@@ -15,12 +16,13 @@ define<ProgrammeDateType>({
     date_error:'',
     periode_error:'',
     old:'',
+    data:'',
     name:{
         value:"programme_date",
         connect(host) {
-              const {date_error,periode_error,old}=host
+              const {date_error,periode_error,old,data}=host
               
-            createRoot(host).render(<ProgrammeDate old={old} periodeError={periode_error} dateError={date_error} />)
+            createRoot(host).render(<ProgrammeDate old={old} periodeError={periode_error} dateError={date_error} data={data} />)
             
             return ()=>{ 
                 createRoot(host).unmount()

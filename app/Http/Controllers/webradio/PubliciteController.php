@@ -4,6 +4,8 @@ namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\PubliciteRequest;
+use App\Http\Requests\webradio\UpdatePubliciteRequest;
+use App\Models\Periode;
 use App\Models\Publicite;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -15,7 +17,12 @@ class PubliciteController extends Controller
 {
     public function index() {
 
-        return view('webradio.service.publicite.publicite');
+        $publicite=new Publicite();
+
+        return view('webradio.service.publicite.publicite',
+        [
+            'publicite'=>$publicite
+        ]);
     }
 
 
@@ -37,11 +44,12 @@ class PubliciteController extends Controller
         /**
          * @var UploadedFile
          */
-        $store_image=$request->validated("pub_file")??null;
+        $pub_file=$request->validated("pub_file")??null;
 
+        $publicite=new Publicite();
 
         //generate image path
-        $imagePath=$this->getImagePath($store_image,$store_files_directory_name);
+        $imagePath=$this->getImagePath($pub_file,$store_files_directory_name,$publicite);
 
         //merge fields data with image path
         $fields=array_merge($fields,$imagePath);
@@ -92,6 +100,8 @@ class PubliciteController extends Controller
             'on_success_url'=>route('dashboard',['ispaid'=>'yes']),
             'amount'=>$amount
         ]);
+
+    }
  
 
         //return redirect()->route('dashboard');
@@ -123,6 +133,86 @@ class PubliciteController extends Controller
         dump($res); */
 
 
+    
+
+
+
+    public function update(Publicite $publicite) {
+
+        return view('webradio.service.publicite.update',
+        [
+            'publicite'=>$publicite
+        ]);
+    }
+
+    public function updateValidation(UpdatePubliciteRequest $request,Publicite $publicite) {
+
+        
+        $fields=$request->validated();
+        
+            
+        $store_files_directory_name="user.".Auth::id();
+
+       
+
+        //Create directory
+        if( Storage::disk('public')->directoryMissing($store_files_directory_name)) {
+
+            Storage::disk('public')->makeDirectory($store_files_directory_name);
+        }
+
+        /**
+         * @var UploadedFile
+         */
+        $pub_image=$request->validated("pub_file")??null;
+
+
+        //generate image path
+        $imagePath=$this->getImagePath($pub_image,$store_files_directory_name,$publicite);
+
+        //merge fields data with image path
+        $fields=array_merge($fields,$imagePath);
+
+        
+      
+        //update publicite
+        $publiciteIsUpdated=$publicite->update($fields);
+
+
+        
+
+        $isDeleted=false;
+
+        if($publiciteIsUpdated) {
+
+            $isDeleted=Periode::where('publicite_id','=',$publicite->id)->delete();
+
+        }
+
+        if($isDeleted) {
+            $programmes=$fields['programme'];
+            $programmeFields=array_map(function($programme) {
+    
+                $programmeField['periode_hour']=$programme['periode'];
+                $programmeField['periode_date']=$programme['date'];
+    
+                return $programmeField;
+    
+            },$programmes);
+               
+          //Inserte date and hour in periodes table
+           $publicite->periodes()->createMany($programmeFields);
+
+        }
+
+        
+         return redirect()->route('dashboard');
+
+       
+
+        
+
+
     }
 
     public function delete(Publicite $publicite) {
@@ -137,19 +227,19 @@ class PubliciteController extends Controller
     }
 
 
-    private function getImagePath(UploadedFile|null $store_image,string $store_files_directory_name):array {
+    private function getImagePath(UploadedFile|null $pub_file,string $store_files_directory_name,Publicite $publicite):array {
 
         $imagePath=[];
 
         //Case: image is not uploaded and store is not configured or image not exist in DB
-        if(empty($store_image)) {
+        if(empty($pub_file)) {
 
             $imagePath["pub_file"]=null;
 
         }
 
         //Case:image is not uploaded and old image exist in DB
-        if(empty($store_image) && !empty(Auth::user()->store->store_image) ) {
+        if(empty($pub_file) && !empty($publicite->pub_file) ) {
 
            unset($imagePath["pub_file"]);
 
@@ -158,12 +248,12 @@ class PubliciteController extends Controller
         //Case image is uploades and any image not exist in DB
 
         if( 
-            $store_image && 
-            $store_image->isValid() && 
-            $store_image->getError()===UPLOAD_ERR_OK &&
-            empty(Auth::user()->store?->store_image)
+            $pub_file && 
+            $pub_file->isValid() && 
+            $pub_file->getError()===UPLOAD_ERR_OK &&
+            empty($publicite?->pub_file)
         ) {
-            $imagePath["pub_file"]=$store_image->store($store_files_directory_name,'public');
+            $imagePath["pub_file"]=$pub_file->store($store_files_directory_name,'public');
 
         }
 
@@ -171,18 +261,18 @@ class PubliciteController extends Controller
         //Case:image is uploaded and old image exist in DB
   
         if( 
-            $store_image && 
-            $store_image->isValid() && 
-            $store_image->getError()===UPLOAD_ERR_OK &&
-            !empty(Auth::user()->store->store_image)
+            $pub_file && 
+            $pub_file->isValid() && 
+            $pub_file->getError()===UPLOAD_ERR_OK &&
+            !empty($publicite?->pub_file)
         ) {
 
-            $path=Auth::user()->store->store_image;
+            $path=$publicite?->pub_file;
 
             //Delete old image
             Storage::disk('public')->delete($path);
 
-            $imagePath["pub_file"]=$store_image->store($store_files_directory_name,'public');
+            $imagePath["pub_file"]=$pub_file->store($store_files_directory_name,'public');
 
         }
 

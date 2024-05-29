@@ -48,6 +48,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property bool $isPaid
  * @property int|null $user_id
+ * @property string $status
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Periode> $periodes
  * @property-read int|null $periodes_count
  * @property-read \App\Models\User|null $user
@@ -61,6 +62,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Publicite wherePubEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publicite wherePubFile($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publicite wherePubTel($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereUserId($value)
  */

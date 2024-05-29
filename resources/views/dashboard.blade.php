@@ -6,9 +6,9 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white p-2  dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-2 bg-blue-900 text-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <h1 class="text-center font-bold text-4xl uppercase" >La liste de vos demandes</h1>
             </div>
         </div>
@@ -27,7 +27,7 @@
         <h3 class="text-xl flex items-center font-semibold" > <i data-lucide="arrow-big-right" class="size-8" ></i> Demande de spot publicitaire </h3>
 
         <table class="w-full my-8 border-collapse " >
-            <thead class="bg-green-600 text-basic_white_color " >
+            <thead class="bg-blue-600 text-basic_white_color " >
                 <tr class="" >
                     <th class=" uppercase  p-2  text-center text-lg" >ID</th>
                     <th class=" uppercase  p-2  text-center text-lg" >programme de diffusion</th>
@@ -37,7 +37,7 @@
                     <th class=" uppercase  p-2  text-center text-lg" >Action</th>
                 </tr>
             </thead>
-            <tbody class="bg-gray-700" >
+            <tbody class="bg-gray-900" >
                 @forelse ($publicites as $publicite )
 
                     @php
@@ -45,16 +45,16 @@
                         $periodes=$publicite->periodes;
                     @endphp
 
-                    <tr>
-                        <td class="border-solid border p-2 border-black text-center text-basic_white_color text-lg" >#{{$publicite->id}}</td>
-                        <td class="border-solid border p-2 border-black text-center text-lg" >
+                    <tr class="border-solid border-b-4 p-2 border-blue-400 text-center text-basic_white_color text-lg h-full" >
+                        <td class="border-solid  p-2 border-black text-center text-basic_white_color text-lg" >#{{$publicite->id}}</td>
+                        <td class="border-solid  p-2 border-black text-center text-lg" >
                             <ul class="text-basic_white_color" >
                                 @foreach ($periodes as $periode)
                                     <li class="list-disc list-inside" > {{$periode->periode_date}} {{$periode->periode_hour}}   </li>
                                 @endforeach
                             </ul>
                         </td>
-                        <td class="border-solid border p-2 border-black text-center text-lg" >
+                        <td class="border-solid  p-2 border-black text-center text-lg" >
                             <ul>
                                 @php
                                     $path='storage/'. $publicite->pub_file
@@ -69,7 +69,7 @@
                                 @endif
                             </ul>
                         </td>
-                        <td class="border-solid border p-2 border-black text-center text-lg" >
+                        <td class="border-solid  p-2 border-black text-center text-lg" >
 
                             @if ($publicite->isPaid)
                                 <span class="text-basic_white_color" >OUI</span> 
@@ -79,14 +79,16 @@
                             @endif
 
                         </td>
-                        <td class="capitalize border-solid border text-orange-500 p-2 border-black text-center text-lg  " >{{$publicite->status}}</td>
+                        <td class="capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg  " >{{$publicite->status}}</td>
 
-                        <td class="border-solid border p-2 border-black text-center text-lg" >
+                        <td class="border-solid  p-2 border-black text-center text-lg items-center lg:flex  " >
+
+                            <a href="{{route('service.publicite.update',['publicite'=>$publicite])}}" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifié</a>
 
                             <form action="{{route('service.publicite.delete',['publicite'=>$publicite])}}" method="POST" >
                                 @csrf 
                                 @method('delete')
-                                <button type="submit" class="bg-red-600 text-basic_white_color p-1 rounded" > Supprimé</button>
+                                <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimé</button>
                             </form>
 
                         </td>

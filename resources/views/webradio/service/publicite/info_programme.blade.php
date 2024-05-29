@@ -11,10 +11,16 @@
                         $periodeError=json_encode($errors->get('programme.*.periode'));
 
                         $oldData=json_encode(old());
+
+                        $periodesCount=$publicite->periodes->count();
+
+                        $data=$periodesCount>=1?json_encode($publicite->periodes()->get(['periode_date','id','periode_hour'])):json_encode([]);
                         
                     @endphp
                     
-                    <programme-date class="w-full flex flex-col items-center" periode_error="{{$periodeError}}" date_error="{{$dateError}}" old="{{$oldData}}" ></programme-date>
+                    <programme-date class="w-full flex flex-col items-center" periode_error="{{$periodeError}}" date_error="{{$dateError}}" old="{{$oldData}}" data="{{$data}}" ></programme-date>
+                  
+                    
 
                 </section>
             </div>

@@ -30,6 +30,10 @@ Route::prefix('/service')->name('service.')->group(function() {
     
     Route::get('/publicite',[PubliciteController::class,'index'])->middleware(['auth','verified'])->name('publicite');
 
+    Route::get('/publicite/update/{publicite}',[PubliciteController::class,'update'])->middleware(['auth','verified'])->name('publicite.update');
+
+    Route::patch('/publicite/update/{publicite}',[PubliciteController::class,'updateValidation'])->middleware(['auth','verified'])->name('publicite.update.validation');
+
     Route::post('/publicite',[PubliciteController::class,'create'])->middleware(['auth','verified'])->name('publicite.create');
 
     Route::delete('/publicite/delete/{publicite}',[PubliciteController::class,'delete'])->middleware(['auth','verified'])->name('publicite.delete');
@@ -44,7 +48,7 @@ Route::prefix('/service')->name('service.')->group(function() {
 
 Route::get('/dashboard', function () {
 
-    $publicites=Publicite::all();
+    $publicites=Publicite::orderByDesc('id')->get();
 
     return view('dashboard',[
         'publicites'=>$publicites

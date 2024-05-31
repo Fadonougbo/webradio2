@@ -6,10 +6,11 @@
         </h2>
     </x-slot>
 
+
     <div class="py-12 ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-2 bg-blue-900 text-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <h1 class="text-center font-bold text-4xl uppercase" >La liste de vos demandes</h1>
+                <h1 class="text-center font-bold text-2xl uppercase" >La liste de vos demandes</h1>
             </div>
         </div>
     </div>
@@ -28,7 +29,7 @@
 
         <table class="w-full my-8 border-collapse " >
             <thead class="bg-blue-600 text-basic_white_color " >
-                <tr class="" >
+                <tr>
                     <th class=" uppercase  p-2  text-center text-lg" >ID</th>
                     <th class=" uppercase  p-2  text-center text-lg" >programme de diffusion</th>
                     <th class=" uppercase  p-2  text-center text-lg" >Information</th>
@@ -65,7 +66,12 @@
                                     </a>
                                 </li>
                                 @if ($publicite->pub_detail)
-                                    <li class="text-basic_white_color" >Detaille supplementaire: <br/>  {{$publicite->pub_detail}}</li>
+                                    <li class="text-basic_white_color" >
+                                        <details class="my-4" >
+                                            <summary>Detaille supplementaire</summary>
+                                            {{$publicite->pub_detail}}
+                                        </details>
+                                    </li>
                                 @endif
                             </ul>
                         </td>
@@ -75,11 +81,22 @@
                                 <span class="text-basic_white_color" >OUI</span> 
                             @else
                                 
-                                <span class="text-basic_white_color" >NON</span> <br> <a href="{{route('service.paiment.redirect',['publicite'=>$publicite])}}" class="text-blue-300 underline" target="_blank" >cliqué ici pour payer</a>
+                                <span class="text-basic_white_color" >NON</span> 
+
+                                @if ($publicite->status==='accepté')
+                                    <br/>
+                                    <a href="{{route('service.paiment.redirect',['publicite'=>$publicite])}}" class="text-blue-300 underline" target="_blank" >cliqué ici pour payer</a>
+                                @endif
+                                
                             @endif
+                           
+                                
 
                         </td>
-                        <td class="capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg  " >{{$publicite->status}}</td>
+
+                        <td class="capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg  " >
+                        {{$publicite->status}}
+                        </td>
 
                         <td class="border-solid  p-2 border-black text-center text-lg items-center lg:flex  " >
 
@@ -94,11 +111,128 @@
                         </td>
 
                     </tr>
+
                 @empty
-                    
+
+                    <tr>
+                        <td colspan="6" class="py-4 text-2xl capitalize font-bold bg-basic_white_color  text-center" >vide</td>
+                    </tr>
+
                 @endforelse
                
             </tbody>
         </table>
    </div>
+
+
+   <!-- Avis de recherche -->
+   <div class="w-full overflow-x-scroll sm:overflow-x-hidden p-4" >
+
+        @session('is_delete')
+            <message-toast type="success" msg="Suppression reussie" delay="3000" ></message-toast>
+        @endsession
+
+        @session('paiment_success')
+            <message-toast type="success" msg="Paiement effectiue avec success" delay="3000" ></message-toast>
+        @endsession
+
+        <h3 class="text-xl flex items-center font-semibold" > <i data-lucide="arrow-big-right" class="size-8" ></i> Avis de recherche</h3>
+
+        <table class="w-full my-8 border-collapse " >
+        <thead class="bg-blue-600 text-basic_white_color " >
+            <tr class="" >
+                <th class=" uppercase  p-2  text-center text-lg" >ID</th>
+                <th class=" uppercase  p-2  text-center text-lg" >programme de diffusion</th>
+                <th class=" uppercase  p-2  text-center text-lg" >Information</th>
+                <th class=" uppercase  p-2  text-center text-lg" >paiement effectué ?</th>
+                <th class=" uppercase  p-2  text-center text-lg" >status</th>
+                <th class=" uppercase  p-2  text-center text-lg" >Action</th>
+            </tr>
+        </thead>
+        <tbody class="bg-gray-900" >
+            @forelse ($publicites as $publicite )
+
+                @php
+                
+                    $periodes=$publicite->periodes;
+                @endphp
+
+                <tr class="border-solid border-b-4 p-2 border-blue-400 text-center text-basic_white_color text-lg h-full" >
+                    <td class="border-solid  p-2 border-black text-center text-basic_white_color text-lg" >#{{$publicite->id}}</td>
+                    <td class="border-solid  p-2 border-black text-center text-lg" >
+                        <ul class="text-basic_white_color" >
+                            @foreach ($periodes as $periode)
+                                <li class="list-disc list-inside" > {{$periode->periode_date}} {{$periode->periode_hour}}   </li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td class="border-solid  p-2 border-black text-center text-lg" >
+                        <ul>
+                            @php
+                                $path='storage/'. $publicite->pub_file
+                            @endphp
+                            <li> 
+                                <a class="text-blue-300 underline" href="{{asset($path)}}" download="{{$publicite->pub_file}}" >
+                                    Voir le document ajouté
+                                </a>
+                            </li>
+                            @if ($publicite->pub_detail)
+                                <li class="text-basic_white_color" >
+                                    <details class="my-4" >
+                                        <summary>Detaille supplementaire</summary>
+                                        {{$publicite->pub_detail}}
+                                    </details>
+                                </li>
+                            @endif
+                        </ul>
+                    </td>
+                    <td class="border-solid  p-2 border-black text-center text-lg" >
+
+                        @if ($publicite->isPaid)
+                            <span class="text-basic_white_color" >OUI</span> 
+                        @else
+                            
+                            <span class="text-basic_white_color" >NON</span> 
+
+                            @if ($publicite->status==='accepté')
+                                <br/>
+                                <a href="{{route('service.paiment.redirect',['publicite'=>$publicite])}}" class="text-blue-300 underline" target="_blank" >cliqué ici pour payer</a>
+                            @endif
+                            
+                        @endif
+                    
+                            
+
+                    </td>
+
+                    <td class="capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg  " >
+                    {{$publicite->status}}
+                    </td>
+
+                <td class="border-solid  p-2 border-black text-center text-lg items-center lg:flex  " >
+
+                        <a href="{{route('service.publicite.update',['publicite'=>$publicite])}}" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifié</a>
+
+                        <form action="{{route('service.publicite.delete',['publicite'=>$publicite])}}" method="POST" >
+                            @csrf 
+                            @method('delete')
+                            <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimé</button>
+                        </form>
+
+                    </td>
+
+                </tr>
+
+            @empty
+
+                <tr>
+                    <td colspan="6" class="py-4 text-2xl capitalize font-bold bg-basic_white_color  text-center" >vide</td>
+                </tr>
+
+            @endforelse
+        
+        </tbody>
+    </table>
+</div>
+
 </x-app-layout>

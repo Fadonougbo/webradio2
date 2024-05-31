@@ -32,9 +32,7 @@
 
             <label for="detail" class='my-3 text-lg  font-bold' >Information complémentaire</label>
 
-            <textarea name="pub_detail" class="w-full rounded h-40" id="pub_detail">
-                {{old('pub_detail',$publicite?->pub_detail)}}
-            </textarea>
+            <textarea name="pub_detail" class="w-full rounded h-40" id="pub_detail">{{old('pub_detail',$publicite?->pub_detail)}}</textarea>
 
             @error('pub_detail')
                 <p class="text-basic_primary_color my-2" >{{$message}}</p>

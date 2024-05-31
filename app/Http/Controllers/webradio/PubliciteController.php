@@ -90,7 +90,9 @@ class PubliciteController extends Controller
         $price=Service::where('name','=','publicité')->get()->first()->price;
         $amount=$price*count($programmes);
 
-         return redirect()->route('service.paiment')->with(
+        return redirect()->route('dashboard');
+
+         /* return redirect()->route('service.paiment')->with(
         [
             'demande_id'=>$publicite->id,
             'tel'=>$publicite->pub_tel,
@@ -99,7 +101,7 @@ class PubliciteController extends Controller
             'on_error_url'=>route('dashboard',['ispaid'=>'no']),
             'on_success_url'=>route('dashboard',['ispaid'=>'yes']),
             'amount'=>$amount
-        ]);
+        ]); */
 
     }
  
@@ -207,10 +209,6 @@ class PubliciteController extends Controller
 
         
          return redirect()->route('dashboard');
-
-       
-
-        
 
 
     }

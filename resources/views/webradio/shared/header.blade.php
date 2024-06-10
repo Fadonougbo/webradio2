@@ -1,6 +1,6 @@
-<header class="p-2 shadow  bg-black  items-center h-28 " >
+<header class="p-2 shadow  bg-black  items-center h-28 fixed z-10 w-full" >
 
-        <div class="w-full flex justify-between items-center" >
+        <div class="w-full flex justify-between items-center top-0" >
 
             <div class="h-12 w-16 flex items-center" >
                 <img src="{{asset('images/rtulogo1.jpg')}}" class="size-full" alt="RTU logo">
@@ -21,7 +21,8 @@
                         Grille des programmes
                     </a>
             
-                    <a href="#" class="transition-all font-bold hover:text-basic_primary_color" >Grille tarifaire</a>
+                    <a href="{{route('grille')}}"  @class(['transition-all font-bold hover:text-basic_primary_color',
+                    'decoration-solid underline underline-offset-4 decoration-4 decoration-basic_primary_color'=>request()->routeIs('grille')]) >Grille tarifaire</a>
 
                     <a href="{{route('home')}}#replay" class="transition-all font-bold hover:text-basic_primary_color hidden xl:block" >Podcast</a>
 

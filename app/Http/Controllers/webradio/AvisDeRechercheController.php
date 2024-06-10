@@ -3,33 +3,32 @@
 namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\webradio\PubliciteRequest;
-use App\Http\Requests\webradio\UpdatePubliciteRequest;
+use App\Http\Requests\AvisDeRechercheRequest;
+use App\Http\Requests\AvisDeRechercheUpdateRequest;
+use App\Models\AvisDeRecherche;
 use App\Models\Periode;
-use App\Models\Publicite;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class PubliciteController extends Controller
+class AvisDeRechercheController extends Controller
 {
     public function index() {
 
-        $publicite=new Publicite();
+        $adr=new AvisDeRecherche();
 
-        return view('webradio.service.publicite.publicite',
+        return view('webradio.service.adr.adr',
         [
-            'publicite'=>$publicite
+            'adr'=>$adr
         ]);
+      
     }
 
+    public function create(AvisDeRechercheRequest $request) {
 
-
-    public function create(PubliciteRequest $request) {
-
-
+        //dd($request->validated());
         $fields=$request->validated();
             
         $store_files_directory_name="user.".Auth::id();
@@ -44,12 +43,12 @@ class PubliciteController extends Controller
         /**
          * @var UploadedFile
          */
-        $pub_file=$request->validated("pub_file")??null;
+        $adr_file=$request->validated("adr_file")??null;
 
-        $publicite=new Publicite();
+        $adr=new AvisDeRecherche();
 
         //generate image path
-        $imagePath=$this->getImagePath($pub_file,$store_files_directory_name,$publicite);
+        $imagePath=$this->getImagePath($adr_file,$store_files_directory_name,$adr);
 
         //merge fields data with image path
         $fields=array_merge($fields,$imagePath);
@@ -57,14 +56,14 @@ class PubliciteController extends Controller
       
       
         //create publicite
-        $publicite=Publicite::create($fields);
+        $adr=AvisDeRecherche::create($fields);
 
         $response=false;
 
-        if($publicite->exists()) {
+        if($adr->exists()) {
             
             //associate publicite with user
-            $response=$publicite->user()->associate(Auth::user())->save();
+            $response=$adr->user()->associate(Auth::user())->save();
         }
 
         $programmes=$fields['programme'];
@@ -81,18 +80,27 @@ class PubliciteController extends Controller
             },$programmes);
                
           //Inserte date and hour in periodes table
-           $publicite->periodes()->createMany($programmeFields);
+           $adr->periodes()->createMany($programmeFields);
                
 
         }
+        
 
-
-        $price=Service::where('name','=','publicité')->get()->first()->price;
+        $price=Service::where('name','=','avis_de_recherche')->get()->first()->price;
         $amount=$price*count($programmes);
 
         return redirect()->route('dashboard');
 
-   
+         /* return redirect()->route('service.paiment')->with(
+        [
+            'demande_id'=>$publicite->id,
+            'tel'=>$publicite->pub_tel,
+            'email'=>$publicite->pub_email,
+            'demande_type'=>'publicite',
+            'on_error_url'=>route('dashboard',['ispaid'=>'no']),
+            'on_success_url'=>route('dashboard',['ispaid'=>'yes']),
+            'amount'=>$amount
+        ]); */
 
     }
  
@@ -130,17 +138,24 @@ class PubliciteController extends Controller
 
 
 
-    public function update(Publicite $publicite) {
-
-        return view('webradio.service.publicite.update',
+    public function update(Request $request,AvisDeRecherche $adr) {
+        $id=(int)$request->route()->parameter('avisDeRecherche');
+        
+        $adr=(AvisDeRecherche::where('id','=',$id)->get())[0];
+        
+        return view('webradio.service.adr.update',
         [
-            'publicite'=>$publicite
+            'adr'=>$adr
         ]);
     }
 
-    public function updateValidation(UpdatePubliciteRequest $request,Publicite $publicite) {
+    public function updateValidation(AvisDeRechercheUpdateRequest $request,AvisDeRecherche $adr) {
 
         
+        $id=(int)$request->route()->parameter('avisDeRecherche');
+        
+        $adr=(AvisDeRecherche::where('id','=',$id)->get())[0];
+
         $fields=$request->validated();
         
             
@@ -157,11 +172,11 @@ class PubliciteController extends Controller
         /**
          * @var UploadedFile
          */
-        $pub_image=$request->validated("pub_file")??null;
+        $adr_image=$request->validated("adr_file")??null;
 
 
         //generate image path
-        $imagePath=$this->getImagePath($pub_image,$store_files_directory_name,$publicite);
+        $imagePath=$this->getImagePath($adr_image,$store_files_directory_name,$adr);
 
         //merge fields data with image path
         $fields=array_merge($fields,$imagePath);
@@ -169,7 +184,7 @@ class PubliciteController extends Controller
         
       
         //update publicite
-        $publiciteIsUpdated=$publicite->update($fields);
+        $publiciteIsUpdated=$adr->update($fields);
 
 
         
@@ -178,7 +193,7 @@ class PubliciteController extends Controller
 
         if($publiciteIsUpdated) {
 
-            $isDeleted=Periode::where('publicite_id','=',$publicite->id)->delete();
+            $isDeleted=Periode::where('avis_de_recherche_id','=',$adr->id)->delete();
 
         }
 
@@ -194,21 +209,23 @@ class PubliciteController extends Controller
             },$programmes);
                
           //Inserte date and hour in periodes table
-           $publicite->periodes()->createMany($programmeFields);
+           $adr->periodes()->createMany($programmeFields);
 
         }
 
         
-         return redirect()->route('dashboard');
+         return redirect()->route('dashboard')->with('success_update','');
 
 
     }
 
-    public function delete(Publicite $publicite) {
-        
-        $isDeleted=$publicite->delete();
+    public function delete(AvisDeRecherche $adr,Request $request) {
+       
+        $id=(int)$request->route()->parameter('avisDeRecherche');
+        $isDeleted=$adr->find($id)->delete();
 
-        if($isDeleted) {
+        
+        if($isDeleted) { 
             return redirect()->route('dashboard')->with('is_delete',true);
         }
 
@@ -216,33 +233,33 @@ class PubliciteController extends Controller
     }
 
 
-    private function getImagePath(UploadedFile|null $pub_file,string $store_files_directory_name,Publicite $publicite):array {
+    private function getImagePath(UploadedFile|null $adr_file,string $store_files_directory_name,AvisDeRecherche $adr):array {
 
         $imagePath=[];
 
         //Case: image is not uploaded and store is not configured or image not exist in DB
-        if(empty($pub_file)) {
+        if(empty($adr_file)) {
 
-            $imagePath["pub_file"]=null;
+            $imagePath["adr_file"]=null;
 
         }
 
         //Case:image is not uploaded and old image exist in DB
-        if(empty($pub_file) && !empty($publicite->pub_file) ) {
+        if(empty($adr_file) && !empty($adr->adr_file) ) {
 
-           unset($imagePath["pub_file"]);
+           unset($imagePath["adr_file"]);
 
         }
 
         //Case image is uploades and any image not exist in DB
 
         if( 
-            $pub_file && 
-            $pub_file->isValid() && 
-            $pub_file->getError()===UPLOAD_ERR_OK &&
-            empty($publicite?->pub_file)
+            $adr_file && 
+            $adr_file->isValid() && 
+            $adr_file->getError()===UPLOAD_ERR_OK &&
+            empty($adr?->adr_file)
         ) {
-            $imagePath["pub_file"]=$pub_file->store($store_files_directory_name,'public');
+            $imagePath["adr_file"]=$adr_file->store($store_files_directory_name,'public');
 
         }
 
@@ -250,18 +267,18 @@ class PubliciteController extends Controller
         //Case:image is uploaded and old image exist in DB
   
         if( 
-            $pub_file && 
-            $pub_file->isValid() && 
-            $pub_file->getError()===UPLOAD_ERR_OK &&
-            !empty($publicite?->pub_file)
+            $adr_file && 
+            $adr_file->isValid() && 
+            $adr_file->getError()===UPLOAD_ERR_OK &&
+            !empty($adr?->adr_file) 
         ) {
 
-            $path=$publicite?->pub_file;
+            $path=$adr?->adr_file;
 
             //Delete old image
             Storage::disk('public')->delete($path);
 
-            $imagePath["pub_file"]=$pub_file->store($store_files_directory_name,'public');
+            $imagePath["adr_file"]=$adr_file->store($store_files_directory_name,'public');
 
         }
 

@@ -11,4 +11,8 @@ class ProgrammeController extends Controller
         
         return view('webradio.programme.programme');
     }
+
+    public function  showGrille() {
+        return view('webradio.programme.grille');
+    }
 }

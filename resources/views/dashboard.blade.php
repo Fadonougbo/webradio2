@@ -15,6 +15,10 @@
         </div>
     </div>
 
+    @session('success_update')
+            <message-toast type="success" msg="Les modifications ont été prises en compte" delay="3000" ></message-toast>
+    @endsession
+
    <div class="w-full overflow-x-scroll sm:overflow-x-hidden p-4" >
 
         @session('is_delete')
@@ -68,7 +72,7 @@
                                 @if ($publicite->pub_detail)
                                     <li class="text-basic_white_color" >
                                         <details class="my-4" >
-                                            <summary>Detaille supplementaire</summary>
+                                            <summary>Details supplementaire</summary>
                                             {{$publicite->pub_detail}}
                                         </details>
                                     </li>
@@ -85,7 +89,7 @@
 
                                 @if ($publicite->status==='accepté')
                                     <br/>
-                                    <a href="{{route('service.paiment.redirect',['publicite'=>$publicite])}}" class="text-blue-300 underline" target="_blank" >cliqué ici pour payer</a>
+                                    <a href="{{route('service.paiment.redirect',['publicite'=>$publicite])}}" class="text-blue-300 underline" target="_blank" >cliquez ici pour payer</a>
                                 @endif
                                 
                             @endif
@@ -93,19 +97,35 @@
                                 
 
                         </td>
+                        @php
+                            
+                            $class='capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg';
+                            if($publicite->status==='accepté') {
+                                $class='capitalize border-solid  text-green-500 p-2 border-black text-center text-lg';
+                            }else if($publicite->status==='refusé') {
+                                $class='capitalize border-solid  text-red-500 p-2 border-black text-center text-lg';
+                            }
+                        @endphp
+                        <td  class="{{$class}}" >
 
-                        <td class="capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg  " >
-                        {{$publicite->status}}
+                            @if($publicite->status==='accepté') 
+                                Demande acceptée
+                            @elseif($publicite->status==='refusé') 
+                                Demande refusée
+                            @else  
+                                Demande en attente de validation
+                            @endif
+                        
                         </td>
 
                         <td class="border-solid  p-2 border-black text-center text-lg items-center lg:flex  " >
 
-                            <a href="{{route('service.publicite.update',['publicite'=>$publicite])}}" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifié</a>
+                            <a href="{{route('service.publicite.update',['publicite'=>$publicite])}}" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifier</a>
 
                             <form action="{{route('service.publicite.delete',['publicite'=>$publicite])}}" method="POST" >
                                 @csrf 
                                 @method('delete')
-                                <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimé</button>
+                                <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimer</button>
                             </form>
 
                         </td>
@@ -133,7 +153,11 @@
         @endsession
 
         @session('paiment_success')
-            <message-toast type="success" msg="Paiement effectiue avec success" delay="3000" ></message-toast>
+            <message-toast type="success" msg="Paiement effectué avec success" delay="3000" ></message-toast>
+        @endsession
+
+        @session('paiment_error')
+            <message-toast type="error" msg="Paiement non effectué " delay="3000" ></message-toast>
         @endsession
 
         <h3 class="text-xl flex items-center font-semibold" > <i data-lucide="arrow-big-right" class="size-8" ></i> Avis de recherche</h3>
@@ -150,15 +174,15 @@
             </tr>
         </thead>
         <tbody class="bg-gray-900" >
-            @forelse ($publicites as $publicite )
+            @forelse ($adr as $avis )
 
                 @php
                 
-                    $periodes=$publicite->periodes;
+                    $periodes=$avis->periodes;
                 @endphp
 
                 <tr class="border-solid border-b-4 p-2 border-blue-400 text-center text-basic_white_color text-lg h-full" >
-                    <td class="border-solid  p-2 border-black text-center text-basic_white_color text-lg" >#{{$publicite->id}}</td>
+                    <td class="border-solid  p-2 border-black text-center text-basic_white_color text-lg" >#{{$avis->id}}</td>
                     <td class="border-solid  p-2 border-black text-center text-lg" >
                         <ul class="text-basic_white_color" >
                             @foreach ($periodes as $periode)
@@ -169,18 +193,18 @@
                     <td class="border-solid  p-2 border-black text-center text-lg" >
                         <ul>
                             @php
-                                $path='storage/'. $publicite->pub_file
+                                $path='storage/'. $avis->adr_file
                             @endphp
                             <li> 
-                                <a class="text-blue-300 underline" href="{{asset($path)}}" download="{{$publicite->pub_file}}" >
+                                <a class="text-blue-300 underline" href="{{asset($path)}}" download="{{$avis->adr_file}}" >
                                     Voir le document ajouté
                                 </a>
                             </li>
-                            @if ($publicite->pub_detail)
+                            @if ($avis->adr_detail)
                                 <li class="text-basic_white_color" >
                                     <details class="my-4" >
-                                        <summary>Detaille supplementaire</summary>
-                                        {{$publicite->pub_detail}}
+                                        <summary>Details supplementaire</summary>
+                                        {{$avis->adr_detail}}
                                     </details>
                                 </li>
                             @endif
@@ -188,15 +212,15 @@
                     </td>
                     <td class="border-solid  p-2 border-black text-center text-lg" >
 
-                        @if ($publicite->isPaid)
+                        @if ($avis->isPaid)
                             <span class="text-basic_white_color" >OUI</span> 
                         @else
                             
                             <span class="text-basic_white_color" >NON</span> 
 
-                            @if ($publicite->status==='accepté')
+                            @if ($avis->status==='accepté')
                                 <br/>
-                                <a href="{{route('service.paiment.redirect',['publicite'=>$publicite])}}" class="text-blue-300 underline" target="_blank" >cliqué ici pour payer</a>
+                                <a href="{{route('service.adr.paiment.redirect',['avisDeRecherche'=>$avis])}}" class="text-blue-300 underline" target="_blank" >cliquez ici pour payer</a>
                             @endif
                             
                         @endif
@@ -205,18 +229,28 @@
 
                     </td>
 
-                    <td class="capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg  " >
-                    {{$publicite->status}}
+
+                    @php
+                            
+                        $class='capitalize border-solid  text-orange-500 p-2 border-black text-center text-lg';
+                        if($avis->status==='accepté') {
+                            $class='capitalize border-solid  text-green-500 p-2 border-black text-center text-lg';
+                        }else if($avis->status==='refusé') {
+                            $class='capitalize border-solid  text-red-500 p-2 border-black text-center text-lg';
+                        }
+                    @endphp
+                    <td  class="{{$class}}" >
+                        {{$avis->status}}
                     </td>
 
                 <td class="border-solid  p-2 border-black text-center text-lg items-center lg:flex  " >
-
-                        <a href="{{route('service.publicite.update',['publicite'=>$publicite])}}" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifié</a>
-
-                        <form action="{{route('service.publicite.delete',['publicite'=>$publicite])}}" method="POST" >
+                        
+                        <a href="{{route('service.adr.update',['avisDeRecherche'=>$avis])}}" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifier</a>
+                        
+                        <form action="{{route('service.adr.delete',['avisDeRecherche'=>$avis])}}" method="POST" >
                             @csrf 
                             @method('delete')
-                            <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimé</button>
+                            <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimer</button>
                         </form>
 
                     </td>

@@ -1,4 +1,4 @@
-<footer class="bg-black p-2 w-full flex flex-col flex-wrap justify-between sm:flex-row" >
+<footer class="bg-black p-2 w-full flex flex-col  flex-wrap justify-between sm:flex-row" >
         <div class="my-4 w-full sm:w-1/2 lg:w-1/4" >
             <h3 class="text-basic_primary_color text-center capitalize font-bold text-xl" >Suivez-nous </h3>
             <ul class=" flex w-full justify-center text-basic_white_color my-2" >
@@ -8,7 +8,7 @@
         </div>
         
         <div class="my-4 flex flex-col items-center w-full sm:w-1/2 lg:w-1/3 " >
-            <h3 class="text-basic_primary_color capitalize text-center font-bold text-xl" >contact</h3>
+            <h3 class="text-basic_primary_color capitalize text-center font-bold text-xl" >contacte</h3>
             <ul class="text-basic_white_color my-2" >
                 <li class="flex items-center my-2" > <i data-lucide="phone" class="mx-1 size-4" ></i> 928289292 </li>
                 <li class="flex items-center my-2" > <i data-lucide="mail" class="mx-1 size-4" ></i> rtu@gmail.com </li>

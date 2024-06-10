@@ -27,7 +27,7 @@ define<PaimentModule>({
 			
 			const { demande_id, tel,email,amount,on_error_url} = host;
 
-			//console.log({ demande_id, tel,email,amount,on_error_url});
+			console.log({ demande_id, tel,email,amount,on_error_url});
 
 			if(Number.isNaN(Number.parseInt(demande_id)) || Number.isNaN(Number.parseInt(tel)) || Number.isNaN(Number.parseInt(amount)) ) {
 				
@@ -35,7 +35,7 @@ define<PaimentModule>({
             }
 
 			
-			
+			console.log('ok');
            
 			const x = FedaPay.init("paiment-module", {
 

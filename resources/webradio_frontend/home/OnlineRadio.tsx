@@ -37,15 +37,14 @@ export const OnlineRadio=()=> {
 
         <div  className='flex justify-center items-center cursor-pointer'  onClick={playAudio}  >
           
-             <p className='mx-4 text-basic_white_color text-md uppercase' > Ecouter rtu en direct</p> 
+             <p className='mx-4 text-basic_white_color text-md uppercase' > Ecoutez rtu en direct</p> 
 
             <span className="relative cursor-pointer size-8" >
 
                 <span className={`inline-flex absolute bg-basic_primary_color opacity-75 rounded-full w-full h-full ${audioState?'animate-ping':''} `}>
-                    <span className={`inline-flex absolute bg-basic_primary_color opacity-75 rounded-full ${audioState?'animate-ping':''} w-full h-full `}></span>
                 </span>
 
-                <span className={`inline-flex absolute bg-basic_primary_color opacity-75 rounded-full ${audioState?'animate-ping':''} w-full h-full `}></span>
+              
 
                 <span className="relative flex justify-center items-center bg-basic_primary_color rounded-full size-8">
                     {audioState?<Pause className='text-basic_white_color'  />:<Play className='text-basic_white_color' />}

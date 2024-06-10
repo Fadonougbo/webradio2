@@ -9,9 +9,13 @@ class Periode extends Model
 {
     use HasFactory;
 
-    public $fillable=['periode_date','periode_hour','publicite_id'];
+    public $fillable=['periode_date','periode_hour','publicite_id','adr_id'];
 
     public function publicite() {
         return $this->belongsTo(Publicite::class);
+    }
+
+    public function avis_de_recherche() {
+        return $this->belongsTo(AvisDeRecherche::class);
     }
 }

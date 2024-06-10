@@ -74,3 +74,21 @@
       @apply bg-background text-foreground;
     }
   }
+
+  /* HTMX */
+
+
+  .htmx-indicator{
+    display:none;
+  }
+
+  .htmx-request + .parent {
+    display: none;
+  }
+
+  .htmx-request .htmx-indicator{
+      display:inline;
+  }
+  .htmx-request.htmx-indicator{
+      display:inline;
+  }

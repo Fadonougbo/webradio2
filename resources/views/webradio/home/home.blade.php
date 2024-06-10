@@ -7,7 +7,10 @@
 
     <main class="p-4" >
         <!-- Carousel -->
-        <actu-carousel class="my-6 md:text-xl" ></actu-carousel>
+         <div class="mt-40" >
+            <actu-carousel class="my-6   md:text-xl" ></actu-carousel>
+         </div>
+        
       
        
         <div class="my-10 " id="actu" >

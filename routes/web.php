@@ -33,11 +33,16 @@ Route::get('/grille-tarifaire',[ProgrammeController::class,'showGrille'])->name(
 
 Route::get('/service',[ServiceController::class,'index'])->name('service.list');
 
+Route::get('/proccess',[CommuniqueController::class,'uploadload'])->name('communique.create.upload.load');
+Route::post('/proccess',[CommuniqueController::class,'upload'])->name('communique.create.upload');
+Route::delete('/proccess',[CommuniqueController::class,'uploadDelete'])->name('communique.delete.upload');
+
 Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->group(function() {
 
     /* communiqué */
     Route::get('/communique',[CommuniqueController::class,'index'])->name('communique');
     Route::post('/communique',[CommuniqueController::class,'create'])->name('communique.create');
+    
 
     Route::post('/communinique/htmx',[CommuniqueController::class,'getHtmxData'])->name('communique.htmx');
 

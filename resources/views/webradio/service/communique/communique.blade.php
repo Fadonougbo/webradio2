@@ -18,10 +18,10 @@
             @csrf
           
             @if($errors->any())
-                <message-toast type="info" msg="Le formulaire n'est pas valide, veuillez vérifier vos informations et réessayer à nouveau." delay="15000" ></message-toast>
-                 <!-- @foreach ($errors->all() as $err)
+                <!-- <message-toast type="info" msg="Le formulaire n'est pas valide, veuillez vérifier vos informations et réessayer à nouveau." delay="15000" ></message-toast> -->
+                 @foreach ($errors->all() as $err)
                      <p>{{$err}}</p>
-                 @endforeach -->
+                 @endforeach 
             @endif
            
             @include('webradio.service.communique.info_demandeur')

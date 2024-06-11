@@ -36,6 +36,8 @@ class CreateCommuniqueFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        
+        
         $dateOfDay=now('africa/porto-novo')->format('Y-m-d');
 
         return [
@@ -48,11 +50,9 @@ class CreateCommuniqueFormRequest extends FormRequest
 
             'programmes.*.hour'=>['required','string',Rule::in(['6:45:00','13:20:00','13:45:00','18:45:00','19:20:00','19:45:00','21:45:00'])],
 
-            'communique_file'=>['required',
-                                File::types(['pdf','docx','txt','mp3'])->max('15mb'),
-                                ],
+            'communique_file'=>['required'],
 
-            'communique_detail'=>['nullable','string','max:100','required']
+            'communique_detail'=>['nullable','string','min:4','max:200','required']
         ];
     }
 }

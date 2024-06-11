@@ -20,11 +20,13 @@
             @endif
             
 
-            <input type="file" name="communique_file" class="cursor-pointer border-2 border-solid border-black rounded p-2" id="communique_file" accept=".pdf,.docx,.txt,audio/*" >
+           <!--  <input type="file" name="communique_file" class="cursor-pointer border-2 border-solid border-black rounded p-2" id="communique_file" accept=".pdf,.docx,.txt,audio/*" > -->
 
             @error('communique_file')
                 <p class="text-basic_primary_color my-2" >{{$message}}</p>
-            @enderror 
+            @enderror
+            
+            <file-uploader></file-uploader>
             
         </div>
 

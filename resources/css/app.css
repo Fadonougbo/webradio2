@@ -92,3 +92,10 @@
   .htmx-request.htmx-indicator{
       display:inline;
   }
+
+  /* filepond */
+
+  .filepond--panel-root {
+    background-color: green;
+    border: 1px solid #2c3340;
+}

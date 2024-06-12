@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\webradio\Communique;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,8 +51,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Publicite::class);
     }
 
-    public function avis_de_recherche() {
+    public function communiques() {
 
-        return $this->hasMany(AvisDeRecherche::class);
+        return $this->hasMany(Communique::class);
     }
+
 }

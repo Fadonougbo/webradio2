@@ -22,11 +22,12 @@
 
            <!--  <input type="file" name="communique_file" class="cursor-pointer border-2 border-solid border-black rounded p-2" id="communique_file" accept=".pdf,.docx,.txt,audio/*" > -->
 
-            @error('communique_file')
-                <p class="text-basic_primary_color my-2" >{{$message}}</p>
-            @enderror
+            
             
             <file-uploader></file-uploader>
+            @error('communique_files')
+                <p class="text-basic_primary_color my-2" >{{$message}}</p>
+            @enderror
             
         </div>
 
@@ -34,9 +35,9 @@
 
             <label for="detail" class='my-3 text-lg  font-bold' >Veuillez nous indiquer le sujet de votre communiqué. Fournissez des détails supplémentaires si vous en avez. (important) </label>
 
-            <textarea name="communique_detail" class="w-full rounded h-40" id="communique_detail">{{old('communique_detail',$communique?->communique_detail)}}</textarea>
+            <textarea name="communique_details" class="w-full rounded h-40" id="communique_details" required>{{old('communique_details',$communique?->communique_detail)}}</textarea>
 
-            @error('communique_detail')
+            @error('communique_details')
                 <p class="text-basic_primary_color my-2" >{{$message}}</p>
             @enderror
         </div>

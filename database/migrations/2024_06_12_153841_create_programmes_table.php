@@ -12,16 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('avisDeRecherches', function (Blueprint $table) {
+        Schema::create('communiques', function (Blueprint $table) {
             $table->id();
-            $table->enum('personne',['morale','physique'])->default('physique');
-            $table->string('adr_email');
-            $table->string('adr_tel');
-            $table->string('adr_file');
-            $table->string('adr_detail')->nullable();
+            $table->string('communique_email')->nullable();
+            $table->string('communique_tel',100);
+            $table->string('communique_details',255);
             $table->boolean('isPaid')->default(false);
+            $table->enum('status',['acepter','refuser','en attente'])->default('en attente');
             $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
-            $table->enum('status',['en attente','accepté','refusé',])->default('en attente');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('avisDeRecherches');
+        Schema::dropIfExists('communiques');
     }
 };

@@ -50,9 +50,10 @@ class CreateCommuniqueFormRequest extends FormRequest
 
             'programmes.*.hour'=>['required','string',Rule::in(['6:45:00','13:20:00','13:45:00','18:45:00','19:20:00','19:45:00','21:45:00'])],
 
-            'communique_file'=>['required'],
+            'communique_files'=>['required','array','min:1','max:2'],
+            'communique_files.*'=>['string'],
 
-            'communique_detail'=>['nullable','string','min:4','max:200','required']
+            'communique_details'=>['string','min:4','max:200','required']
         ];
     }
 }

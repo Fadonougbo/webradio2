@@ -4,8 +4,8 @@
 
 @section('content')
     
-    <main class="p-4" >
-       <div class="mt-40" >
+    <main class="p-4 mt-20" >
+       <div class="" >
            <h2 class="my-6 text-4xl font-semibold uppercase text-center " > Communiqué </h2>
             <p class="text-center text-2xl" >Remplissez le formulaire ci-dessous pour faire votre demande</p>
        </div>
@@ -18,10 +18,10 @@
             @csrf
           
             @if($errors->any())
-                <!-- <message-toast type="info" msg="Le formulaire n'est pas valide, veuillez vérifier vos informations et réessayer à nouveau." delay="15000" ></message-toast> -->
-                 @foreach ($errors->all() as $err)
+                <message-toast type="info" msg="Le formulaire n'est pas valide, veuillez vérifier vos informations et réessayer à nouveau." delay="15000" ></message-toast>
+                <!--  @foreach ($errors->all() as $err)
                      <p>{{$err}}</p>
-                 @endforeach 
+                 @endforeach  -->
             @endif
            
             @include('webradio.service.communique.info_demandeur')

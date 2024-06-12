@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\webradio\Communique;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,7 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('periodes', function (Blueprint $table) {
+        Schema::create('programmes', function (Blueprint $table) {
+            $table->id();
+            $table->date('periode_date');
+            $table->time('periode_hour');
+            $table->foreignIdFor(Communique::class)->nullable()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('periodes', function (Blueprint $table) {
-            $table->dropTimestamps();
-        });
+        Schema::dropIfExists('programmes');
     }
 };

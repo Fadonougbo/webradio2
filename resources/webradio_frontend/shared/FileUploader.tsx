@@ -8,7 +8,6 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import { useEffect, useState } from 'react';
 
-import { create } from 'filepond';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
 
@@ -19,7 +18,7 @@ export const FileUploader=()=> {
 
     const [files, setFiles] = useState<{ source: string, options: { type: string } }[]>([]);
 
-    const [token,setToken]=useState<string|undefined>()
+    const [token,setToken]=useState<string>('')
 
     useEffect(()=> {
 
@@ -40,8 +39,10 @@ export const FileUploader=()=> {
                 allowMultiple={true}
 
                 maxFiles={2}
+                minFileSize={1}
 
-                name="communique_file[]"
+                name="communique_files[]"
+                
                 onupdatefiles={setFiles}
                 acceptedFileTypes={['application/pdf','audio/*','text/plain','application/vnd.openxmlformats-officedocument.wordprocessingml.document']}
 
@@ -49,101 +50,24 @@ export const FileUploader=()=> {
 
                 allowFileSizeValidation={true}
 
-                maxFileSize={'15mb'}
+                maxFileSize={'20mb'}
                 
                 server={{
-                    
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                    },
                     process:{
-                        url:'http://localhost:8000/proccess',
-                        method:'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': token,
-                        },
-                        onload(response) {
-                            const x=JSON.parse(response);
-                            console.log(x.ok);
-                            return x.ok;
-                        },
-                        ondata(data) {
-                            console.log(Object.fromEntries(data));
-                            return data
-                        },
-                        onerror(responseBody) {
-                            return 'okok err'
-                        }
-
-                        
+                        url:'http://localhost:8000/process',
+                       
                     },
-                    revert:{
-                        url:'http://localhost:8000/proccess',
-                        method:'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': token,
-                        },
-                        onload(response) {
-                            const x=JSON.parse(response);
-                            console.log(x.ok);
-                            return x.ok;
-                        },
-
-                    },
-                     load:{
-                        url:'http://localhost:8000/proccess?load=',
-                        onload(response) {
-                            console.log(response);
-                            return response
-                        },
-                        ondata(data) {
-                            console.log(data,'data');
-                            return data;
-                        },
-                        onerror(responseBody) {
-                            console.log(responseBody);
-                        },
-                    },
-
-                    restore:{
-                        url:'',
-                        onload(response) {
-                            console.log(response);
-                        },
-                        ondata(data) {
-                            console.log(data);
-                        },
-                        onerror(responseBody) {
-                            console.log(responseBody);
-                        },
-                    }
+                    revert:'http://localhost:8000/revert'
  
-
-                
                 }}
-    /* 
-                Remplace la partie options par un fetch
-                Essai de remplacez les on par les customs function
-
-    */
-                oninit={()=> {
-                    setFiles((old)=> {
-                        return [{
-                            // the server file reference
-                            source: 'eoeoe',
                 
-                            // set type to local to indicate an already uploaded file
-                            options: {
-                                type: 'limbo',
-                                
-                                file: {
-                                    name: 'my-file.png',
-                                    size: 3201025,
-                                    type: 'image/png',
-                                },
-                            },
-                        },]
-                    })
-                }}
+
             />
         </div>
     );
 
 }
+

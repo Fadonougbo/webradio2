@@ -6,7 +6,7 @@
 		
         <!-- Programme avec la clé 0 -->
         <section>
-            <input type="date" class="my-2 rounded w-full" value="{{old('programmes.0.date')}}" name='programmes[0][date]' />
+            <input type="date" class="my-2 rounded w-full" value="{{old('programmes.0.date')}}" name='programmes[0][date]' required/>
 
             @error('programmes.0.date')
 
@@ -27,7 +27,7 @@
                 ]
             @endphp
 
-            <select name='programmes[0][hour]'   class="my-2 rounded w-full" >
+            <select name='programmes[0][hour]'   class="my-2 rounded w-full" required>
                 @foreach ($hours as $hour=>$text)
                     <option value="{{$hour}}" @selected(old('programmes.0.hour')===$hour) >{{$text}}</option>
                 @endforeach

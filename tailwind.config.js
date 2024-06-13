@@ -1,9 +1,10 @@
 import forms from '@tailwindcss/forms';
+import daisyui from "daisyui"
 import defaultTheme from 'tailwindcss/defaultTheme';
+
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
@@ -91,5 +92,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"),forms],
+  plugins: [require("tailwindcss-animate"),forms,daisyui],
 }

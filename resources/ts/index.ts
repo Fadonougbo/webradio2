@@ -1,4 +1,4 @@
-import { ArrowBigRight,CirclePlus, CircleUserRound,Clock,Facebook,Info,Mail,Phone,Youtube,createIcons} from 'lucide';
+import { ArrowBigRight,CirclePlus, CircleUserRound,Clock,Facebook,Info,LoaderCircle,Mail,Phone,Youtube,createIcons} from 'lucide';
 
 
 
@@ -12,6 +12,7 @@ createIcons({
     Youtube,
     Info,
     ArrowBigRight,
-    CirclePlus
+    CirclePlus,
+    LoaderCircle 
   }
 });

@@ -14,7 +14,18 @@ use Illuminate\Support\Facades\Storage;
 class CommuniqueController extends Controller
 {
     public function index(Request $request) {
-         
+
+         $tmpPath=old('communique_files');
+
+         //Remove path from tmp dir if we have an error
+         if(!empty($tmpPath) && is_array($tmpPath)) {
+
+            foreach($tmpPath as $path) {
+                $this->removeFile($path);
+            }
+
+         }
+
         $communique=new Communique();
        
         return view('webradio.service.communique.communique',[
@@ -88,14 +99,12 @@ class CommuniqueController extends Controller
         if(!empty($imagePaths)) {
             $communique->servicefiles()->createMany($imagePaths);
 
-            return redirect()->route('dashboard')->with('success','Le communiqué à bien été envoyé ');
+            return redirect()->route('service.payment')->with('created_successfully',
+            [
+                'type'=>'communique',
+                'id'=>$communique->id
+            ]);
         }
-
-  
-
-
-        //$price=Service::where('name','=','publicité')->get()->first()->price;
-        //$amount=$price*count($programmes);
 
         return  redirect()->route('dashboard')->with('error','Une erreur est survenue, essayer plus tard');
 
@@ -120,8 +129,28 @@ class CommuniqueController extends Controller
 
     }
 
+    private function removeFile(string $path):bool {
+
+        if(empty($path)) {
+            return false;
+        }
+
+        $disk=Storage::disk('public');
+
+        if($disk->missing($path)) {
+            return false;
+        }
+
+        
+
+        $res=$disk->delete($path);
+
+        return $res;
+
+    }
+
     /**
-     * Pour l'ajout de fichier avec filpond
+     * Pour l'ajout de fichier avec filpond dans le dossier tmp
      *
      * @param Request $request
      * @return mixed
@@ -148,6 +177,7 @@ class CommuniqueController extends Controller
         foreach($files as $file) {
             
             abort_unless($file->isValid(),500);
+            abort_unless($file->isFile(),500);
             
             $path=$file->store('tmp','public');
         }
@@ -163,9 +193,9 @@ class CommuniqueController extends Controller
          
        $path=file_get_contents('php://input');
 
-       if(!empty($path)) {
-            Storage::disk('public')->delete($path);
-       }
+       $res=$this->removeFile($path);
+
+       abort_unless($res,500);
 
         return response('');
     }

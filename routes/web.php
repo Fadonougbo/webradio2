@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\webradio\CommuniqueController;
+use App\Http\Controllers\webradio\DashboadController;
 use App\Http\Controllers\webradio\HomeController;
 use App\Http\Controllers\webradio\PaimentController;
+use App\Http\Controllers\webradio\PaymentController;
 use App\Http\Controllers\webradio\ProgrammeController;
 use App\Http\Controllers\webradio\PubliciteController;
 use App\Http\Controllers\webradio\ServiceController;
-use App\Models\Publicite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +31,14 @@ Route::get('/grille-tarifaire',[ProgrammeController::class,'showGrille'])->name(
 
 Route::get('/service',[ServiceController::class,'index'])->name('service.list');
 
-//Route::get('/proccess',[CommuniqueController::class,'uploadload'])->name('communique.create.upload.load');
+
 Route::post('/process',[CommuniqueController::class,'process'])->name('communique.create.process');
 Route::delete('/revert',[CommuniqueController::class,'revert'])->name('communique.create.revert');
+
+
+
+Route::get('service/payment',[PaymentController::class,'index'])->name('service.payment')->middleware(['auth','verified']);
+
 
 Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->group(function() {
 
@@ -42,17 +48,15 @@ Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->gr
     Route::post('/communinique/htmx',[CommuniqueController::class,'getHtmxData'])->name('communique.htmx');
 
 
+    /* Payment */
+    Route::get('/payment',[PaymentController::class,'index'])->name('payment');
+    Route::post('/payment/htmx/{id}/{type}',[PaymentController::class,'getHtmxData'])->name('payment.htmx');
+    //Pour un payment direct
+    Route::patch('/payment/validation',[PaymentController::class,'validation'])->name('payment.validation');
+    //Pour un payment apres enregistrement
+    Route::get('/payment/old/payment/validation/{id}/{type}',[PaymentController::class,'oldPaymentValidation'])->name('payment.old.payment.validation');
     
     /* Pub */
-    Route::get('/publicite',[PubliciteController::class,'index'])->name('publicite');
-
-    Route::get('/publicite/update/{publicite}',[PubliciteController::class,'update'])->name('publicite.update');
-
-    Route::patch('/publicite/update/{publicite}',[PubliciteController::class,'updateValidation'])->name('publicite.update.validation');
-
-    Route::post('/publicite',[PubliciteController::class,'create'])->name('publicite.create');
-
-    Route::delete('/publicite/delete/{publicite}',[PubliciteController::class,'delete'])->name('publicite.delete');
 
     Route::get('/paiment',[PaimentController::class,'paiment'])->name('paiment');
 
@@ -67,19 +71,7 @@ Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->gr
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() {
 
-    Route::get('/', function () {
-
-        /* $publicites=Auth::user()->publicites()->orderByDesc('id')->get(); 
-
-        $adr=Auth::user()->avis_de_recherche()->orderByDesc('id')->get(); 
-    
-        */
-     /*    return view('dashboard',[
-            'publicites'=>$publicites,
-            'adr'=>$adr
-        ]); */ 
-        
-    })->name('dashboard');
+    Route::get('/',[DashboadController::class,'index'])->name('dashboard');
 
 
     Route::get('/validation', function () {

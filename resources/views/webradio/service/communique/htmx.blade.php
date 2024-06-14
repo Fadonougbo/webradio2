@@ -10,7 +10,7 @@
 
         <div class="flex w-full justify-end">
             <button class='bg-black rounded-full text-basic_white_color text-xl size-8' 
-                hx-post={{route('service.communique.htmx')}}
+                hx-patch={{route('service.communique.htmx')}}
                 hx-trigger="click"
                 hx-swap="outerHTML"
                 hx-target=".programme_{{$count}}"

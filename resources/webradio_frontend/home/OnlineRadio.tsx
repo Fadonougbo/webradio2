@@ -1,7 +1,7 @@
 
 // A basic example
 
-import { Pause, Play } from 'lucide-react';
+import { CircleStop, Pause, Play } from 'lucide-react';
 import {  useRef, useState } from 'react';
 
 
@@ -16,7 +16,6 @@ export const OnlineRadio=()=> {
     const audio = new Audio()
     audio.controls = true
     
-
     const playAudio=()=> {
 
         setAudioState((state)=>!state)
@@ -47,7 +46,7 @@ export const OnlineRadio=()=> {
               
 
                 <span className="relative flex justify-center items-center bg-basic_primary_color rounded-full size-8">
-                    {audioState?<Pause className='text-basic_white_color'  />:<Play className='text-basic_white_color' />}
+                    {audioState? <CircleStop  className='text-basic_white_color'/>:<Play className='text-basic_white_color' />}
                 </span>
 
             </span>

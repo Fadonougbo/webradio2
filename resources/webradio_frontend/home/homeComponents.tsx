@@ -7,21 +7,17 @@ import { OnlineRadio } from "./OnlineRadio";
 
 type MenuType={
     name:string,
-    fcsrf:string,
-    fuser_status:string
+    
 }
 
 define<MenuType>({
     tag:"menu-burger",
-    fcsrf:'',
-    fuser_status:'',
+
     name:{
         value:"menu_burger",
         connect(host) {
 
-            const {fcsrf,fuser_status}=host
-
-            createRoot(host).render(<Menu csrf={fcsrf} user_status={fuser_status} />)
+            createRoot(host).render(<Menu  />)
 
             return ()=>{ 
                 createRoot(host).unmount()

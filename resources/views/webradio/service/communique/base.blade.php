@@ -17,12 +17,12 @@
     'resources/webradio_frontend/shared/FileUploaderComponent.tsx'
     
     ])
-
+    
 </head>
 <body>
     
     @include('webradio.shared.header')
-    
+
     @yield('content')
 
     <scroll-to></scroll-to>

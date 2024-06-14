@@ -7,7 +7,7 @@
 
             <label for="communique_email" class="my-3 text-lg   font-bold" >Email </label>
 
-            <input type="email" id="communique_email" value="{{old('communique_email',Auth::user()->email)}}" class="rounded w-full" name="communique_email" >
+            <input type="email" id="communique_email" value="{{old('communique_email',$communique?->communique_email?? Auth::user()->email)}}" class="rounded w-full" name="communique_email" >
 
             @error('communique_email')
                 <p class="text-basic_primary_color my-2" >{{$message}}</p>
@@ -19,7 +19,7 @@
 
             <label for="communique_tel" class="my-3 text-lg   font-bold" >Telephone (important) </label>
 
-            <input type="tel" class="rounded w-full" value="{{old('communique_tel',$communique?->pub_tel)}}" placeholder="ex: 918100" name="communique_tel" id="communique_tel"  required>
+            <input type="tel" class="rounded w-full" value="{{old('communique_tel',$communique?->communique_tel)}}" placeholder="ex: 918100" name="communique_tel" id="communique_tel"  required>
 
             @error('communique_tel')
                 <p class="text-basic_primary_color my-2" >{{$message}}</p>

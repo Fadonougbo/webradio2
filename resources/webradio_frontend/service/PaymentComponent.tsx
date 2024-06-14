@@ -73,7 +73,7 @@ define<PaymentModule>({
 				
 			});
 
-			console.log(x[0].open());
+			
 
 			x[0].open();
 		},

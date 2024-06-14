@@ -15,15 +15,14 @@
                             Accueil
                         </a>
                         <menu-deroulant></menu-deroulant>
-                        <a href="{{route('home')}}#actu" class="transition-all font-bold hover:text-basic_primary_color" >Actualités</a>
                         <a href="{{asset('pdf/prog.pdf')}}" class="transition-all font-bold hover:text-basic_primary_color" download="programme.pdf" >
                             Grille des programmes
                         </a>
                         <a href="{{route('grille')}}"  @class(['transition-all font-bold hover:text-basic_primary_color',
                         'decoration-solid underline underline-offset-4 decoration-4 decoration-basic_primary_color'=>request()->routeIs('grille')]) >Grille tarifaire</a>
                         <a href="{{route('home')}}#replay" class="transition-all font-bold hover:text-basic_primary_color hidden xl:block" >Podcast</a>
+
                         @auth
-                        
                             <div class="border-l items-center border-solid hidden border-basic_white_color text-sm xl:flex " >
                                 <a href="/dashboard" class="mx-2 transition-all font-bold hover:text-basic_primary_color" >dashboard</a>
                                 <form action="/logout" method="POST" class=" items-center " >
@@ -39,12 +38,13 @@
                             </div>
                         @endguest
                     </section>
+                  
                     <section class="flex justify-center w-full mt-4" >
                         <online-radio ></online-radio>
                     </section>
             </nav>
 
-            <menu-burger fcsrf='{{csrf_token()}}' fuser_status='{{Auth::check()}}' class="xl:hidden" ></menu-burger>
+            <menu-burger class="xl:hidden" ></menu-burger>
         </div>
   
     </header>

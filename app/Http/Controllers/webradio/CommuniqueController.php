@@ -4,7 +4,9 @@ namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\CreateCommuniqueFormRequest;
+use App\Http\Requests\webradio\UpdateFormRequest;
 use App\Models\webradio\Communique;
+use App\Models\webradio\Servicefile;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -96,19 +98,165 @@ class CommuniqueController extends Controller
         },$communique_files);
 
 
+        //Ajout du path des images dans la base de données
         if(!empty($imagePaths)) {
             $communique->servicefiles()->createMany($imagePaths);
 
-            return redirect()->route('service.payment')->with('created_successfully',
+            return redirect()->route('service.payment')->with('success',
             [
                 'type'=>'communique',
                 'id'=>$communique->id
             ]);
         }
 
-        return  redirect()->route('dashboard')->with('error','Une erreur est survenue, essayer plus tard');
+        return  redirect()->route('dashboard')->with('error','Une erreur est survenue. Veuillez réessayer plus tard.');
 
    
+    }
+
+    public function updateView(Communique $communique) {
+
+        return view('webradio.service.communique.update',[
+            'communique'=>$communique
+        ]);
+    }
+
+    public function update(UpdateFormRequest $request,Communique $communique) {
+        
+        $fields=$request->validated();
+            
+        $response=false;
+
+        if($communique->exists()) {
+            
+            //associate publicite with user
+            $response=$communique->update($fields);
+        }
+
+        $programmeIsDeleted=false;
+
+        //Delete old programme
+        if($response) {
+            $programmeIsDeleted=$communique->programmes()->delete();
+        }
+
+        
+        $programmes=$fields['programmes'];
+
+
+        if($programmeIsDeleted) {
+            
+            $programmeFields=array_map(function($programme) {
+    
+                $programmeField['programme_hour']=$programme['hour'];
+                $programmeField['programme_date']=$programme['date'];
+    
+                return $programmeField;
+    
+            },$programmes); 
+               
+          //Add new programme
+           $communique->programmes()->createMany($programmeFields);
+               
+           
+        }
+        
+        
+        $store_files_directory_name="user.".Auth::id();
+
+
+        //Create directory
+        if( Storage::disk('public')->directoryMissing($store_files_directory_name)) {
+
+            Storage::disk('public')->makeDirectory($store_files_directory_name);
+        }
+
+        
+
+        /**
+         * @var string[] $communique_file
+         */
+        $communique_files=$request->validated("communique_files")??[];
+
+
+        $filePathsFromDB=$communique->servicefiles()->get(['path'])->toArray();
+
+        //Send removed file path
+        //Renvoi les fichiers qui sont dans la base de données et qui sont supprimé par l'utilisateur sur l'interface
+        $invalidePaths=array_filter($filePathsFromDB,function($element) use($communique_files) {
+
+            $path=pathinfo($element['path'],PATHINFO_BASENAME);
+
+            return !in_array($path,$communique_files);
+        });
+        
+        
+        foreach($invalidePaths as $key=>$path) {
+            $file=Servicefile::where('path','=',$path);
+            $paths=$file->get(['path'])->toArray();
+            //Suppression de la DB
+            if($file->exists()) {
+                $file->delete();
+            }
+
+            $localFile=Storage::disk('public');
+
+            //Suppression du fichier sur la disque
+            if($localFile->exists( $paths[$key]['path']) ) {
+
+                $localFile->delete( $paths[$key]['path'] );
+            }
+        }
+
+      
+
+        // Je flat le tableau $filePathsFromDB et je recupere uniquement le nom des fichiers
+        $flat_FilePathsFromDB=array_map(function($element){
+
+            return pathinfo($element['path'],PATHINFO_BASENAME);
+
+        },$filePathsFromDB);
+
+       
+
+        //Renvoi un tableau avec le chemin des nouveaux fichiers a ajouter
+        $newPaths=array_filter($communique_files,function($element) use($flat_FilePathsFromDB) {
+
+            return !in_array($element,$flat_FilePathsFromDB);
+        });
+
+        
+        
+        $imagePaths=array_map(function($path) use($store_files_directory_name,$communique) {
+            
+            /* Move file from temp dir */
+            $res=$this->moveFileFromTempDir($path,$store_files_directory_name,$communique);
+
+            if(is_string($res)) {
+                return ['path'=>$res];
+            }
+
+        },$newPaths);
+
+
+        if(!empty($imagePaths)) {
+            $communique->servicefiles()->createMany($imagePaths);
+
+            
+        }
+
+        return redirect()->route('dashboard')->with('success','La modification a été effectuée avec succès.');
+    }
+
+    public function delete(Communique $communique) {
+
+        $isDeleted=$communique->delete();
+
+        if($isDeleted) {
+            return redirect()->route('dashboard')->with('success','Votre communiqué a été supprimé avec succès.');
+        }
+
+        return redirect()->route('dashboard')->with('error','Une erreur est survenue lors de la suppression. Veuillez réessayer plus tard.');
     }
 
     private function moveFileFromTempDir(string $path,string $store_files_directory_name,Communique $communique):string|false {
@@ -140,8 +288,6 @@ class CommuniqueController extends Controller
         if($disk->missing($path)) {
             return false;
         }
-
-        
 
         $res=$disk->delete($path);
 
@@ -198,6 +344,40 @@ class CommuniqueController extends Controller
        abort_unless($res,500);
 
         return response('');
+    }
+
+    // Send file Info to filePond
+    public function loadFile(Request $request) {
+
+        $type=$request->input('type');
+        $id=(int)$request->input('id');
+
+        $typeExist=in_array($type,['communique']);
+
+        if(!$typeExist) {
+            return response()->json([],headers:['Contente-Type'=>'application/json']);
+        }
+
+        $communique=Communique::find($id);
+
+        $files=$communique->servicefiles->toArray();
+
+        $data=array_map(function($file) {
+            
+            $fileSize=Storage::disk('public')->fileSize($file['path']);
+
+           $arr['source']=pathinfo($file['path'],PATHINFO_BASENAME);
+           $arr['options']['type']='local';
+           $arr['options']['file']['size']=$fileSize;
+           $arr['options']['file']['name']=pathinfo($file['path'],PATHINFO_BASENAME);
+
+           return $arr;
+
+        },$files); 
+         
+      
+
+        return response()->json($data,headers:['Contente-Type'=>'application/json']);
     }
 
     /**

@@ -1,6 +1,6 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
-import type { PropsWithChildren } from "react";
+import { useEffect, useState } from "react";
 
 
  const getActiveElementClass = (path: string) => {
@@ -12,17 +12,37 @@ import type { PropsWithChildren } from "react";
 };
 
 
-type MenuType = PropsWithChildren<{
-	csrf: string;
-	user_status: string;
-}>;
 
-export const Menu = ({ csrf, user_status }: MenuType) => {
+
+export const Menu = () => {
 	
-  // biome-ignore lint/style/useNumberNamespace: <explanation>
-	  const userExist=user_status!=='' && parseInt(user_status)===1
 
-   
+	  const [token, setToken] = useState<string>("");
+
+	  const [user,setUser]=useState<boolean>(false)
+
+	  useEffect(()=> {
+
+		const csrfToken = document
+		?.querySelector('meta[name="csrf-token"]')
+		?.getAttribute("content");
+
+		if (csrfToken) {
+			setToken(() => csrfToken);
+		}
+
+		fetch('/auth/user',{
+			method:'POST',
+			headers: {
+				"X-CSRF-TOKEN": token,
+			}
+		}).then((res)=>res.json())
+		  .then((data:{user:boolean})=>{
+
+				setUser(()=>data.user);
+		  });
+
+	  },[token])
 
 	return (
 		<Sheet>
@@ -33,11 +53,11 @@ export const Menu = ({ csrf, user_status }: MenuType) => {
 				<nav className="flex flex-col justify-around items-center w-full h-full text-basic_white_color text-xl uppercase">
 					<div className="items-center border-basic_white_color text-lg">
             {
-              userExist?
+              user?
 			  <div className="flex flex-wrap justify-center items-center w-full" >
 				<a href="/dashboard" className="mx-2 font-bold hover:text-basic_primary_color transition-all" >dashboard</a>
 				<form action="/logout" method="POST" >
-					<input type="hidden" name="_token" value={csrf}  />
+					<input type="hidden" name="_token" value={token}  />
 					<button type="submit" className="bg-basic_primary_color p-1 rounded font-bold" >
 					Deconnexion
 					</button>
@@ -60,7 +80,7 @@ export const Menu = ({ csrf, user_status }: MenuType) => {
               </>
 
             }
-						
+		
 					</div>
 
 					<a href="/" className={`${getActiveElementClass("/")}`}>
@@ -70,13 +90,6 @@ export const Menu = ({ csrf, user_status }: MenuType) => {
 					{/* affiche une page qui liste les services */}
 					<a href="/service" className={`${getActiveElementClass("/service")}`}>
 						Nos Services
-					</a>
-
-					<a
-						href="/#actu"
-						className="p-2 w-full font-bold hover:text-basic_primary_color transition-all hover:translate-x-4"
-					>
-						Actualités
 					</a>
 
 					<a

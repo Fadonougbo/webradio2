@@ -24,7 +24,7 @@ import { forwardRef } from "react";
 
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Communiqué",
+    title: "Diffusion de Communiqué",
     href: "/service/communique",
     description:
       "",
@@ -40,7 +40,7 @@ export function MenuDeroulant() {
         <NavigationMenuItem className="">
           <NavigationMenuTrigger className={getActiveElementClass(['/service/publicite','/service/communique','/service'])} >Nos services</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="gap-3 grid p-4">{/* gap-3 grid md:grid-cols-2 p-4 w-[400px] md:w-[500px] lg:w-[600px] */}
+            <ul className="gap-3 grid p-4 w-[300px]">{/* gap-3 grid md:grid-cols-2 p-4 w-[400px] md:w-[500px] lg:w-[600px] */}
               {components.map((component) => (
                 <ListItem
                   key={component.title}

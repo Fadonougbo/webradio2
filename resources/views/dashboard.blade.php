@@ -1,11 +1,5 @@
 <x-app-layout>
 
-    {{--<x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }} 
-        </h2>
-    </x-slot>--}}
-
 
     <div class="py-12 ">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -15,15 +9,16 @@
         </div>
     </div>
 
-    @session('success_update')
-            <message-toast type="success" msg="Les modifications ont été prises en compte" delay="3000" ></message-toast>
+
+    @session('success')
+            <message-toast type="success" msg="{{session('success')}}" delay="3000" ></message-toast>
     @endsession
 
-   <div class="w-full overflow-x-scroll sm:overflow-x-hidden p-4" >
+    @session('error')
+            <message-toast type="error" msg="{{session('error')}}" delay="3000" ></message-toast>
+    @endsession
 
-        @session('is_delete')
-            <message-toast type="success" msg="Suppression reussie" delay="3000" ></message-toast>
-        @endsession
+   <div class="w-full overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
 
         @session('paiment_success')
             <message-toast type="success" msg="Paiement effectiue avec success" delay="3000" ></message-toast>
@@ -32,8 +27,8 @@
         <h3 class="text-xl flex items-center font-semibold" > <i data-lucide="arrow-big-right" class="size-8" ></i> Communiqué </h3>
 
         <table class="w-full my-8 border-collapse " >
-            <thead class="bg-blue-600 text-basic_white_color " >
-                <tr>
+            <thead class="bg-blue-600  text-basic_white_color " >
+                <tr class="" >
                     <th class=" uppercase  p-2  text-center text-lg" >ID</th>
                     <th class=" uppercase  p-2  text-center text-lg" >programme de diffusion</th>
                     <th class=" uppercase  p-2  text-center text-lg" >Information</th>
@@ -82,11 +77,11 @@
 
                         </td>
                         
-                        <td class="border-solid  p-2 border-black text-center text-lg items-center lg:flex  " >
+                        <td class="border-solid  p-2 border-black text-center text-lg items-center justify-center lg:flex  " >
 
-                            <a href="" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifier</a>
+                            <a href="{{route('service.communique.update.view',['communique'=>$communique])}}" class="bg-green-900 my-4  text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifier</a>
 
-                            <form action="" method="POST" >
+                            <form action="{{route('service.communique.delete',['communique'=>$communique])}}" method="POST" >
                                 @csrf 
                                 @method('delete')
                                 <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimer</button>

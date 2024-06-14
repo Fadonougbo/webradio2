@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+//Route utiliser en ajax pour envoyer les informations de l'utilisateur au front
+Route::post('/auth/user',[HomeController::class,'getUserData'])->name('auth.data');
 
 Route::get('/programme',[ProgrammeController::class,'index'])->name('programme');
 
@@ -34,6 +36,8 @@ Route::get('/service',[ServiceController::class,'index'])->name('service.list');
 
 Route::post('/process',[CommuniqueController::class,'process'])->name('communique.create.process');
 Route::delete('/revert',[CommuniqueController::class,'revert'])->name('communique.create.revert');
+// Pour afficher les fichiers deja uploader par l'utilisateur
+Route::post('/load/file',[CommuniqueController::class,'loadFile'])->name('communique.update.load.file');
 
 
 
@@ -44,8 +48,16 @@ Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->gr
 
     /* communiqué */
     Route::get('/communique',[CommuniqueController::class,'index'])->name('communique');
+
     Route::post('/communique',[CommuniqueController::class,'create'])->name('communique.create');
-    Route::post('/communinique/htmx',[CommuniqueController::class,'getHtmxData'])->name('communique.htmx');
+
+    Route::delete('/communique/delete/{communique}',[CommuniqueController::class,'delete'])->name('communique.delete');
+
+    Route::get('/communique/update/{communique}',[CommuniqueController::class,'updateView'])->name('communique.update.view');
+
+    Route::patch('/communique/update/{communique}',[CommuniqueController::class,'update'])->name('communique.update');
+
+    Route::match(['POST','PATCH'],'/communinique/htmx',[CommuniqueController::class,'getHtmxData'])->name('communique.htmx');
 
 
     /* Payment */

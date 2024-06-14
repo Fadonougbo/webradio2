@@ -15,19 +15,20 @@
 
             @endphp
             <section class="flex flex-col" >
-                <span class="text-black text-2xl underline" >Fichier</span>
-                <ul>
+                <span class="text-black text-2xl underline my-2" >Fichier</span>
+                <ol>
                     @foreach ($files as $key=>$file)
                         @php
                             $path='storage/'. $file->path
                         @endphp
-                        <li class="my-2" >
-                            <a class="text-blue-900 " href="{{asset($path)}}" download="{{$file->path}}" >
-                            {{$key+1}}. Ouvrire le fichier
+                        <li class="my-1 list-decimal list-outside text-start" >
+                            <a class="text-blue-900 text-sm" href="{{asset($path)}}" download="{{$file->path}}" >
+                            <span class="text-xl" >&RightArrowBar;</span>  {{pathinfo($file->path,PATHINFO_BASENAME)}}
+                            
                             </a>
                         </li>
                     @endforeach 
-                </ul>
+                </ol>
                 
             </section>
             <section class="my-8" >

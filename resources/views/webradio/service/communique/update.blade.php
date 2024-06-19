@@ -1,6 +1,6 @@
 @extends('webradio.service.communique.base')
 
-@section('title',"Modifier votre communiqué")
+@section('title',"Modifier les informations de votre communiqué")
 
 @section('content')
     

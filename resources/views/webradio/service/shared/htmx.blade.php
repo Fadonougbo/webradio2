@@ -24,12 +24,8 @@
     $element_email=$communique->communique_email;
 
     $element_tel=$communique->communique_tel;
-                
-    $programesCount=$communique->programmes->count();
-    
-    $price=App\Models\Service::where('name','=','communique')->get()->first()->price;
 
-    $element_amount=$price*$programesCount;
+    $element_amount=(new App\Models\Service())->getAmount('communique',$communique->id);
     
  }
 
@@ -44,10 +40,11 @@
                     @method('patch')
                     <input type="hidden" name="id" value="{{$element_id}}">
                     <input type="hidden" name="type" value="{{$type}}">
+                    <input type="hidden" name="price" value="{{$element_amount}}">
                 </form>
                 
                 <payment-module 
-                    id="{{$element_id}}" 
+                    identifiant="{{$element_id}}" 
                     demande_type="{{$type}}" 
                     on_error_url="{{route('dashboard')}}" 
                     amount="{{$element_amount}}" 
@@ -58,11 +55,13 @@
                 >
                 </payment-module>
             </div>
-            
+        @else
+
+            <span id="htmx_target" ></span>
         
         @endif
         
 
 @else
-    <span></span>
+    <span id="htmx_target" ></span>
 @endif

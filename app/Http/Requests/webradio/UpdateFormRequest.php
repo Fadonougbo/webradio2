@@ -50,7 +50,7 @@ class UpdateFormRequest extends FormRequest
             'communique_files'=>['required','array','min:1','max:2'],
             'communique_files.*'=>['string'],
 
-            'communique_details'=>['string','min:4','max:200','required']
+            'communique_details'=>['string','min:4','max:300','required']
         ];
     }
 }

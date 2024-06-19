@@ -19,31 +19,35 @@ class PaymentController extends Controller
 
         $request->validate([
             'id'=>['required','string','exists:communiques,id'],
-            'type'=>['required','string','exists:services,name']
+            'type'=>['required','string','exists:services,name'],
+            'price'=>['required','integer']
         ]);
 
         
 
         $type=$request->input('type');
         $id=(int)$request->input('id');
+        $price=(int)$request->input('price');
 
         $res=false;
         if($type==='communique') {
             
             $communique=Communique::find($id);
 
-            $communique->isPaid=true; 
+            $communique->isPaid=true;
+            
+            $communique->price=$price;
 
             $res=$communique->save();
         }
         
-        return $res?redirect()->route('dashboard')->with('payment_success',true):redirect()->route('dashboard');
+        return $res?redirect()->route('dashboard')->with('success','Paiement effectué avec succès'):redirect()->route('dashboard');
 
     }
 
-    public function oldPaymentValidation(Request $request,string $id, string $type) {
+    public function oldPaymentValidation(string $id, string $type) {
         
-        return redirect()->route('service.payment')->with('created_successfully',
+        return redirect()->route('service.payment')->with('success',
         [
             'type'=>$type,
             'id'=>$id

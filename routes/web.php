@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/',[HomeController::class,'index'])->name('home');
+
 //Route utiliser en ajax pour envoyer les informations de l'utilisateur au front
 Route::post('/auth/user',[HomeController::class,'getUserData'])->name('auth.data');
 
@@ -68,14 +69,7 @@ Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->gr
     //Pour un payment apres enregistrement
     Route::get('/payment/old/payment/validation/{id}/{type}',[PaymentController::class,'oldPaymentValidation'])->name('payment.old.payment.validation');
     
-    /* Pub */
-
-    Route::get('/paiment',[PaimentController::class,'paiment'])->name('paiment');
-
-    Route::get('/paiment/redirect/{publicite}',[PaimentController::class,'redirect'])->name('paiment.redirect');
-
-    Route::patch('/paiment',[PaimentController::class,'paimentValidation'])->name('paiment_validation');
-
+   
 
 });
 
@@ -85,43 +79,18 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() 
 
     Route::get('/',[DashboadController::class,'index'])->name('dashboard');
 
+    Route::get('/administration',[DashboadController::class,'administration'])->name('dashboard.administration')->can('show_administration');
 
-    Route::get('/validation', function () {
+    Route::patch('/administration/action',[DashboadController::class,'action'])->name('dashboard.administration.action')->can('show_administration');
 
-        /* $publicites=Publicite::orderByDesc('id')->get();
-        $adr=AvisDeRecherche::orderByDesc('id')->get();
+    Route::get('/administration',[DashboadController::class,'administration'])->name('dashboard.administration')->can('show_administration');
 
-        return view('webradio.service.admin.admin',[
-            'publicites'=>$publicites,
-            'adr'=>$adr
-        ]); */
-        
-    })->name('dashboard.validation')->can('show_superadmin_dashboard');
+    Route::get('/administration/role',[DashboadController::class,'index'])->name('dashboard.gestion.role')->can('show_administration');
 
-    Route::POST('/validation', function (Request $request) {
+    Route::get('/administration/configuration',[DashboadController::class,'configuration'])->name('dashboard.configuration')->can('show_administration');
 
-       /* $type=$request->input('type');
-       $status=$request->input('status');
+    Route::patch('/administration/configuration/update/price',[DashboadController::class,'price'])->name('dashboard.configuration.price')->can('show_administration');
 
-       if($type==='publicite') {
-
-            foreach($status as $key=>$s) {
-                
-                Publicite::where('id','=',$key)->update(['status'=>$s]);
-                
-            }
-
-       }else if($type==='adr') {
-            foreach($status as $key=>$s) {
-                    
-                AvisDeRecherche::where('id','=',$key)->update(['status'=>$s]);
-                
-            }
-       }
-        
-       return back()->with('success',''); */
-
-    })->name('dashboard.validation.update')->can('show_superadmin_dashboard');
 
 });
 

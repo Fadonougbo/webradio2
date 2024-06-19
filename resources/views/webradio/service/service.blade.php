@@ -4,16 +4,6 @@
 
 @section('content')
     
-<!-- 
-        
-        <div class=" w-full sm:items-center sm:flex sm:flex-col " >
-            <ul class="list-disc p-6 text-xl sm:w-1/2 " >
-                <li class="my-4 hover:text-basic_primary_color uppercase cursor-pointer" >
-                    <a href="{{route('service.communique')}}">Diffusion de communiqués</a>
-                </li>
-                
-            </ul>
-        </div> -->
 
     <main class="p-4 my-24 min-h-screen" >
        

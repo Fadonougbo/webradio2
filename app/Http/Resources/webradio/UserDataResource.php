@@ -15,7 +15,7 @@ class UserDataResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        dump($request->user('api'));
+        //dump($request->user('api'));
         
         return [
             'user'=>$request

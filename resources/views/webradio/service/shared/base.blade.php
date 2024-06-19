@@ -6,10 +6,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
     @viteReactRefresh
-    @vite(['resources/css/app.css','resources/ts/index.ts',"resources/ts/htmx.ts",'resources/webradio_frontend/service/PaymentComponent.tsx'])
+    @vite(['resources/ts/index.ts',"resources/ts/htmx.ts",'resources/webradio_frontend/service/PaymentComponent.tsx','resources/css/loader.css'])
 </head>
 <body>
-        
+
     @yield('content')
 
 </body>

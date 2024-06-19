@@ -10,7 +10,7 @@ class Communique extends Model
 {
     use HasFactory;
 
-    public $fillable=['communique_email','communique_tel','communique_tel','communique_details'];
+    public $fillable=['communique_email','communique_tel','communique_tel','communique_details','price'];
 
     public function user() {
 

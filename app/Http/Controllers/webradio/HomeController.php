@@ -4,7 +4,6 @@ namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
 use Auth;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -13,7 +12,7 @@ class HomeController extends Controller
     }
 
 
-    //Route utiliser avec ajax
+    //Route utiliser avec ajax pour envoyer les informations de l'utilisateur
      public function getUserData() {
 
         return response()->json(['user'=>Auth::check()])->header('Content-Type','application/json');

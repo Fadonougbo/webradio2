@@ -1,0 +1,35 @@
+
+/* Loader pour les procedures de payment */
+.loader {
+    height: 20rem;
+    width: 20rem;
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    animation: loader_animation 1.2s infinite linear;
+}
+
+@keyframes loader_animation {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.htmx-indicator{
+    display:none;
+  }
+
+  .htmx-request + .parent {
+    display: none;
+  }
+
+  .htmx-request + .spiner {
+    display: none;
+  }
+
+  .htmx-request .htmx-indicator{
+      display:inline;
+  }
+  .htmx-request.htmx-indicator{
+      display:inline;
+  }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\webradio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\CreateCommuniqueFormRequest;
 use App\Http\Requests\webradio\UpdateFormRequest;
+use App\Models\Service;
 use App\Models\webradio\Communique;
 use App\Models\webradio\Servicefile;
 use Illuminate\Http\Request;
@@ -36,9 +37,9 @@ class CommuniqueController extends Controller
     }
 
     public function create(CreateCommuniqueFormRequest $request) {
-
+     
         $fields=$request->validated();
-            
+       
     
         //create publicite
         $communique=Communique::create($fields);
@@ -53,7 +54,9 @@ class CommuniqueController extends Controller
         
         $programmes=$fields['programmes'];
 
+        
 
+        $programmeIsCreated=false;
         if($response) {
             
             $programmeFields=array_map(function($programme) {
@@ -66,10 +69,11 @@ class CommuniqueController extends Controller
             },$programmes); 
                
           //Inserte date and hour in programmes table
-           $communique->programmes()->createMany($programmeFields);
+           $programmeIsCreated=$communique->programmes()->createMany($programmeFields);
                
 
         }
+
 
 
         $store_files_directory_name="user.".Auth::id();

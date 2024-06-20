@@ -5,7 +5,9 @@ namespace App\Http\Controllers\webradio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\AdminActionRequest;
 use App\Http\Requests\webradio\ChangePriceRequest;
+use App\Http\Requests\webradio\ChangeRoleRequest;
 use App\Models\Service;
+use App\Models\User;
 use App\Models\webradio\Communique;
 use Auth;
 use Illuminate\Http\Request;
@@ -41,7 +43,7 @@ class DashboadController extends Controller
         $status=$request->validated('status');
         $communiqueIds=array_keys($status);
   
-        $response=Communique::findMany($communiqueIds)->each(function(Communique $communique,int $k) use($status) {
+        Communique::findMany($communiqueIds)->each(function(Communique $communique,int $k) use($status) {
 
             $s=$status[$communique->id];
         
@@ -72,8 +74,36 @@ class DashboadController extends Controller
             ]);
         }
 
-        return $res? redirect()->route('dashboard.configuration')->with('success','La modification a été effectuée avec succès.'):redirect()->route('dashboard.configuration')->with('error','Une erreur est survenue lors de la modification. Veuillez réessayer plus tard.');
+        return $res? redirect()->route('dashboard.configuration')->with('success','La modification a été effectuée avec succès.'):redirect()->route('dashboard.configuration')->with('error','Une erreur est survenue lors de la modification. Veuillez réessayer ultérieurement.');
     }
+
+    public function role(ChangeRoleRequest $request,User $user) {
+        
+
+        $user->role=$request->validated('role');
+        
+
+        $res=$user->save();
+        
+        return $res?redirect()->route('dashboard.configuration')->with('success','Le rôle a été changé avec succès.'):redirect()->route('dashboard.configuration')->with('error',"Le rôle n'a pas été changé ");
+    }
+
+
+    /**
+     * Pour la gestion des requetes avec htmx
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function getHtmxData(Request $request) {
+        $isHtmxRequest=$request->header('hx-request')==='true';
+
+        return view('htmx',
+        [
+            'isHtmxRequest'=>$isHtmxRequest
+        ]);
+    }
+
 
 
 }

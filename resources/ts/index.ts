@@ -1,15 +1,19 @@
 import {
 	ArrowBigRight,
+	AtSign,
+	CalendarDays,
 	CirclePlus,
 	CircleUserRound,
 	Clock,
 	Facebook,
+	File,
 	Info,
 	LoaderCircle,
 	Mail,
 	Phone,
+	User,
 	Youtube,
-	createIcons,
+	createIcons
 } from "lucide";
 
 
@@ -26,5 +30,9 @@ createIcons({
 		ArrowBigRight,
 		CirclePlus,
 		LoaderCircle,
+		User,
+		AtSign,
+		File,
+		CalendarDays
 	},
 });

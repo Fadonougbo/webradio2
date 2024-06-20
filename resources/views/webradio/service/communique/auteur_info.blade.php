@@ -19,10 +19,20 @@
             type="button"  >✕</button>  <!-- type="button" est ajouté pour ne pas déclencher la soumission du formulaire -->
         </form>
         
-        <ul class="text-black" >
-            <li class="capitalize text-start" >{{auth()->user()->last_name}} {{auth()->user()->first_name}}</li>
-            <li class="text-start" ><a href="mailto:{{$communique->communique_email}}">{{$communique->communique_email}}</a> </li>
-            <li class="text-start" >{{$communique->communique_tel}}</li>
+        <ul class="text-black space-y-3" >
+            <li class="capitalize text-start flex items-center" >
+                <i data-lucide="user" class="size-8 mr-4" ></i> 
+                {{auth()->user()->last_name}} {{auth()->user()->first_name}}
+            </li>
+
+            <li class="text-start flex items-center" >
+                <i data-lucide="at-sign" class="size-8 mr-4" ></i>
+                <a href="mailto:{{$communique->communique_email}}" class="text-blue-500 underline">{{$communique->communique_email}}</a> 
+            </li>
+            <li class="text-start flex items-center" >
+                 <i data-lucide="phone" class="size-8 mr-4" ></i>
+                {{$communique->communique_tel}}
+            </li>
         </ul>
         
     </div>

@@ -27,15 +27,19 @@
                             Administration
                         </x-nav-link>
 
-                        <x-nav-link class="text-white text-xl" :href="route('dashboard.gestion.role')" :active="request()->routeIs('dashboard.gestion.role')">
-                                Gestion des roles
+                        <x-nav-link class="text-white text-xl" :href="route('dashboard.blog')" :active="request()->routeIs('dashboard.blog')">
+                            Écrire un article
                         </x-nav-link>
+                    @endcan
                     
-                        <x-nav-link class="text-white text-xl hidden lg:flex" :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
+                    @can('show_superadmin_interface')
+                         <x-nav-link class="text-white text-xl hidden lg:flex " :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
                                 Configuration
                         </x-nav-link>
-
                     @endcan
+                       
+
+                    
                     
                 </div>
             </div>
@@ -101,21 +105,26 @@
             <x-responsive-nav-link class="sm:hidden" :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
             @can('show_administration')
 
-            <x-responsive-nav-link class="sm:hidden" :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
+            <x-responsive-nav-link  :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
                 Administration
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link class="sm:hidden" :href="route('dashboard.gestion.role')" :active="request()->routeIs('dashboard.gestion.role')">
-                Gestion des roles
+            <x-responsive-nav-link  :href="route('dashboard.blog')" :active="request()->routeIs('dashboard.blog')">
+                Écrire un article
             </x-responsive-nav-link>
-
-            <x-responsive-nav-link :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
-                Configuration
-            </x-responsive-nav-link>
-
             @endcan
+
+            @can('show_superadmin_interface')
+                <x-responsive-nav-link :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
+                Configuration
+                </x-responsive-nav-link>
+            @endcan
+            
+
+            
         </div>
 
         <!-- Responsive Settings Options -->

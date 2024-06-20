@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\webradio\BlogController;
 use App\Http\Controllers\webradio\CommuniqueController;
 use App\Http\Controllers\webradio\DashboadController;
 use App\Http\Controllers\webradio\HomeController;
@@ -58,14 +59,18 @@ Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->gr
 
     Route::patch('/communique/update/{communique}',[CommuniqueController::class,'update'])->name('communique.update');
 
+    //htmx route
     Route::match(['POST','PATCH'],'/communinique/htmx',[CommuniqueController::class,'getHtmxData'])->name('communique.htmx');
 
 
     /* Payment */
     Route::get('/payment',[PaymentController::class,'index'])->name('payment');
+
     Route::post('/payment/htmx/{id}/{type}',[PaymentController::class,'getHtmxData'])->name('payment.htmx');
+
     //Pour un payment direct
     Route::patch('/payment/validation',[PaymentController::class,'validation'])->name('payment.validation');
+
     //Pour un payment apres enregistrement
     Route::get('/payment/old/payment/validation/{id}/{type}',[PaymentController::class,'oldPaymentValidation'])->name('payment.old.payment.validation');
     
@@ -83,13 +88,19 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() 
 
     Route::patch('/administration/action',[DashboadController::class,'action'])->name('dashboard.administration.action')->can('show_administration');
 
-    Route::get('/administration',[DashboadController::class,'administration'])->name('dashboard.administration')->can('show_administration');
+  /*   Route::get('/administration',[DashboadController::class,'administration'])->name('dashboard.administration')->can('show_administration');
+ */
 
-    Route::get('/administration/role',[DashboadController::class,'index'])->name('dashboard.gestion.role')->can('show_administration');
+    Route::get('/administration/configuration',[DashboadController::class,'configuration'])->name('dashboard.configuration')->can('show_superadmin_interface');
 
-    Route::get('/administration/configuration',[DashboadController::class,'configuration'])->name('dashboard.configuration')->can('show_administration');
+    Route::patch('/administration/configuration/update/price',[DashboadController::class,'price'])->name('dashboard.configuration.price')->can('show_superadmin_interface');
 
-    Route::patch('/administration/configuration/update/price',[DashboadController::class,'price'])->name('dashboard.configuration.price')->can('show_administration');
+
+    Route::post('/administration/configuration/update/role/htmx',[DashboadController::class,'getHtmxData'])->name('dashboard.configuration.role.htmx')->can('show_superadmin_interface');
+
+    Route::patch('/administration/configuration/update/role/{user}',[DashboadController::class,'role'])->name('dashboard.configuration.role')->can('show_superadmin_interface');
+
+    Route::get('/administration/create/blog',[BlogController::class,'create'])->name('dashboard.blog')->can('show_administration');
 
 
 });

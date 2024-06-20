@@ -13,7 +13,7 @@
 
         <!-- Scripts -->
         @viteReactRefresh
-        @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts'])
+        @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts','resources/ts/htmx.ts','resources/webradio_frontend/shared/DeleteButton.ts'])
         
     </head>
     <body class="font-sans antialiased">

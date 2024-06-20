@@ -87,7 +87,7 @@
                                     @if ($communique->communique_status==='broadcast_completed')
                                         <span class="text-green-600 block w-96" >La diffusion de ce communiqué sur la période choisie à été éffectué</span>
                                     @endif
-                                    <button type="submit" class="bg-red-800 my-6 text-basic_white_color p-1 rounded" > Supprimer</button>
+                                    <delete-button></delete-button>
                                 </form>
                             @endif
 

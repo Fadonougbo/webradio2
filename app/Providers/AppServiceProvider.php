@@ -23,7 +23,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('show_administration', function (User $user) {
 
-            return in_array($user->role,['superadmin','admin']);
+            return in_array($user->role,['superadmin','admin','boss']);
+        });
+
+        Gate::define('show_superadmin_interface', function (User $user) {
+
+            return in_array($user->role,['superadmin','boss']);
         });
     }
 }

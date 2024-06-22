@@ -10,67 +10,58 @@
             <message-toast type="error" msg="{{session('error')}}" delay="3000" ></message-toast>
     @endsession
 
-    <div>
-        <form action="" >
-                <section class="flex flex-col w-full items-center" >
-                        <div class="flex flex-col my-3 w-[90%] md:w-3/4 lg:w-1/2 " >
-                                <label for="article_title" class="my-3 text-xl   font-bold" >Titre de l'article </label>
-                                <input type="text" id="article_title" value="{{old('article_title')}}" class="rounded w-full" name="article_title" >
-                                @error('article_title')
-                                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                                @enderror
-                        </div>
-                        <div class="flex flex-col my-3 w-[90%] md:w-3/4 lg:w-1/2 " >
-                                <label for="article_slug" class="my-3 text-xl   font-bold" >Slug de l'article </label>
-                                <input type="text" id="article_slug" value="{{old('article_slug')}}" class="rounded w-full" name="article_slug" >
-                                @error('article_slug')
-                                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                                @enderror
-                        </div>
-                        <div class="flex flex-col my-3 w-[90%] md:w-3/4 lg:w-1/2 " >
-                                <label for="article_status" class="my-3 text-xl   font-bold" >Mettre en ligne ? </label>
-                
-                                <input type="checkbox" class="checkbox checkbox-success checkbox-lg border-2" id="article_status" value="{{old('article_status')}}" name="article_status" checked/>
+    <h3 class="text-xl mt-4 flex items-center font-semibold" > 
+        <i data-lucide="arrow-big-right" class="size-8" ></i> Articles de blog 
+        <a href="{{route('dashboard.blog.create.article')}}" class="mx-6 text-lg text-blue-800 underline" >Créer un article de blog</a>
+    </h3>
+    
+    <h3 class="text-xl mt-4 flex items-center font-semibold" > 
+        <i data-lucide="arrow-big-right" class="size-8" ></i> Categories 
+        <a href="{{route('dashboard.configuration')}}#create_categorie" class="mx-6 text-lg text-blue-800 underline" >Créer une categorie</a>
+    </h3>
 
-                                @error('article_status')
-                                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                                @enderror
-                        </div>
-                        <div class="flex flex-col my-3 w-[90%] md:w-3/4 lg:w-1/2 " >
-                                <label for="article_image" class="my-3 text-xl   font-bold" >Image principale </label>
-                                <input type="file" id="article_image" value="{{old('article_image')}}" class="rounded w-full" name="article_image" >
-                                @error('article_image')
-                                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                                @enderror
-                        </div>
+    <div class="w-full flex flex-col items-center overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
 
-                        <div class="flex flex-col my-3 w-[90%] md:w-3/4 lg:w-1/2 " >
-                                <label for="categories" class="my-3 text-xl   font-bold" >Categorie</label>
-                
-                                <select name="categories" id="categories" multiple>
-                                        <option value="sport">sport</option>
-                                        <option value="science">science</option>
-                                </select>
-                
-                                @error('categories')
-                                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                                @enderror
-                        </div>
+        <table class="w-full my-4 border-collapse  sm:w-1/2" >
+            <thead class="bg-blue-600  text-basic_white_color " >
+                <tr class="" >
+                    <th class=" uppercase  p-2  text-center text-lg" >Nom</th>
+                    <th class=" uppercase  p-2  text-center text-lg" >Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-gray-900" >
+                @forelse ($categories as $categorie )
 
-                        <div class="flex flex-col my-3 w-[90%] md:w-3/4 lg:w-1/2 " >
-                                <label for="contenu" class="my-3 text-xl   font-bold" >Contenu</label>
-                
-                
-                
-                                @error('contenu')
-                                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                                @enderror
-                        </div>
-                
-                
-                </section>
-        </form>
-    </div>
+                    <tr class="border-solid border-b-4 p-2 border-blue-400 text-center text-basic_white_color text-lg h-full" >
+
+                        <td class="border-solid  p-2 border-black  text-center text-xl" >
+                                
+                            {{$categorie->name}}
+                        </td>
+                        
+                        <td class="border-solid space-x-4 p-2 border-black text-center text-lg items-center justify-center flex " >
+                                <a href="{{route('dashboard.update.categorie',['categorie'=>$categorie])}}" class="bg-green-900 my-4   text-basic_white_color px-4 py-1 rounded lg:mx-4" >Modifier</a>
+
+                                <form action="{{route('dashboard.delete.categorie',['categorie'=>$categorie])}}" method="POST" >
+                                        @csrf 
+                                        @method('delete')
+                                        <delete-button></delete-button>
+                                </form>
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="6" class="py-4 text-2xl capitalize font-bold bg-basic_white_color  text-center" >vide</td>
+                    </tr>
+
+                @endforelse
+               
+            </tbody>
+        </table>
+   </div>
     
     
 

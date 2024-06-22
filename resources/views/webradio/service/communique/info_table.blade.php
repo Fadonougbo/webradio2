@@ -19,9 +19,11 @@
                     <tr>
                         <td class="border-solid border-2 p-2  border-black" >
             
-                            <ul class="list-disc list-inside" >
-                                <li class="my-1" >5000f </li>
-                            </ul>
+                            @php
+                                $price=$communique->getPrice()
+                                
+                            @endphp
+                            <span class="my-1 whitespace-nowrap" > {{$price}} fcfa </span>
                         </td>
                         <td class="border-solid border-2 p-2 border-black text-center text-lg" >- </td>
                         <td class="border-solid border-2 p-2 border-black text-center text-lg" >1</td>

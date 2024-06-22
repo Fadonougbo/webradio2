@@ -2,15 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\webradio\BlogController;
+use App\Http\Controllers\webradio\CategorieController;
 use App\Http\Controllers\webradio\CommuniqueController;
 use App\Http\Controllers\webradio\DashboadController;
 use App\Http\Controllers\webradio\HomeController;
-use App\Http\Controllers\webradio\PaimentController;
 use App\Http\Controllers\webradio\PaymentController;
 use App\Http\Controllers\webradio\ProgrammeController;
-use App\Http\Controllers\webradio\PubliciteController;
 use App\Http\Controllers\webradio\ServiceController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -84,23 +82,46 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() 
 
     Route::get('/',[DashboadController::class,'index'])->name('dashboard');
 
+    //Administration home
     Route::get('/administration',[DashboadController::class,'administration'])->name('dashboard.administration')->can('show_administration');
 
+    //Administration action
     Route::patch('/administration/action',[DashboadController::class,'action'])->name('dashboard.administration.action')->can('show_administration');
 
-  /*   Route::get('/administration',[DashboadController::class,'administration'])->name('dashboard.administration')->can('show_administration');
- */
 
+
+    //Page configuration
     Route::get('/administration/configuration',[DashboadController::class,'configuration'])->name('dashboard.configuration')->can('show_superadmin_interface');
 
     Route::patch('/administration/configuration/update/price',[DashboadController::class,'price'])->name('dashboard.configuration.price')->can('show_superadmin_interface');
 
-
+    //Pour les requetes HTMX 
+    /* Pour changer les roles */
     Route::post('/administration/configuration/update/role/htmx',[DashboadController::class,'getHtmxData'])->name('dashboard.configuration.role.htmx')->can('show_superadmin_interface');
 
+    /* Pour changer les roles */
     Route::patch('/administration/configuration/update/role/{user}',[DashboadController::class,'role'])->name('dashboard.configuration.role')->can('show_superadmin_interface');
 
-    Route::get('/administration/create/blog',[BlogController::class,'create'])->name('dashboard.blog')->can('show_administration');
+    /* Creer une categorie */
+    Route::post('/administration/configuration/create/categorie',[CategorieController::class,'create'])->name('dashboard.configuration.create.categorie')->can('show_administration');
+
+    /* supprimer une categorie */
+    Route::delete('/administration/configuration/delete/categorie/{categorie}',[CategorieController::class,'delete'])->name('dashboard.delete.categorie')->can('show_administration');
+
+    /* Modification d'une categorie */
+    Route::get('/administration/configuration/update/categorie/{categorie}',[CategorieController::class,'update'])->name('dashboard.update.categorie')->can('show_administration');
+
+    Route::patch('/administration/configuration/update/categorie/{categorie}',[CategorieController::class,'saveUpdate'])->name('dashboard.update.categorie')->can('show_administration');
+
+    //Page de Gestion des categories et des article
+    Route::get('/administration/blog',[BlogController::class,'index'])->name('dashboard.blog.index')->can('show_administration');
+
+    //Page pour Creer un article
+    Route::get('/administration/create/article',[BlogController::class,'create'])->name('dashboard.blog.create.article')->can('show_administration');
+
+    Route::post('/administration/create/article',[BlogController::class,'store'])->name('dashboard.blog.store.article')->can('show_administration');
+
+    Route::post('/administration/blog/upload/file',[BlogController::class,'uploadFile'])->name('dashboard.blog.upload.file')->can('show_administration');
 
 
 });

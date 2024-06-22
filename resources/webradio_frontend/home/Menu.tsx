@@ -38,7 +38,6 @@ export const Menu = () => {
 			}
 		}).then((res)=>res.json())
 		  .then((data:{user:boolean})=>{
-
 				setUser(()=>data.user);
 		  });
 

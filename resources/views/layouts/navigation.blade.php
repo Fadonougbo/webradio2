@@ -27,8 +27,8 @@
                             Administration
                         </x-nav-link>
 
-                        <x-nav-link class="text-white text-xl" :href="route('dashboard.blog')" :active="request()->routeIs('dashboard.blog')">
-                            Écrire un article
+                        <x-nav-link class="text-white text-xl" :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
+                            Blog administration
                         </x-nav-link>
                     @endcan
                     
@@ -112,8 +112,8 @@
                 Administration
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link  :href="route('dashboard.blog')" :active="request()->routeIs('dashboard.blog')">
-                Écrire un article
+            <x-responsive-nav-link  :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
+            Blog administration
             </x-responsive-nav-link>
             @endcan
 

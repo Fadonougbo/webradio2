@@ -2,6 +2,7 @@
 
 namespace App\Models\webradio;
 
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,5 +24,11 @@ class Communique extends Model
 
     public function servicefiles() {
         return $this->hasMany(Servicefile::class);
+    }
+
+    public function getPrice():int {
+        $price=Service::where('name','=','communique')->get()->first()->price;
+
+        return $price;
     }
 }

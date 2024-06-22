@@ -12,7 +12,6 @@
     "resources/ts/htmx.ts",
     "resources/webradio_frontend/home/homeComponents.tsx",
     "resources/webradio_frontend/shared/ScrollToComponent.tsx",
-    'resources/webradio_frontend/service/ProgrammeDateComponent.tsx',
     'resources/webradio_frontend/shared/ToastComponent.tsx',
     'resources/webradio_frontend/shared/FileUploaderComponent.tsx'
     

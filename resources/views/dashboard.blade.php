@@ -21,7 +21,11 @@
    <div class="w-full overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
 
 
-        <h3 class="text-xl flex items-center font-semibold" > <i data-lucide="arrow-big-right" class="size-8" ></i> Communiqué </h3>
+        <h3 class="text-xl flex items-center font-semibold" >
+             <i data-lucide="arrow-big-right" class="size-8" ></i> 
+             Communiqué 
+             <a href="{{route('service.communique')}}" class="mx-6 text-lg text-blue-800 underline" >Ajouter un communiqué</a>
+        </h3>
 
         <table class="w-full my-8 border-collapse " >
             <thead class="bg-blue-600  text-basic_white_color " >

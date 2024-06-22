@@ -14,6 +14,10 @@
         <!-- Scripts -->
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts','resources/ts/htmx.ts','resources/webradio_frontend/shared/DeleteButton.ts'])
+
+        @if (request()->routeIs('dashboard.blog.create.article'))
+            @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts','resources/ts/htmx.ts','resources/webradio_frontend/shared/DeleteButton.ts','resources/webradio_frontend/blog/EditorComponent.tsx'])
+        @endif
         
     </head>
     <body class="font-sans antialiased">

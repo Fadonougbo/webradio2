@@ -121,6 +121,15 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() 
 
     Route::post('/administration/create/article',[BlogController::class,'store'])->name('dashboard.blog.store.article')->can('show_administration');
 
+    Route::delete('/administration/delete/article/{article}',[BlogController::class,'delete'])->name('dashboard.blog.delete.article')->can('show_administration');
+
+    Route::get('/administration/update/article/{article}',[BlogController::class,'update'])->name('dashboard.blog.update.article')->can('show_administration');
+
+    Route::patch('/administration/update/article',[BlogController::class,'saveUpdate'])->name('dashboard.blog.update.save')->can('show_administration');
+
+    Route::patch('/administration/article/htmx/{article}',[BlogController::class,'getHtmxData'])->name('dashboard.blog.htmx')->can('show_administration');
+
+    //uploadFile via ajax
     Route::post('/administration/blog/upload/file',[BlogController::class,'uploadFile'])->name('dashboard.blog.upload.file')->can('show_administration');
 
 

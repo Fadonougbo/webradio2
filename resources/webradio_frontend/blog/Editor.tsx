@@ -52,20 +52,57 @@ const csrfToken = document
 	})
 
 	const data=await req.json<string>()
-
+	
 	if(data) {
 		allPath.push(data)
 	}
 
 	return data
-		//throw new Error('File not upload')
+		
 
   }
 
 
 
+  //Determine si il  y a du text dans l'editeur
+  const editorNotEmpty=(document:any[]):boolean=> {
 
-export const Editor = () => {
+	//cas ou on n'a du plusieur contenu dans l'editeur
+	if(document.length>2) {
+		return true
+	}
+
+	//Cas ou l'editeur est vide
+	if(document.length===1) {
+		return false
+	}
+
+	let count=0 
+
+	//Cas ou on ecrit du text et on supprime tout le text
+	if(document.length===2) {
+
+		for (const doc of document) {
+
+			if(!Array.isArray(doc.content)) {
+				count=0				
+			}else if(doc.content.length===0) {
+				count+=1
+			}
+
+		}
+
+	}
+
+	return count>0 && count!==2
+  }
+
+  const oldEditorData=localStorage.getItem('editor_data') 
+
+  //Suppression du contenu du localstorage
+  localStorage.getItem('editor_data')?localStorage.removeItem('editor_data'):''
+
+export const Editor = ({content}:{content:string}) => {
 
 	const hiddenIputeRef=useRef<HTMLInputElement|null>(null)
 
@@ -73,15 +110,21 @@ export const Editor = () => {
 
 	const invalideileInputRef=useRef<HTMLInputElement|null>(null)
 
-	const [blocks, setBlocks] = useState<Block[]>([]);
+	//const [editorData,setEditorData]=useState({})
 
-	const [token,setToken]=useState('')
+	const [isLoad,setIsLoad]=useState(false)
 
+	let editorData={}
 
+	if(content!=='') {
+		editorData={initialContent:JSON.parse(content)}
+	}
+
+	if(oldEditorData!==null) {
+		editorData={initialContent:JSON.parse(oldEditorData)}
+	}
 	
-	const oldEditorData=localStorage.getItem('editor_data') 
-
-	const editorData=oldEditorData!==null?{initialContent:JSON.parse(oldEditorData)}:{}
+	
 
 	// Creates a new editor instance.
 	const editor = useCreateBlockNote({
@@ -95,34 +138,29 @@ export const Editor = () => {
 
 	useEffect(()=> {
 
-		//Remove old data from localstorage pour qu'il ne rest pas eternelement dans le local storage
-		//Sinon il s'affichera chaque fois
-		localStorage.getItem('editor_data')?localStorage.removeItem('editor_data'):''
 		
-		/* const csrfToken = document
-		?.querySelector('meta[name="csrf-token"]')
-		?.getAttribute("content"); */
-
-			/* if (csrfToken) {
-				setToken(() => csrfToken);
-			} */
 
 	},[])
 
-	
 	const click=(e:MouseEvent)=> {
+
+		e.preventDefault()
 
 		//Liste des images gardées par l'utilisateur
 		const utilsFile:string[]=[]
+
 		//Apres soumision je conserve les medias de l'utilisateur
+		const valideType=['image','audio','video']
 		// biome-ignore lint/complexity/noForEach: <explanation>
 		editor.document.forEach((item)=> {
-			if(item.type==='image') {
+			
+			if(valideType.includes(item.type)) {
 				utilsFile.push(item.props.url)
-				//console.log();
+				
 			}
 		})
 
+		//Je filtre les medias supprimés par l'utilisateur lors de la creation de l'article
 		const invalideFiles=allPath.filter((file)=> {
 
 			return utilsFile.includes(file)===false
@@ -132,16 +170,22 @@ export const Editor = () => {
 
  			const input=hiddenIputeRef.current
 
-			if(input && editor.document.length>1) {
-				e.preventDefault()
+			//Si le contenu de l'editeur est valide
+			if(input && editorNotEmpty(editor.document)) {
+				
 				const content=JSON.stringify(editor.document)
 
 				input.value=content
 
 				localStorage.setItem('editor_data',content);
 
-			}
+			} 
 			
+			//Si le contenu de l'editeur est invalide
+			if(input && !editorNotEmpty(editor.document)) {
+					input.value=''
+			}
+		
 
 			if(valideFileInputRef?.current && invalideileInputRef?.current ) {
 
@@ -150,12 +194,7 @@ export const Editor = () => {
 				invalideileInputRef.current.value=`${JSON.stringify(invalideFiles)}`
 			}
 
-			console.log(valideFileInputRef.current?.value,'valide');
-
-			console.log(invalideileInputRef.current?.value,'invalide');
-
-			
-				form?.submit()
+			form?.submit()
 
 			
 			

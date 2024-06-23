@@ -3,6 +3,7 @@
 namespace App\Http\Requests\webradio;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File ;
 
 class CreateArticleFormRequest extends FormRequest
 {
@@ -21,15 +22,23 @@ class CreateArticleFormRequest extends FormRequest
      */
     public function rules(): array
     {
+
+
         return [
             'article_title'=>['required','min:3','max:140','string'],
-            'article_slug'=>['nullable','string','max:280','unique:articles,article_slug'],
+
             'isOnline'=>['nullable','boolean'],
+
             'categorie'=>['required','exists:categories,id'],
-            'article_principal_image'=>['required','image','max:20MB','file'],
+
+            'article_principal_image'=>['required','image',File::image()->max('20mb')],
+
             'content'=>['required','string','min:1'],
+
             'blog_valide_files'=>['present'],
+
             'blog_files_need_drop'=>['present']
+
         ];
     }
 }

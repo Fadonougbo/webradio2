@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\webradio\Article;
 use App\Models\webradio\Communique;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -54,6 +55,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function communiques() {
 
         return $this->hasMany(Communique::class);
+    }
+
+    public function articles() {
+        return $this->hasMany(Article::class);
     }
 
 }

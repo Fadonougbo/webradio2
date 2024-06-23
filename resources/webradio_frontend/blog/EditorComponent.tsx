@@ -3,17 +3,20 @@ import { createRoot } from "react-dom/client"
 import { Editor } from "./Editor"
 
 
-type ActuCarouselType={
-    name:string
+type EditorType={
+    name:string,
+    articlecontent:string
 }
 
 
-define<ActuCarouselType>({
+define<EditorType>({
     tag:"blog-editor",
+    articlecontent:'',
     name:{
         value:"blog_editor",
         connect(host) {
-            createRoot(host).render(<Editor/>)
+            const {articlecontent}=host
+            createRoot(host).render(<Editor content={articlecontent} />)
 
             return ()=>{ 
                 createRoot(host).unmount()

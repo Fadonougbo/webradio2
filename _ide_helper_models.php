@@ -16,38 +16,6 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property string $pub_email
- * @property string $pub_tel
- * @property string $pub_file
- * @property string|null $pub_detail
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property bool $isPaid
- * @property int|null $user_id
- * @property string $status
- * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite query()
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereIsPaid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite wherePubDetail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite wherePubEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite wherePubFile($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite wherePubTel($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Publicite whereUserId($value)
- */
-	class Publicite extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * 
- *
- * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -75,15 +43,15 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string $role
  * @property string|null $first_name
  * @property string|null $last_name
+ * @property string $role
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\webradio\Article> $articles
+ * @property-read int|null $articles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\webradio\Communique> $communiques
  * @property-read int|null $communiques_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Publicite> $publicites
- * @property-read int|null $publicites_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -109,14 +77,93 @@ namespace App\Models\webradio{
  * 
  *
  * @property int $id
+ * @property string $article_title
+ * @property string $article_slug
+ * @property bool $isOnline
+ * @property string $article_principal_image
+ * @property int $user_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $content
+ * @property int|null $categorie_id
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\webradio\Blogfile> $blogfiles
+ * @property-read int|null $blogfiles_count
+ * @property-read \App\Models\webradio\Categorie|null $categorie
+ * @property-read \App\Models\webradio\Categorie $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Article newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Article newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Article query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereArticlePrincipalImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereArticleSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereArticleTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereCategorieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereIsOnline($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Article whereUserId($value)
+ */
+	class Article extends \Eloquent {}
+}
+
+namespace App\Models\webradio{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $path
+ * @property int $article_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\webradio\Article $article
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile whereArticleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Blogfile whereUpdatedAt($value)
+ */
+	class Blogfile extends \Eloquent {}
+}
+
+namespace App\Models\webradio{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\webradio\Article> $articles
+ * @property-read int|null $articles_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Categorie newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Categorie newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Categorie query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Categorie whereUpdatedAt($value)
+ */
+	class Categorie extends \Eloquent {}
+}
+
+namespace App\Models\webradio{
+/**
+ * 
+ *
+ * @property int $id
  * @property string|null $communique_email
  * @property string $communique_tel
  * @property string $communique_details
  * @property bool $isPaid
- * @property string $status
  * @property int|null $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $price
+ * @property string $communique_status
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\webradio\Programme> $programmes
  * @property-read int|null $programmes_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\webradio\Servicefile> $servicefiles
@@ -127,11 +174,12 @@ namespace App\Models\webradio{
  * @method static \Illuminate\Database\Eloquent\Builder|Communique query()
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereCommuniqueDetails($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereCommuniqueEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Communique whereCommuniqueStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereCommuniqueTel($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereIsPaid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Communique whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Communique wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Communique whereUserId($value)
  */

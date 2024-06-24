@@ -12,6 +12,25 @@
         <button class="btn btn-sm btn-circle btn-ghost bg-black absolute right-2 top-2" onclick="{{$ID}}.close()" type="button">✕</button>
         </form>
 
+        @if(request()->routeIs('dashboard.administration'))
+
+            <section class="my-8" >
+                <p class=" text-black my-3 flex items-center" >
+                    PRIX: 
+                    @if ($communique->price)
+                        
+                        {{$communique->price}}</p> 
+                    @else
+                        {{$communique->getPrice()}}
+                    @endif
+                    fcfa
+                </p> 
+    
+            </section>
+
+        @endif
+       
+
         <section class="my-8" >
             @php
                 $programmes=$communique->programmes;

@@ -3,21 +3,23 @@ import { createRoot } from "react-dom/client";
 import { Menu } from "./Menu";
 import { MenuDeroulant } from "./MenuDeroulant";
 import { OnlineRadio } from "./OnlineRadio";
+import { EditorContent } from "./ShowEditorContent";
 
 
-type MenuType={
-    name:string,
-    
+type EditorContentType={
+    editorcontent:string,
+    name:string
 }
 
-define<MenuType>({
-    tag:"menu-burger",
-
+define<EditorContentType>({
+    tag:"editor-content",
+    editorcontent:'',
     name:{
-        value:"menu_burger",
+        value:"editor_content",
         connect(host) {
+            const {editorcontent}=host
 
-            createRoot(host).render(<Menu  />)
+            createRoot(host).render(<EditorContent content={editorcontent}  />)
 
             return ()=>{ 
                 createRoot(host).unmount()
@@ -41,6 +43,9 @@ define<OnlineRadioType>({
     name:{
         value:"online_radio",
         connect(host) {
+
+      
+              
             createRoot(host).render(<OnlineRadio/>)
             
             return ()=>{ 
@@ -63,6 +68,8 @@ define<MenuDeroulantType>({
         value:"menu_deroulant",
         connect(host) {
 
+      
+              
             createRoot(host).render(<MenuDeroulant/>)
             
             return ()=>{ 

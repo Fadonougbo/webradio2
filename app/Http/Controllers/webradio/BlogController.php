@@ -4,26 +4,31 @@ namespace App\Http\Controllers\webradio;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\CreateArticleFormRequest;
+use App\Http\Requests\webradio\UpdateArticleFormRequest;
 use App\Models\webradio\Article;
+use App\Models\webradio\Blogfile;
 use App\Models\webradio\Categorie;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Number;
 use Str;
 
 class BlogController extends Controller
 {
 
+    //Affiche les articles et les categories
     public function index() {
 
         
-        $categories=Categorie::orderByDesc('id')->get();
-        $articles=Article::orderByDesc('id')->get();
+        $categories=Categorie::orderByDesc('id')->paginate(perPage:20,pageName:'categorie');
+
+        $articles=Article::orderByDesc('id')->paginate(perPage:10,pageName:'article');
+
         return view('webradio.blog.blog',['categories'=>$categories,'articles'=>$articles]); 
     }
 
+    //affiche le formulaire pour creer une categorie
     public function create (Request $request) {
         
         
@@ -32,9 +37,11 @@ class BlogController extends Controller
         $this->dropOldEditorFiles($data);
 
         $categories=Categorie::all();
+
         return view('webradio.blog.new_article',['categories'=>$categories]);
     }
 
+    //Enregistrer la categorie creer dans la base de donner
     public function store(CreateArticleFormRequest $request) {
         
         $data=json_decode($request->validated('blog_files_need_drop'))??[];
@@ -93,12 +100,12 @@ class BlogController extends Controller
        }
        
 
-        
        return $res?redirect()->route('dashboard.blog.index')->with('success','OK'):redirect()->route('dashboard.blog.index')->with('error','ERROR');
         
 
     }
 
+    //Afficher le formulaire pour une mise a jour
     public function update(Request $request,Article $article) {
         
         $data=json_decode($request->old('blog_files_need_drop'))??[];
@@ -110,23 +117,111 @@ class BlogController extends Controller
         return view('webradio.blog.update_article',['article'=>$article,'categories'=>$categories]);
     }
 
-    public function saveUpdate(Request $request) {
-        dump($request->all());
+
+    //Sauvegarder les mises a jours
+    public function saveUpdate(UpdateArticleFormRequest $request,Article $article) {
+        
+        $data=json_decode($request->validated('blog_files_need_drop'))??[];
+
+        $this->dropOldEditorFiles($data);
+
+        $fields=$request->validated();
+
+        $fields['article_slug']=Str::slug( $fields['article_title'] );
+
+        $fields['isOnline']=empty($fields['isOnline'])?0:$fields['isOnline'];
+
+       
+
+         //Create directory
+         if( Storage::disk('public')->directoryMissing('blogfiles')) {
+
+            Storage::disk('public')->makeDirectory('blogfiles');
+        }
+
+
+        /**
+         * @var  UploadedFile
+         * 
+         */
+
+        $image=$request->validated("article_principal_image");
+
+        $fields['article_principal_image']=$this->uploadImage($image,'blogfiles',$article);
+
+       
+        
+        //Update article
+       $articleIsUpdate=$article->update($fields);
+
+       
+
+       $res=false;
+       //Update Association article categorie
+       if($articleIsUpdate) {
+            $categorieId=(int)$fields['categorie'];
+
+            $article->categorie_id=$categorieId;
+
+            $res=$article->save();
+       }
+
+       $data=json_decode($request->validated('blog_valide_files'))??[];
+
+       //supression des anciennennt image de l'article
+       $article->blogfiles()->delete();
+
+       //Ajout des images du blog dans la base de donnees
+       if($res && !empty($data)) {
+        
+            $pathList=array_map(function($path) {
+
+                $basename='blogfiles/'.pathinfo($path,PATHINFO_BASENAME);
+
+                return ['path'=>$basename];
+
+            },$data);
+            
+           $article->blogfiles()->createMany($pathList);
+        
+       }
+       
+
+        
+       return $articleIsUpdate?redirect()->route('dashboard.blog.index')->with('success','OK'):redirect()->route('dashboard.blog.index')->with('error','ERROR');
     }
 
+    //Supression d'un article
     public function delete(Article $article) {
+
+        $fileSysteme=Storage::disk('public');
+
+        //Suppression de fichier
+        if($fileSysteme->exists($article->article_principal_image)) {
+            $fileSysteme->delete($article->article_principal_image);
+        }
+
+        $article->blogfiles()->each(function(Blogfile $blogfile) use($fileSysteme) {
+
+            if($fileSysteme->exists($blogfile->path)) {
+                $fileSysteme->delete($blogfile->path);
+            }
+        });
+
+        //Supression de l'article
         $res=$article->delete();
 
         return $res?redirect()->route('dashboard.blog.index')->with('success','Suppression OK'):redirect()->route('dashboard.blog.index')->with('error','Suppression ERROR');
     }
 
+    //Enregistrer les images reçu de l'editeur via ajax
     public function uploadFile(Request $request) {
 
 
         //$debug=$request->file('editor_file')->getClientOriginalExtension();
 
         $file=$request->file('editor_file');
-        $badExtentions=['php','js'];
+        $badExtentions=['php','js','html'];
 
         $inBadExtentionArray=in_array($file->getClientOriginalExtension(),$badExtentions);
 
@@ -166,16 +261,18 @@ class BlogController extends Controller
 
     }
 
-    private function uploadImage(UploadedFile $image,string $directory_name):string|null {
+    //Enregistrer les images de l'article
+    private function uploadImage(UploadedFile|null $image,string $directory_name,?Article $article=null):string|null {
 
-        $imagePath=null;
+        $imagePath=$article->article_principal_image??null;
 
         //Case image is uploades 
 
         if( 
             $image && 
             $image->isValid() && 
-            $image->getError()===UPLOAD_ERR_OK
+            $image->getError()===UPLOAD_ERR_OK &&
+            empty($article)
         ) {
             $imagePath=$image->store($directory_name,'public');
 
@@ -186,21 +283,24 @@ class BlogController extends Controller
 
         //Case:image is uploaded and old image exist in DB
   
-        /* if( 
-            $store_image && 
-            $store_image->isValid() && 
-            $store_image->getError()===UPLOAD_ERR_OK &&
-            !empty(Auth::user()->store->store_image)
+        if( 
+            $image && 
+            $image->isValid() && 
+            $image->getError()===UPLOAD_ERR_OK &&
+            !empty($article?->article_principal_image)
         ) {
 
-            $path=Auth::user()->store->store_image;
+            $path=$article->article_principal_image;
 
-            Delete old image
-            Storage::disk('public')->delete($path);
+            //Delete old image
+            if( Storage::disk('public')->exists($path) ) {
 
-            $imagePath=$store_image->store($store_files_directory_name,'public');
+                Storage::disk('public')->delete($path);
+            }
 
-        } */
+            $imagePath=$image->store($directory_name,'public');
+
+        }
 
         return $imagePath;
        
@@ -209,7 +309,7 @@ class BlogController extends Controller
 
         /**
      * Pour la gestion des requetes avec htmx
-     *
+     *Pour afficher l'editeur
      * @param Request $request
      * @return mixed
      */

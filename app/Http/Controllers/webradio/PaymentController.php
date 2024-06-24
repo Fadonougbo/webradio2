@@ -15,7 +15,6 @@ class PaymentController extends Controller
     /* Valide un payment */
     public function validation(Request $request) {
 
-        
 
         $request->validate([
             'id'=>['required','string','exists:communiques,id'],

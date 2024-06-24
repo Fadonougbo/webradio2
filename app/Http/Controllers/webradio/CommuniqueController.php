@@ -54,8 +54,6 @@ class CommuniqueController extends Controller
         $programmes=$fields['programmes'];
 
         
-
-        $programmeIsCreated=false;
         if($response) {
             
             $programmeFields=array_map(function($programme) {
@@ -68,11 +66,10 @@ class CommuniqueController extends Controller
             },$programmes); 
                
           //Inserte date and hour in programmes table
-           $programmeIsCreated=$communique->programmes()->createMany($programmeFields);
+          $communique->programmes()->createMany($programmeFields);
                
 
         }
-
 
 
         $store_files_directory_name="user.".Auth::id();
@@ -117,6 +114,7 @@ class CommuniqueController extends Controller
    
     }
 
+    //Formulaire de modification
     public function updateView(Communique $communique) {
 
         return view('webradio.service.communique.update',[
@@ -124,6 +122,7 @@ class CommuniqueController extends Controller
         ]);
     }
 
+    //Sauvegarder les modifications
     public function update(UpdateFormRequest $request,Communique $communique) {
         
         $fields=$request->validated();
@@ -195,8 +194,11 @@ class CommuniqueController extends Controller
         
         
         foreach($invalidePaths as $key=>$path) {
+
             $file=Servicefile::where('path','=',$path);
+
             $paths=$file->get(['path'])->toArray();
+
             //Suppression de la DB
             if($file->exists()) {
                 $file->delete();
@@ -253,6 +255,16 @@ class CommuniqueController extends Controller
 
     public function delete(Communique $communique) {
 
+        $fileSysteme=Storage::disk('public');
+
+        $communique->servicefiles()->each(function(Servicefile $servicefile) use($fileSysteme) {
+
+            if($fileSysteme->exists($servicefile->path)) {
+                $fileSysteme->delete($servicefile->path);
+            }
+
+        });
+
         $isDeleted=$communique->delete();
 
         if($isDeleted) {
@@ -262,6 +274,7 @@ class CommuniqueController extends Controller
         return redirect()->route('dashboard')->with('error','Une erreur est survenue lors de la suppression. Veuillez réessayer plus tard.');
     }
 
+    //Si le formulaire est valide on deplace les fichier ajouter par l'utilisateur du dossier temporaire
     private function moveFileFromTempDir(string $path,string $store_files_directory_name,Communique $communique):string|false {
 
         $fileNotExist=Storage::disk('public')->missing($path);
@@ -280,6 +293,7 @@ class CommuniqueController extends Controller
 
     }
 
+    //Supprimer un fichier
     private function removeFile(string $path):bool {
 
         if(empty($path)) {
@@ -311,7 +325,7 @@ class CommuniqueController extends Controller
          */
         $files=$request->file('communique_files');
 
-        $badExtentions=['php','js'];
+        $badExtentions=['php','js','html'];
 
 
         foreach($files as $file) {
@@ -327,6 +341,8 @@ class CommuniqueController extends Controller
             
             abort_unless($file->isValid(),500);
             abort_unless($file->isFile(),500);
+             //Limite la taille des fichiers a 20Mo
+            abort_if($file->getSize()>20000000,500);
             
             $path=$file->store('tmp','public');
         }

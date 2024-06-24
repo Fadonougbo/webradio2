@@ -44,7 +44,7 @@ class CreateCommuniqueFormRequest extends FormRequest
 
             'communique_email'=>['nullable','email','string'],
 
-            'communique_tel'=>['required','numeric','min_digits:4',],
+            'communique_tel'=>['required','string','min:4',],
 
             'programmes.*.date'=>['date','required',"after_or_equal:{$dateOfDay}"],
 

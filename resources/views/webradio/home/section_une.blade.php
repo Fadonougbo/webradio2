@@ -41,22 +41,32 @@
     ]
 @endphp
 
+@php
+    $articles=$categories[0]->articles; 
+    
+@endphp
 
 
-@foreach ($listes as $liste)
+
+
+@foreach ($articles as $article)
     @php
-        $img=$liste['img'];
-        $date=$liste['date'];
-        $title=$liste['title'];
-        $author=$liste['author'];
+    (new DateTime)->format('');
+    
+        $img=$article->article_principal_image;
+        $date=now('africa/porto-novo')->locale('fr-FR')->setDateTimeFrom(new DateTime($article->created_at))->format('d/m/Y');
+        $title=Str::limit($article->article_title,'100');
+        $author=$article->user->last_name .' '. $article->user->first_name;
+        
     @endphp
-    <div class="my-10  rounded mx-2 lg:mx-6" >
+    <div class="my-10  rounded mx-4 " >
         <section class="w-full  h-48 my-4 relative" >
-            <img src='{{asset("images/$img")}}' class="size-full " alt="actu image">
+            <img src='{{asset("storage/$img")}}' class="size-full " alt="actu image">
             <span class="absolute top-4 left-4 text-sm uppercase bg-basic_primary_color/80 text-basic_white_color px-2 rounded-full" >{{$date}}</span>
         </section>
         <section class="my-2" >
-            <a class="text-2xl  font-extrabold text-center my-4 transition-all hover:text-basic_primary_color" href="#" >{{$title}}</a>
+            <a class="text-2xl  font-extrabold text-center my-4 transition-all hover:text-basic_primary_color" href="{{route('home.show',['article'=>$article,'slug'=>$article->article_slug])}}" >{{$title}}</a>
+
             <p class="opacity-75  font-bold  text-sm flex items-center" > <i data-lucide="circle-user-round" class="mx-1 size-4" ></i> {{$author}}</p> 
         </section>
     </div>

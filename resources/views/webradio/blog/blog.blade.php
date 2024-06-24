@@ -10,13 +10,20 @@
             <message-toast type="error" msg="{{session('error')}}" delay="3000" ></message-toast>
     @endsession
 
+    @if($errors->any())
+        <message-toast type="info" msg="Une erreur est surevenue, veuillez  réessayer à nouveau." delay="15000" ></message-toast>
+        <!--  @foreach ($errors->all() as $err)
+                <p>{{$err}}</p>
+            @endforeach  -->
+    @endif
+
     <h3 class="text-xl mt-4 flex items-center font-semibold" > 
         <i data-lucide="arrow-big-right" class="size-8" ></i> Articles  
         <a href="{{route('dashboard.blog.create.article')}}" class="mx-6 text-lg text-blue-800 underline" >Créer un article </a>
     </h3>
 
     <div class="w-full flex flex-col items-center overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
-
+     {{$articles->links()}}
         <table class="w-full my-4 border-collapse " >
             <thead class="bg-blue-600  text-basic_white_color " >
                 <tr class="" >
@@ -83,6 +90,7 @@
             
             </tbody>
         </table>
+        {{$articles->links()}}
     </div>
 
     
@@ -91,8 +99,9 @@
         <a href="{{route('dashboard.configuration')}}#create_categorie" class="mx-6 text-lg text-blue-800 underline" >Créer une categorie</a>
     </h3>
 
+    
     <div class="w-full flex flex-col items-center overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
-
+        {{$categories->links()}}
         <table class="w-full my-4 border-collapse  sm:w-1/2" >
             <thead class="bg-blue-600  text-basic_white_color " >
                 <tr class="" >
@@ -132,6 +141,7 @@
                
             </tbody>
         </table>
+        {{$categories->links()}}
    </div>
     
     

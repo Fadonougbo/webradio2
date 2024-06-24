@@ -1,62 +1,6 @@
-/* Base theme */
-.bn-container[data-theming-css-variables-new][data-color-scheme] {
-    
-    --bn-colors-editor-background: #ffffff;
-    --bn-colors-side-menu: #0a0303;
 
-  }
-
-  .bn-editor table {
-     
-    td {
-      border-color: #000;
-      border-width: 0.4px;
-      text-align: center;
-      color: #2c2c2cee;
-    }
-  }
-
-  .bn-editor h2,.bn-editor h1 {
-    line-height: 3.4rem;
-  }
-
-  .bn-editor h3 {
-      font-size: 1.2rem;
-      font-weight: 500;
-  }
-
-  .bn-editor h2 {
-    font-size: 1.4rem;
-    font-weight: 500;
-}
-
-.bn-editor h1 {
-  font-size: 1.6rem;
-  font-weight: 700;
-}
-
-  
-
-  .bn-editor {
-    
-    min-height: 30rem;
-
-    font-size: 1.2rem;
-    
-    color: #000;
-
-    outline: solid 3px rgb(22, 93, 160);
-  }
-
-
-  .bn-block-content {
-    line-height: 2.5rem;
-  }
-
-
-
-  .x {
-    --bn-colors-editor-text: #3f3f3f;
+:root {
+--bn-colors-editor-text: #3f3f3f;
 --bn-colors-editor-background: #ffffff;
 --bn-colors-menu-text: #3f3f3f;
 --bn-colors-menu-background: #ffffff;
@@ -93,5 +37,86 @@
   "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
   "Helvetica Neue", sans-serif;
 --bn-border-radius: 6px;
-  }
-   
+}
+
+#wrapper {
+    padding: 0.8rem;
+    font-size: 1.2rem;
+    width: 100%;
+    
+}
+
+#wrapper .bn-inline-content:empty{
+    margin-top:3rem; 
+ }
+
+ #wrapper .bn-inline-content:not(:empty) {
+    line-height: 2.2rem;
+    text-align: justify;
+ }
+
+/*  #wrapper bn-inline-content:not(:empty):not(li) {
+    margin-left: 2rem;
+ } */
+
+ #wrapper table {
+    width: 100%;
+ }
+
+ #wrapper table td {
+    border:solid 1px black;
+    text-align: center;
+    padding:1rem
+ }
+
+ ol {
+    list-style: decimal;
+    list-style-position: inside;
+
+    li p {
+        display: inline-block;
+    }
+ }
+
+ ul {
+    list-style: disc;
+    list-style-position: inside;
+
+    li p {
+        display: inline-block;
+    }
+ }
+
+ #wrapper input[type='checkbox']:checked  + .bn-inline-content{
+    text-decoration: line-through;
+ }
+
+h1,h2,h3{
+    margin: 1rem 0;
+}
+
+#wrapper h3.bn-inline-content:not(:empty)  {
+    font-size: 1.8rem;
+    font-weight: 500;
+    word-break: break-all;
+    line-height: 2.5rem;
+}
+
+#wrapper h2.bn-inline-content:not(:empty)   {
+  font-size: 2.4rem;
+  font-weight: 500;
+    word-break: break-all;
+    line-height: 2.5rem;
+}
+
+#wrapper h1.bn-inline-content:not(:empty)   {
+    display: inline;
+    font-size: 3.7rem;
+    font-weight: 600;
+    word-break: break-all;
+}
+
+
+/*  #wrapper [data-text-color] {
+    color: initial;
+ } */

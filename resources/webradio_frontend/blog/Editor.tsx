@@ -98,7 +98,7 @@ const csrfToken = document
   }
 
   const oldEditorData=localStorage.getItem('editor_data') 
-
+  console.log(oldEditorData);
   //Suppression du contenu du localstorage
   localStorage.getItem('editor_data')?localStorage.removeItem('editor_data'):''
 
@@ -170,14 +170,16 @@ export const Editor = ({content}:{content:string}) => {
 
  			const input=hiddenIputeRef.current
 
+			const content=JSON.stringify(editor.document)
+
+			localStorage.setItem('editor_data',content);
+
 			//Si le contenu de l'editeur est valide
 			if(input && editorNotEmpty(editor.document)) {
 				
-				const content=JSON.stringify(editor.document)
-
 				input.value=content
 
-				localStorage.setItem('editor_data',content);
+				
 
 			} 
 			

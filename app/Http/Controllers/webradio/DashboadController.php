@@ -17,7 +17,7 @@ class DashboadController extends Controller
     //Show user dashboard
     public function index() {
 
-        $communiques=Auth::user()->communiques()->orderByDesc('id')->get();
+        $communiques=Auth::user()->communiques()->orderByDesc('id')->paginate(perPage:18,pageName:'communique');
 
         
         return view('dashboard',
@@ -29,7 +29,7 @@ class DashboadController extends Controller
     //Show admin dashboard
     public function administration() {
 
-        $communiques=Communique::orderByDesc('id')->get();
+        $communiques=Communique::orderByDesc('id')->paginate(perPage:20,pageName:'communique');
         
         return view('administration_dashboard',
         [
@@ -79,9 +79,7 @@ class DashboadController extends Controller
 
     public function role(ChangeRoleRequest $request,User $user) {
         
-
         $user->role=$request->validated('role');
-        
 
         $res=$user->save();
         

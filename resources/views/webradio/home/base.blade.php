@@ -11,9 +11,9 @@
             'resources/ts/index.ts',
             "resources/webradio_frontend/home/homeComponents.tsx",
             "resources/webradio_frontend/shared/ScrollToComponent.tsx",
-            'resources/webradio_frontend/home/ActuCarouselComponent.tsx',
             'resources/ts/htmx.ts'
             ])
+    @yield('specifique_resource')
 
 </head>
 

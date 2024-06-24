@@ -2,6 +2,11 @@
 
 @section('title',"Radio Trait d'Union")
 
+@section('specifique_resource')
+  @vite(['resources/webradio_frontend/home/ActuCarouselComponent.tsx'])  
+@endsection
+
+
 @section('content')
     
 
@@ -10,18 +15,18 @@
          <div class="mt-40" >
             <actu-carousel class="my-6   md:text-xl" ></actu-carousel>
          </div>
-        
+
+         @dump($categories)
       
-       
         <div class="my-10 " id="actu" >
             <section class="w-full flex justify-center" >
-                <h2 class="text-xl w-full shadow-2xl my-4 p-1 rounded uppercase bg-basic_primary_color text-basic_white_color text-center font-semibold  md:text-2xl sm:w-[90%]" >Actualité à la une</h2>
+                <h2 class="text-xl w-full shadow-2xl my-4 p-1 rounded uppercase bg-basic_primary_color text-basic_white_color text-center font-semibold  md:text-2xl sm:w-[90%]" >{{$categories[0]->name}}</h2>
             </section>
 
            @include('webradio.home.section_une')
 
             <section class="flex justify-center" >
-                <a class="text-basic_primary_color border-solid border-[1px] border-basic_primary_color font-semibold  p-2 rounded-sm text-lg text-center hover:opacity-75 " href="#" >Voir tous les actualités </a>
+                <a class="text-basic_primary_color border-solid border-[1px] border-basic_primary_color font-semibold  p-2 rounded-sm text-lg text-center hover:opacity-75 " href="#" >Afficher plus </a>
             </section>
         </div>
 

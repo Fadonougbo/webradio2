@@ -34,8 +34,8 @@
             <button class="btn btn-success  text-white mx-4" >Valider les modifications</button>
         </div>
             
-    <div class="w-full overflow-x-scroll md:overflow-x-hidden p-4 " >
-
+        <div class="w-full overflow-x-scroll md:overflow-x-hidden p-4 " >
+            {{$communiques->links()}}
             <table class="w-full my-8 border-collapse " >
                 <thead class="bg-blue-600  text-basic_white_color " >
                     <tr class="" >
@@ -95,9 +95,8 @@
             
                 </tbody>
             </table>
+            {{$communiques->links()}}
             </div>
-            </form>
+        </form>
    
-
-
 </x-app-layout>

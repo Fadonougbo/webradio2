@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('article_title',150);
-            $table->string('article_slug',300);
+            $table->string('article_title',350);
+            $table->string('article_slug',450);
             $table->boolean('isOnline')->default(true);
             $table->string('article_principal_image');
             $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->nullOnDelete();

@@ -16,11 +16,15 @@
         @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts','resources/ts/htmx.ts','resources/webradio_frontend/shared/DeleteButton.ts'])
 
         @if (request()->routeIs('dashboard.blog.create.article'))
-            @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts','resources/webradio_frontend/shared/DeleteButton.ts','resources/webradio_frontend/blog/EditorComponent.tsx'])
+            @vite(['resources/webradio_frontend/blog/EditorComponent.tsx'])
         @endif
 
         @if (request()->routeIs('dashboard.blog.update.article'))
-            @vite(['resources/css/app.css', 'resources/js/app.js','resources/webradio_frontend/shared/ToastComponent.tsx','resources/ts/index.ts','resources/ts/htmx.ts','resources/webradio_frontend/shared/DeleteButton.ts','resources/webradio_frontend/blog/EditorComponent.tsx'])
+            @vite(['resources/webradio_frontend/blog/EditorComponent.tsx'])
+        @endif
+
+        @if (request()->routeIs('dashboard.blog.index'))
+            @vite(['resources/webradio_frontend/blog/removeEditorItem.ts'])
         @endif
         
     </head>

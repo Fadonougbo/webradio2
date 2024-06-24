@@ -17,7 +17,7 @@
     @endif
 
     <div class="p-4" >
-        <form action="{{route('dashboard.blog.update.save')}}" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
                 
                 @csrf
                 @method('PATCH')
@@ -94,12 +94,11 @@
                                         <p class="text-basic_primary_color my-2" >{{$message}}</p>
                                 @enderror
 
-                                <!-- <blog-editor usecase="update" ></blog-editor> -->
+                                <!-- Afficher l'editeur via ajax -->
                                  <div
                                         hx-post="{{route('dashboard.blog.htmx',['article'=>$article])}}"
-                                      hx-trigger="load"
-                                 >
-                                                
+                                        hx-trigger="load"
+                                 >   
                                  </div>
                 
                                 

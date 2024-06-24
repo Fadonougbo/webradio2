@@ -16,7 +16,7 @@
                         <th class="border-solid border border-black capitalize" >désignation</th>
                         <th class="border-solid border border-black capitalize" >Nombre de page</th>
                         <th class="border-solid border border-black capitalize" >Nombre de personne</th>
-                        <th class="border-solid border border-black capitalize" >Prix hors taxe</th>
+                        <th class="border-solid border border-black capitalize" >Prix hors taxe (fcfa)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +24,7 @@
                         <td class="border-solid border border-black" >Communique</td>
                         <td class="border-solid border border-black" >1</td>
                         <td class="border-solid border border-black" ></td>
-                        <td class="border-solid border border-black" >5000</td>
+                        <td class="border-solid border border-black" >{{(new App\Models\webradio\Communique())->getPrice()}} </td>
                     </tr>
                     <tr>
                         <td class="border-solid border border-black" >Diffusion, communique, Avis et spot Publicitaire Hors des heures de programme Classique</td>

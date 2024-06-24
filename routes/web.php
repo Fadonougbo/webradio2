@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[HomeController::class,'index'])->name('home');
 
+Route::get('/article/{article}/{slug}',[HomeController::class,'show'])->name('home.show');
+Route::get('/article/show/htmx/{article}',[HomeController::class,'getHtmxData'])->name('home.show.htmx');
+
 //Route utiliser en ajax pour envoyer les informations de l'utilisateur au front
 Route::post('/auth/user',[HomeController::class,'getUserData'])->name('auth.data');
 
@@ -125,7 +128,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() 
 
     Route::get('/administration/update/article/{article}',[BlogController::class,'update'])->name('dashboard.blog.update.article')->can('show_administration');
 
-    Route::patch('/administration/update/article',[BlogController::class,'saveUpdate'])->name('dashboard.blog.update.save')->can('show_administration');
+    Route::patch('/administration/update/article/{article}',[BlogController::class,'saveUpdate'])->name('dashboard.blog.update.save')->can('show_administration');
 
     Route::patch('/administration/article/htmx/{article}',[BlogController::class,'getHtmxData'])->name('dashboard.blog.htmx')->can('show_administration');
 

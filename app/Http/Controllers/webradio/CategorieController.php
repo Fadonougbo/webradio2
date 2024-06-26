@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\webradio\CreateCategorieRequest;
 use App\Http\Requests\webradio\UpdateCategorieRequest;
 use App\Models\webradio\Categorie;
-use Illuminate\Http\Request;
 
 class CategorieController extends Controller
 {

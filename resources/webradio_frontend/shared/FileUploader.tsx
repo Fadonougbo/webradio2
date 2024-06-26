@@ -105,7 +105,7 @@ export const FileUploader = ({
 
 				allowFileSizeValidation={true}
 
-				maxFileSize={"20mb"}
+				maxFileSize={"48mb"}
 
 				server={{
 					headers: {

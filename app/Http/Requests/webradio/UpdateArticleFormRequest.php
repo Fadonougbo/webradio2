@@ -29,7 +29,7 @@ class UpdateArticleFormRequest extends FormRequest
 
             'categorie'=>['required','exists:categories,id'],
 
-            'article_principal_image'=>['nullable','image',File::image()->max('19mb')],
+            'article_principal_image'=>['nullable','image',File::image()->max('48mb')],
 
             'content'=>['required','string','min:1'],
 

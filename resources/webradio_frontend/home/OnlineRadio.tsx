@@ -1,7 +1,7 @@
 
 // A basic example
 
-import { CircleStop, Pause, Play } from 'lucide-react';
+import { CircleStop, Play } from 'lucide-react';
 import {  useRef, useState } from 'react';
 
 
@@ -36,7 +36,7 @@ export const OnlineRadio=()=> {
 
         <div  className='flex justify-center items-center cursor-pointer'  onClick={playAudio}  >
           
-             <p className='mx-4 text-basic_white_color text-md uppercase' > Ecoutez rtu en direct</p> 
+             <p className='sm:block hidden mx-4 text-basic_white_color text-md uppercase' > Ecoutez rtu en direct</p> 
 
             <span className="relative cursor-pointer size-8" >
 

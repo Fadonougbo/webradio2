@@ -341,8 +341,8 @@ class CommuniqueController extends Controller
             
             abort_unless($file->isValid(),500);
             abort_unless($file->isFile(),500);
-             //Limite la taille des fichiers a 20Mo
-            abort_if($file->getSize()>20000000,500);
+             //Limite la taille des fichiers a 48Mo
+            abort_if($file->getSize()>48000000,500);
             
             $path=$file->store('tmp','public');
         }

@@ -20,50 +20,73 @@
 
    
 
-    <div>
-        <div class="py-12 ">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 sm:w-[80%] " >
-                <div class="p-2 bg-blue-900 text-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <h1 class="text-center font-bold text-lg uppercase sm:text-2xl" >Modification du prix</h1>
+    <section class="flex flex-col w-full lg:flex-row lg:items-start space-y-16 lg:space-y-0" >
+        <div class="w-full" >
+            <div class="py-12 ">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 sm:w-[80%] " >
+                    <div class="p-2 bg-blue-900 text-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <h1 class="text-center font-bold text-lg uppercase sm:text-2xl" >Modification des prix</h1>
+                    </div>
                 </div>
             </div>
+            <form action="{{route('dashboard.configuration.price')}}" method="POST" class="w-full flex justify-center" >
+                @csrf
+                @method('PATCH')
+                <div class="flex flex-col w-[80%] sm:px-6  space-y-6 " >
+                    <select name="name" required >
+                        @foreach ($services as $service)
+                            <option value="{{$service->name}}">{{$service->name}}</option>
+                        @endforeach
+        
+                    </select>
+                    @error('name')
+                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
+                    @enderror
+                    <label for="price" class="text-lg font-semibold" >Saisissez le prix  (important) </label>
+                    <input type="number"    min="1" name="price" id="price" value="{{old('price',$services[0]->price) }}" required>
+                    @error('price')
+                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
+                    @enderror
+                    <button class="btn btn-success text-2xl text-white capitalize"  >valider</button>
+        
+                </div>
+        
+            </form>
         </div>
-        <form action="{{route('dashboard.configuration.price')}}" method="POST" class="w-full flex justify-center" >
+        
+        <div class="pb-10 w-full" id="create_categorie" >
 
-            @csrf
-
-            @method('PATCH')
-
-            <div class="flex flex-col w-[90%] space-y-6 md:w-1/2 lg:w-1/3" >
-
-                <select name="name" id="">
-                    @foreach ($services as $service)
-                        <option value="{{$service->name}}">{{$service->name}}</option>
-                    @endforeach
-                
-                </select>
-
-                @error('name')
-                    <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                @enderror
-
-                <label for="price" class="text-lg font-semibold" >Saisissez le prix  (important) </label>
-
-                <input type="number"  min="1" name="price" id="price" value="{{old('price',$services[0]->price) }}">
-                @error('price')
-                    <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                @enderror
-
-                <button class="btn btn-success text-lg text-white capitalize"  >valider</button>
-                
+            <div class="py-12 ">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 sm:w-[80%] ">
+                    <div class="p-2 bg-blue-900 text-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                        <h1 class="text-center font-bold text-lg uppercase sm:text-2xl" >Creation des catégories</h1>
+                    </div>
+                </div>
             </div>
-            
-        </form>
-    </div>
 
-    
+            <form action="{{route('dashboard.configuration.create.categorie')}}" method="POST" class="w-full flex justify-center" id="categorie_form" >
+                @csrf
+                <div class="flex flex-col w-[80%] sm:px-6 space-y-6 " >
 
-    <div class="py-24" >
+                    <label for="categorie_name" class="text-lg font-semibold" >Saisissez le nom de la categorie  (important) </label>
+
+                    <input type="text"  name="categorie_name" id="categorie_name" value="{{old('categorie_name') }}" required>
+
+                    @error('categorie_name')
+                        <p class="text-basic_primary_color my-2" >{{$message}}</p>
+                    @enderror
+
+                    <button class="btn btn-success text-2xl text-white capitalize"   >Créer</button>
+        
+                </div>
+        
+            </form>
+
+        </div>
+    </section>
+
+
+    <div class="py-20" >
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 sm:w-[80%] ">
@@ -72,7 +95,7 @@
                 </div>
             </div>
         </div>
-        
+
         <section class="w-full flex flex-col ite  sm:flex-row" >
 
             <form action="" method="POST" class="w-full  flex justify-center sm:w-2/3 lg:w-1/2" >
@@ -83,13 +106,13 @@
                         Saisissez  l'identifiant de l'utilisateur  (important) 
                     </label>
 
-                    <input type="number"  min="1" name="identifiant" value="1" id="identifiant" value="{{old('identifiant') }}">
+                    <input type="number"  min="1" name="identifiant" value="1" id="identifiant" value="{{old('identifiant') }}" required>
 
                     @error('identifiant')
                         <p class="text-basic_primary_color my-2" >{{$message}}</p>
                     @enderror
 
-                    <button class="btn btn-success text-xl text-white capitalize"  
+                    <button class="btn btn-success text-2xl text-white capitalize"  
                             hx-post="{{route('dashboard.configuration.role.htmx')}}"
                             hx-swap="outerHTML"
                             hx-include="#identifiant"
@@ -114,36 +137,7 @@
 
         </section>
 
-    </div>
-
-    <div class="pb-10" id="create_categorie" >
-        <div class="py-12 ">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 sm:w-[80%] ">
-                <div class="p-2 bg-blue-900 text-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                    <h1 class="text-center font-bold text-lg uppercase sm:text-2xl" >Gestion des catégories</h1>
-                </div>
-            </div>
         </div>
-
-        <form action="{{route('dashboard.configuration.create.categorie')}}" method="POST" class="w-full flex justify-center" id="categorie_form" >
-
-            @csrf
-
-            <div class="flex flex-col w-[90%] space-y-6 md:w-1/2 lg:w-1/3" >
-
-                <label for="categorie_name" class="text-lg font-semibold" >Saisissez le nom de la categorie  (important) </label>
-
-                <input type="text"  name="categorie_name" id="categorie_name" value="{{old('categorie_name') }}">
-                @error('categorie_name')
-                    <p class="text-basic_primary_color my-2" >{{$message}}</p>
-                @enderror
-
-                <button class="btn btn-success text-lg text-white capitalize"   >Créer</button>
-                
-            </div>
-            
-        </form>
-    </div>
 
 
 

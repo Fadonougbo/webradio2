@@ -1,1 +1,3 @@
 - Change la taille du fichier.ini pour uplader des fichiers de grande taille 
+
+-ajoute les fichiers dans le config vite

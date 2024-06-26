@@ -1,0 +1,1 @@
+<img src="{{asset('images/rtulogo1.jpg')}}" class="size-24 rounded-sm my-6"  alt="logo radio trait d'union">

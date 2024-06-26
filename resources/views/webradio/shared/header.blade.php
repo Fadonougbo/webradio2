@@ -20,7 +20,7 @@
                         </a>
                         <a href="{{route('grille')}}"  @class(['transition-all font-bold hover:text-basic_primary_color',
                         'decoration-solid underline underline-offset-4 decoration-4 decoration-basic_primary_color'=>request()->routeIs('grille')]) >Grille tarifaire</a>
-                        <a href="{{route('home')}}#replay" class="transition-all font-bold hover:text-basic_primary_color hidden xl:block" >Podcast</a>
+
 
                         @auth
                             <div class="border-l items-center border-solid hidden border-basic_white_color text-sm xl:flex " >

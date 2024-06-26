@@ -8,15 +8,15 @@
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-text-input id="email" class="block mt-1 w-full ring-1 ring-indigo-500" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Mot de passe')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <x-text-input id="password" class="block mt-1 w-full ring-1 ring-indigo-500"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
@@ -26,17 +26,17 @@
 
         <!-- Remember Me -->
         <div class=" mt-4 flex flex-col ">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+            <label for="remember_me" class="inline-flex items-center my-4">
+                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300  text-indigo-600 size-6 shadow-sm ring-1 ring-indigo-500  focus:ring-indigo-500 " name="remember">
+                <span class="ms-2 text-sm text-gray-700 dark:text-gray-400">{{ __('Remember me') }}</span>
             </label>
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md my-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a class="underline text-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md my-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                    {{ __('Mot de passe oublié ?') }}
                 </a>
             @endif
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md my-2  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="/register">
-                    {{ __('Create new compte?') }}
+            <a class="underline text-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md my-2  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="/register">
+                    {{ __('Créer un compte?') }}
             </a>
 
         </div>
@@ -44,7 +44,7 @@
         <div class="flex items-center justify-end mt-4">
             
             <x-primary-button class="ms-3">
-                {{ __('Log in') }}
+                {{ __('connexion') }}
             </x-primary-button>
         </div>
     </form>

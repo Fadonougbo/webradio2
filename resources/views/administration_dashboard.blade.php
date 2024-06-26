@@ -98,5 +98,59 @@
             {{$communiques->links()}}
             </div>
         </form>
+
+    <div class="py-12 ">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="p-2 bg-blue-900 text-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <h1 class="text-center font-bold text-lg uppercase sm:text-2xl" >Liste des administrateurs</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full flex flex-col items-center overflow-x-scroll md:overflow-x-hidden p-4 " >
+
+        <table class="w-full my-4 border-collapse sm:w-1/2 " >
+            <thead class="bg-blue-600  text-basic_white_color " >
+                <tr class="" >
+                    <th class=" uppercase  p-2  text-center text-lg" >ID</th>
+                    <th class=" uppercase  p-2  text-center text-lg" >Nom & Prenom</th>
+                    <th class=" uppercase  p-2  text-center text-lg" >Rôle</th>
+                </tr>
+            </thead>
+            <tbody class="bg-gray-900" >
+                @php
+                    $admins=(new App\Models\User())->where('role','!=','user')->where('role','!=','boss')->get();
+                @endphp
+                @forelse ($admins as $admin )
+
+                    <tr class="border-solid border-b-4 p-2 border-blue-400 text-center text-basic_white_color text-lg h-full" >
+
+                        <td class="border-solid  p-2 border-black  text-center text-xl" >
+                            
+                            #{{$admin->id}}
+                        </td>
+                        <td class="border-solid  p-2 border-black  text-center text-xl" >
+                                
+                            {{$admin->first_name}} {{$admin->last_name}}
+                        </td>
+
+                        <td class="border-solid  p-2 border-black  text-center text-xl" >
+                                
+                            {{$admin->role}}
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+                        <td colspan="6" class="py-4 text-2xl capitalize font-bold bg-basic_white_color  text-center" >vide</td>
+                    </tr>
+
+                @endforelse
+            
+            </tbody>
+        </table>
+    </div>
    
 </x-app-layout>

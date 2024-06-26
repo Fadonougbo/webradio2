@@ -1,8 +1,15 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { CarouselCard } from "./CarouselCard";
 
-export const ActuCarousel=()=> {
+export type dataType={
+  title:string,
+  url:string,
+  image:string,
+  date:string
+}
 
+export const ActuCarousel=({data}:{data:string})=> {
 
     const responsive = {
         superLargeDesktop: {
@@ -23,45 +30,32 @@ export const ActuCarousel=()=> {
           items: 1,
         }
       };
-     return ( <Carousel responsive={responsive} className="z-[2] my-6"
-        infinite={true}
-        autoPlay={false}
-        keyBoardControl={true}
-        autoPlaySpeed={4500}
-        showDots={true}
-        removeArrowOnDeviceType={["tablet", "mobile"]}
+
+      //Parse les data reçu du backend
+      const carouselData=JSON.parse(data) as dataType[]
+
+      const carouselDiv=carouselData.map((el,key)=> {
+               return  <CarouselCard carddata={el} key={key} />
+
+      }) 
+
+
+     return ( <Carousel responsive={responsive} className="z-[2] button:bg-green-400 my-6"
+      infinite={true}
+      autoPlay={false}
+      keyBoardControl={true}
+      autoPlaySpeed={4500}
+      showDots={true}
+      pauseOnHover={true}
+     
+   >
+         {[...carouselDiv]}
         
-
-     >
-        <div  className="relative bg-[url('../../../public/images/actu1.png')] bg-cover bg-center mx-4 p-4 rounded h-56"  >
-            <span className="top-4 left-4 absolute bg-basic_primary_color px-2 rounded-full text-basic_white_color text-sm uppercase" >7 mai 2024</span>
-
-            <a href="#" className="bottom-1 left-1 absolute bg-black/45 mt-4 font-extrabold text-2xl text-basic_white_color hover:text-basic_primary_color/70 transition-all" >Les enjeux économiques du Pipeline de Sèmè-Kpodji</a>
-        </div>
-        <div  className="relative bg-[url('../../../public/images/actu2.jpg')] bg-ga bg-purple-400 bg-cover bg-center mx-4 p-4 rounded h-56"  >
-            <span className="top-4 left-4 absolute bg-basic_primary_color px-2 rounded-full text-basic_white_color text-sm uppercase" >7 mai 2024</span>
-            <a href="#" className="bottom-1 left-1 absolute bg-black/45 mt-4 font-extrabold text-2xl text-basic_white_color hover:text-basic_primary_color/70 transition-all" >Marine nationale : Le Capitaine de Vaisseau Dossa HOUNKPATIN nouveau chef</a>
-        </div>
-        <div  className="relative bg-[url('../../../public/images/actu3.jpg')] bg-cover bg-center mx-4 p-4 rounded h-56"  >
-            <span className="top-4 left-4 absolute bg-basic_primary_color px-2 rounded-full text-basic_white_color text-sm uppercase" >5 mai 2024</span>
-            <a href="#" className="bottom-1 left-1 absolute bg-black/45 mt-4 font-extrabold text-2xl text-basic_white_color hover:text-basic_primary_color/70 transition-all" >Sénégal : Bassirou Diomaye Faye élu sur la promesse de rupture a prêté serment</a>
-        </div>
-        <div  className="relative bg-[url('../../../public/images/actu4.jpg')] bg-cover bg-center mx-4 p-4 rounded h-56"  >
-            <span className="top-4 left-4 absolute bg-basic_primary_color px-2 rounded-full text-basic_white_color text-sm uppercase" >27 mars 2024</span>
-            <a href="#" className="bottom-1 left-1 absolute bg-black/45 mt-4 font-extrabold text-2xl text-basic_white_color hover:text-basic_primary_color/70 transition-all" >Bénin : Compte-Rendu Du Conseil Des Ministres du mercredi 27 mars 2024</a>
-        </div>
-        <div  className="relative bg-[url('../../../public/images/actu5.jpg')] bg-cover bg-center mx-4 p-4 rounded h-56"  >
-            <span className="top-4 left-4 absolute bg-basic_primary_color px-2 rounded-full text-basic_white_color text-sm uppercase" >15 mai 2024</span>
-            <a href="#" className="bottom-1 left-1 absolute bg-black/45 mt-4 font-extrabold text-2xl text-basic_white_color hover:text-basic_primary_color/70 transition-all" >Santé : Le Bénin introduit le vaccin contre le paludisme dans son programme de santé publique</a>
-        </div>
-        <div  className="relative bg-[url('../../../public/images/actu6.jpeg')] bg-cover bg-center mx-4 p-4 rounded h-56"  >
-            <span className="top-4 left-4 absolute bg-basic_primary_color px-2 rounded-full text-basic_white_color text-sm uppercase" >5 mai 2024</span>
-            <a href="#" className="bottom-1 left-1 absolute bg-black/45 mt-4 font-extrabold text-2xl text-basic_white_color hover:text-basic_primary_color/70 transition-all" >Economie : le Nigeria rétrograde à la 4ème place en Afrique </a>
-        </div>
-      </Carousel>)
+    </Carousel>)
 
 }
 
+/*  */
 
 /* import Autoplay from "embla-carousel-autoplay"
 import useEmblaCarousel from 'embla-carousel-react'

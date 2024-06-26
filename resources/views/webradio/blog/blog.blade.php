@@ -1,7 +1,5 @@
 <x-app-layout>
 
-
-
     @session('success')
             <message-toast type="success" msg="{{session('success')}}" delay="3000" ></message-toast>
     @endsession
@@ -22,15 +20,17 @@
         <a href="{{route('dashboard.blog.create.article')}}" class="mx-6 text-lg text-blue-800 underline" >Créer un article </a>
     </h3>
 
-    <div class="w-full flex flex-col items-center overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
-     {{$articles->links()}}
+    {{$articles->links()}}
+    <div class="w-full flex flex-col  overflow-x-scroll md:overflow-x-auto  p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
+ 
         <table class="w-full my-4 border-collapse " >
             <thead class="bg-blue-600  text-basic_white_color " >
                 <tr class="" >
+                    <th class=" uppercase  p-2  text-center text-lg" >ID</th>
                     <th class=" uppercase  p-2  text-center text-lg" >Titre</th>
                     <th class=" uppercase  p-2  text-center text-lg" >Auteur</th>
                     <th class=" uppercase  p-2  text-center text-lg" >Categorie</th>
-                    <th class=" uppercase  p-2  text-center text-lg" >En ligne ?</th>
+                    <th class=" uppercase  p-2  text-center text-lg whitespace-nowrap" >En ligne ?</th>
                     <th class=" uppercase  p-2  text-center text-lg" >Actions</th>
                 </tr>
             </thead>
@@ -40,17 +40,35 @@
                     <tr class="border-solid border-b-4 p-2 border-blue-400 text-center text-basic_white_color text-lg h-full" >
 
                         <td class="border-solid  p-2 border-black  text-center text-xl" >
-                                
-                            {{$article->article_title}}
+                            
+                            #{{$article->id}} 
                         </td>
-                        <td class="border-solid  p-2 border-black  text-center text-xl" >
+
+                        <td class="border-solid whitespace-nowrap text-indigo-300  p-2 border-black  text-center text-xl" >
+
+                            @if (!empty($article->categorie))
+                                <a class="underline underline-offset-2" 
+                                    href="{{route('home.show',['article'=>$article->id,'slug'=>$article->article_slug])}}" 
+                                    title="{{$article->article_title}}" 
+                                >
+                                    {{Str::limit($article->article_title,'20')}}
+                                </a>
+                            @else
+                                <a class="underline underline-offset-2" href="#" title="{{$article->article_title}}" >
+                                    {{Str::limit($article->article_title,'20')}}
+                                </a>
+                            @endif
+                            
+                            
+                        </td>
+                        <td class="border-solid whitespace-nowrap p-2 border-black  text-center text-xl" >
                                 
                             {{$article->user->first_name}} {{$article->user->last_name}}
                         </td>
 
                         <td class="border-solid  p-2 border-black  text-center text-xl" >
                                 
-                            {{$article->categorie->name}}
+                            {{$article->categorie->name??'-'}}
                         </td>
 
                         <td class="border-solid  p-2 border-black " >
@@ -90,19 +108,19 @@
             
             </tbody>
         </table>
-        {{$articles->links()}}
+        
     </div>
-
+    {{$articles->links()}}
     
-    <h3 class="text-xl mt-4 flex items-center font-semibold" > 
+    <h3 class="text-xl my-4 flex items-center font-semibold" > 
         <i data-lucide="arrow-big-right" class="size-8" ></i> Categories 
         <a href="{{route('dashboard.configuration')}}#create_categorie" class="mx-6 text-lg text-blue-800 underline" >Créer une categorie</a>
     </h3>
 
-    
-    <div class="w-full flex flex-col items-center overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
-        {{$categories->links()}}
-        <table class="w-full my-4 border-collapse  sm:w-1/2" >
+    {{$categories->links()}}
+    <div class="w-full flex flex-col md:items-center overflow-x-scroll md:overflow-x-hidden p-4 " ><!-- overflow-x-scroll md:overflow-x-hidden -->
+        
+        <table class="w-full my-4 border-collapse  md:w-1/2" >
             <thead class="bg-blue-600  text-basic_white_color " >
                 <tr class="" >
                     <th class=" uppercase  p-2  text-center text-lg" >Nom</th>
@@ -141,8 +159,9 @@
                
             </tbody>
         </table>
-        {{$categories->links()}}
+        
    </div>
+   {{$categories->links()}}
     
     
 

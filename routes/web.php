@@ -25,7 +25,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[HomeController::class,'index'])->name('home');
 
 Route::get('/article/{article}/{slug}',[HomeController::class,'show'])->name('home.show');
+
+Route::get('/categorie/{categorie}/{name}',[HomeController::class,'showCategorie'])->name('home.show.categorie');
+
+//Pour afficher le contenu de l'article
 Route::get('/article/show/htmx/{article}',[HomeController::class,'getHtmxData'])->name('home.show.htmx');
+
+/* Pour afficher le carousel */
+Route::get('/carousel/htmx',[HomeController::class,'getCarouselHtmxData'])->name('home.carousel.htmx');
 
 //Route utiliser en ajax pour envoyer les informations de l'utilisateur au front
 Route::post('/auth/user',[HomeController::class,'getUserData'])->name('auth.data');

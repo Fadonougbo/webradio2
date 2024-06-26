@@ -4,17 +4,19 @@ import { ActuCarousel } from "./ActuCarousel"
 
 
 type ActuCarouselType={
-    name:string
+    name:string,
+    carouseldata:string
 }
 
 
 define<ActuCarouselType>({
     tag:"actu-carousel",
+    carouseldata:'',
     name:{
         value:"actu_carousel",
         connect(host) {
-
-            createRoot(host).render(<ActuCarousel/>)
+            const {carouseldata}=host
+            createRoot(host).render(<ActuCarousel data={carouseldata} />)
 
             return ()=>{ 
                 createRoot(host).unmount()

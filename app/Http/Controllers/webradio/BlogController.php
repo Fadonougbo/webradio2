@@ -227,8 +227,8 @@ class BlogController extends Controller
 
         abort_if($inBadExtentionArray,500);
 
-        //Limite la taille des fichiers a 19Mo
-        abort_if($file->getSize()>19000000,500);
+        //Limite la taille des fichiers a 48Mo
+        abort_if($file->getSize()>48000000,500);
         
         abort_unless($file->isValid(),500);
         abort_unless($file->isFile(),500);

@@ -23,17 +23,17 @@
                     </x-nav-link>
 
                     @can('show_administration')
-                        <x-nav-link class="text-white text-xl" :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
-                            Administration
+                        <x-nav-link class="text-white text-xl whitespace-nowrap" :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
+                            administration
                         </x-nav-link>
 
-                        <x-nav-link class="text-white text-xl" :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
+                        <x-nav-link class="text-white text-xl whitespace-nowrap hidden lg:flex" :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
                             Blog administration
                         </x-nav-link>
                     @endcan
                     
                     @can('show_superadmin_interface')
-                         <x-nav-link class="text-white text-xl hidden lg:flex " :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
+                         <x-nav-link class="text-white text-xl hidden xl:flex " :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
                                 Configuration
                         </x-nav-link>
                     @endcan
@@ -45,7 +45,7 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden lg:flex lg:items-center lg:ms-6 ">
+            <div class="hidden xl:flex lg:items-center lg:ms-6 ">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500  bg-white  hover:text-gray-700  focus:outline-none transition ease-in-out duration-150">
@@ -84,7 +84,7 @@
             </div>
 
             <!-- Hamburger -->
-            <div class="-me-2 flex items-center lg:hidden">
+            <div class="-me-2 flex items-center xl:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-white dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -96,25 +96,27 @@
     </div>
 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden   lg:hidden ring-2">
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden   xl:hidden ring-2">
         <div class="pt-2 pb-3 space-y-1">
            
             <x-responsive-nav-link class="sm:hidden" :href="route('home')" :active="request()->routeIs('home')">
                 Accueil
             </x-responsive-nav-link>
+
             <x-responsive-nav-link class="sm:hidden" :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
             @can('show_administration')
 
-            <x-responsive-nav-link  :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
-                Administration
-            </x-responsive-nav-link>
+                <x-responsive-nav-link class="sm:hidden" :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
+                 administration
+                </x-responsive-nav-link>
 
-            <x-responsive-nav-link  :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
-            Blog administration
-            </x-responsive-nav-link>
+                <x-responsive-nav-link class="lg:hidden" :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
+                Blog administration
+                </x-responsive-nav-link>
+                
             @endcan
 
             @can('show_superadmin_interface')

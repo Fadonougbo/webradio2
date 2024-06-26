@@ -3,7 +3,7 @@ import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import { type DefaultReactSuggestionItem, SuggestionMenuController,getDefaultReactSlashMenuItems, useCreateBlockNote } from "@blocknote/react";
 
-import { type Block, type BlockNoteEditor, filterSuggestionItems } from "@blocknote/core";
+import { type BlockNoteEditor, filterSuggestionItems } from "@blocknote/core";
 import { type MouseEvent, useEffect, useRef, useState } from "react";
 
 import ky from 'ky'
@@ -42,7 +42,7 @@ const csrfToken = document
 	const formData=new FormData()
 
 	formData.set('editor_file',file)
-	console.log(csrfToken);
+
 	const req=await ky.post('/dashboard/administration/blog/upload/file',{
 		headers:{
 			"X-CSRF-TOKEN": csrfToken??''

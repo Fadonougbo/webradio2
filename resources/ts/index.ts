@@ -5,6 +5,7 @@ import {
 	CirclePlus,
 	CircleUserRound,
 	Clock,
+	ExternalLink,
 	Facebook,
 	File,
 	Info,
@@ -33,6 +34,7 @@ createIcons({
 		User,
 		AtSign,
 		File,
-		CalendarDays
+		CalendarDays,
+		ExternalLink
 	},
 });

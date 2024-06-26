@@ -48,7 +48,7 @@ export const Menu = () => {
 			<SheetTrigger>
 				<MenuIcon className="text-basic_white_color size-10" />
 			</SheetTrigger>
-			<SheetContent side="top" className="z-50 bg-black h-full">
+			<SheetContent side="top" className="z-50 bg-black/75 h-full">
 				<nav className="flex flex-col justify-around items-center w-full h-full text-basic_white_color text-xl uppercase">
 					<div className="items-center border-basic_white_color text-lg">
             {
@@ -106,12 +106,7 @@ export const Menu = () => {
 						Grille tarifaire
 					</a>
 
-					<a
-						href="#replay"
-						className="p-2 w-full font-bold hover:text-basic_primary_color transition-all hover:translate-x-4"
-					>
-						Podcast
-					</a>
+					
 				</nav>
 			</SheetContent>
 		</Sheet>

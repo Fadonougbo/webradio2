@@ -31,7 +31,7 @@ class CreateArticleFormRequest extends FormRequest
 
             'categorie'=>['required','exists:categories,id'],
 
-            'article_principal_image'=>['required','image',File::image()->max('19mb')],
+            'article_principal_image'=>['required','image',File::image()->max('48mb')],
 
             'content'=>['required','string','min:1'],
 

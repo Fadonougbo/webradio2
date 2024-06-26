@@ -35,10 +35,10 @@
 
                         <div class="flex flex-col my-3 w-[90%] md:w-3/4 lg:w-1/2 " >
 
-                                <label for="isOnline" class="my-3 text-xl  font-bold" >Mettre en ligne ? </label>
-
-                
-                                <input type="checkbox" class="checkbox checkbox-success  accent-white checkbox-lg border-2" id="isOnline" value="{{old('isOnline',1)}}" name="isOnline" @checked(old('isOnline',$article->isOnline)) />
+                                <section class="flex items-center" >
+                                        <label for="isOnline" class="my-3 text-xl  font-bold" >Mettre en ligne ? </label>
+                                        <input type="checkbox" class="checkbox mx-2 checkbox-success  accent-white checkbox-lg border-2" id="isOnline" value="{{old('isOnline',1)}}" name="isOnline" @checked(old('isOnline',$article->isOnline)) />
+                                </section>
 
                                 @error('isOnline')
                                         <p class="text-basic_primary_color my-2" >{{$message}}</p>

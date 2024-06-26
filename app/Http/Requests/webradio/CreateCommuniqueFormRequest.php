@@ -3,7 +3,6 @@
 namespace App\Http\Requests\webradio;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\File;
 use Illuminate\Validation\Rule;
 
 class CreateCommuniqueFormRequest extends FormRequest

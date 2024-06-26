@@ -62,8 +62,12 @@
                             
                         </td>
                         <td class="border-solid whitespace-nowrap p-2 border-black  text-center text-xl" >
-                                
-                            {{$article->user->first_name}} {{$article->user->last_name}}
+                            @if ($article->user)
+                                {{$article->user->first_name}} {{$article->user->last_name}}
+                            @else
+                                -
+                            @endif
+                            
                         </td>
 
                         <td class="border-solid  p-2 border-black  text-center text-xl" >

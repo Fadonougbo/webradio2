@@ -1,4 +1,5 @@
 import {
+	Album,
 	ArrowBigRight,
 	AtSign,
 	CalendarDays,
@@ -6,14 +7,12 @@ import {
 	CircleUserRound,
 	Clock,
 	ExternalLink,
-	Facebook,
 	File,
 	Info,
 	LoaderCircle,
 	Mail,
 	Phone,
 	User,
-	Youtube,
 	createIcons
 } from "lucide";
 
@@ -25,8 +24,6 @@ createIcons({
 		Mail,
 		Phone,
 		Clock,
-		Facebook,
-		Youtube,
 		Info,
 		ArrowBigRight,
 		CirclePlus,
@@ -35,6 +32,7 @@ createIcons({
 		AtSign,
 		File,
 		CalendarDays,
-		ExternalLink
+		ExternalLink,
+		Album
 	},
 });

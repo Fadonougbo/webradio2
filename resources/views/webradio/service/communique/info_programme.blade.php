@@ -1,6 +1,6 @@
 <div class="my-6 w-full flex flex-col items-center" >
 
-    <h2 class="text-2xl uppercase text-center my-4 font-semibold p-2 rounded bg-green-900 text-basic_white_color w-full  md:w-3/4 lg:w-1/2" >Programme de diffusion</h2>
+    <h2 class="text-xl uppercase text-center my-4 font-semibold p-2 rounded bg-green-900 text-basic_white_color w-full md:text-2xl  md:w-3/4 lg:w-1/2" >Programme de diffusion</h2>
 
     @if ($communique->id)
         <div class="my-4 w-full md:w-3/4 lg:w-1/2">
@@ -146,7 +146,7 @@
 
             <span
             
-            class="bg-blue-600 p-1 rounded text-basic_white_color cursor-pointer parent"
+            class="bg-blue-600 p-1 text-center rounded text-basic_white_color cursor-pointer parent"
             hx-post={{route('service.communique.htmx')}}
             hx-trigger="click"
             hx-swap="beforeend"

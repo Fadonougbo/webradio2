@@ -21,6 +21,7 @@ class Service extends Model
 
         if($type==='communique') {
 
+           
             $programmesCount=Communique::find($id)?->programmes?->count();
 
             $price=$this->where('name','=',$type)->get('price')->first()->price;

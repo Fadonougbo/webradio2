@@ -1,4 +1,5 @@
 
+
 @if ($isHtmxRequest)
 
     @if ($article->exists())

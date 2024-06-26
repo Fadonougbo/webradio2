@@ -14,10 +14,10 @@
                     <summary>
                         <em class="text-lg" ><span class="font-semibold cursor-pointer text-blue-500 hover:text-blue-500/40" >Categories</span> / <span >{{$categorie->name}}</span></em>
                     </summary>
-                    <ul class="ml-8 my-2" >
+                    <ul class="ml-8 my-2 flex flex-wrap" >
                         @foreach ($categories as $cat)
-                            <li class="my-1 capitalize font-semibold underline" > 
-                                <a  href="{{route('home.show.categorie',['categorie'=>$cat->id,'name'=>$cat->name])}}">
+                            <li class="my-1 capitalize font-semibold bg-blue-600 inline-block rounded-sm mx-1" > 
+                                <a class="p-2 text-basic_white_color "  href="{{route('home.show.categorie',['categorie'=>$cat->id,'name'=>$cat->name])}}">
                                     {{$cat->name}}
                                 </a>
                             </li>
@@ -48,7 +48,7 @@
 
                             $title=Str::limit($article->article_title,'100');
 
-                            $author=$article->user->last_name .' '. $article->user->first_name;
+                            $author=$article->user?$article->user->last_name .' '. $article->user->first_name:'';
 
                             
                         @endphp

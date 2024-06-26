@@ -27,6 +27,24 @@ export  const EditorContent=({content}:{content:string})=> {
             containerRef.current.innerHTML=html
         }
 
+        //Par defaut les audios et les videos ne s'affiche pas parcequ'il n'ont pas l'attribut controls
+        const audios=[...document.querySelectorAll('#wrapper audio')] as HTMLAudioElement[];
+
+        const videos=[...document.querySelectorAll('#wrapper video')] as HTMLVideoElement[];
+
+        if(audios.length>0) {
+          for (const audio of audios) {
+            audio.setAttribute('controls','')
+          }
+        }
+
+        if(videos.length>0) {
+          for (const video of videos) {
+            video.setAttribute('controls','')
+          }
+        }
+       
+
     });
 
 

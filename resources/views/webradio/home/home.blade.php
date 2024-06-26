@@ -9,7 +9,7 @@
 
 @section('content')
 
-    <main class="p-4" >
+    <main class="p-1 overflow-x-hidden" >
         <!-- Carousel -->
          <div class="mt-20 tm:mt-32 min-h-44 " >
             <!-- Cet element sera remplacer par le carousel  -->
@@ -34,9 +34,14 @@
 
             <div class="my-10 " id="actu" >
                 
-                    <section class="w-full flex justify-center" >
+                    {{--<section class="w-full flex justify-center" >
                         <h2 class="text-xl w-full shadow-2xl my-4 p-1 rounded uppercase bg-basic_primary_color text-basic_white_color text-center font-semibold  md:text-2xl sm:w-[90%]" >{{$firstCategorie->name}}</h2>
-                    </section>
+                    </section>--}}
+                    
+                    <div class="divider divider-center divider-error p-6 font-semibold before:h-2 after:h-2 before:bg-basic_primary_color/90 after:bg-basic_primary_color/90 uppercase text-lg">
+                    
+                        {{$firstCategorie->name}}
+                    </div>
                     
             
                 
@@ -53,6 +58,18 @@
 
         
         @include('webradio.home.other_section')
+
+        <div class="w-full flex justify-center flex-wrap"  >
+
+           {{--  <a class="p-1 bg-indigo-800 text-basic_white_color rounded  inline-block" href="{{route('home.show.categorie',['categorie'=>$firstCategorie->id,'name'=>$firstCategorie->name])}}">{{$firstCategorie->name}}</a>
+
+            @foreach ($otherCategories as $other) 
+
+                <a class="p-1 bg-indigo-800 text-basic_white_color rounded  inline-block" href="{{route('home.show.categorie',['categorie'=>$other->id,'name'=>$other->name])}}">{{$other->name}}</a>
+
+            @endforeach --}}
+
+        </div>
        
 
        {{--  <div class="my-6" id="replay" >

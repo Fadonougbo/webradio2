@@ -118,22 +118,27 @@
                             hx-include="#identifiant"
                             hx-target="#card"
                             hx-trigger="click"
+                            hx-indicator="#indicator"
                             
                     >
-                        Rechercher
+                        Rechercher 
                     </button>
+
+                    
             
                 </div>
             
             </form>
 
             <div class="p-4 space-y-4  bg-gray-800 flex-grow rounded-lg " id="card" >
+                <span class="loading loading-spinner loading-md bg-yellow-500 htmx-indicator" id="indicator"   ></span>
                 <p class="text-xl text-white" >ID: <span class="mx-4 text-lg" >xxxx</span></p>
                 <p class="text-xl text-white" >Nom: <span class="mx-4 text-lg" >xxxx</span> </p>
                 <p class="text-xl text-white" >Prenom:<span class="mx-4 text-lg" >xxxxx</span></p>
                 <p class="text-xl text-white" >Email:  <span class="mx-4 text-lg" >xxx@xxx.com</span></p>
                 <p class="text-xl text-white" >Role:  <span class="mx-4 text-lg" >xxx</span></p>
             </div>
+
 
         </section>
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('article_slug',450);
             $table->boolean('isOnline')->default(true);
             $table->string('article_principal_image');
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

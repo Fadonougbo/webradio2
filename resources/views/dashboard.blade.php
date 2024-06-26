@@ -80,7 +80,7 @@
                         
                         <td class="border-solid  p-2 border-black text-center text-lg items-center justify-center lg:flex  " >
                             @if ($communique->communique_status==='broadcast')
-                                <span class="text-amber-600" >La diffusion de ce communiqué à déja debuté</span>
+                                <span class="text-amber-600 break-words" >La diffusion de ce communiqué a déjà commencé ou commencera bientôt.</span>
                             @endif
 
                             @if (in_array($communique->communique_status,['pending']))

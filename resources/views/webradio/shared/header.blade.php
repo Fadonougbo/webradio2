@@ -3,7 +3,7 @@
         <div class="w-full flex justify-between items-start" >
 
             <div class="h-12 w-16 flex items-center" >
-                <img src="{{asset('images/rtulogo1.jpg')}}" class="size-full" alt="RTU logo">
+                <img src="{{asset('images/rtulogo1.jpg')}}" loading="lazy" class="size-full flex-none" alt="RTU logo">
                 <span class="text-basic_white_color uppercase font-bold text-xl mx-2 " >95.3 FM</span>
             </div>
             

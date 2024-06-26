@@ -1,9 +1,8 @@
 import { define } from "hybrids";
 import { createRoot } from "react-dom/client";
-import { Menu } from "./Menu";
-import { MenuDeroulant } from "./MenuDeroulant";
-import { OnlineRadio } from "./OnlineRadio";
-
+/* import { MenuDeroulant } from "./MenuDeroulant";
+ *//* import { OnlineRadio } from "./OnlineRadio";
+ */
 
 type MenuType={
     name:string,
@@ -17,7 +16,9 @@ define<MenuType>({
         value:"menu_burger",
         connect(host) {
 
-            createRoot(host).render(<Menu  />)
+            import("./Menu").then(({Menu})=> {
+                createRoot(host).render(<Menu  />)
+            })
 
             return ()=>{ 
                 createRoot(host).unmount()
@@ -41,7 +42,10 @@ define<OnlineRadioType>({
     name:{
         value:"online_radio",
         connect(host) {
-            createRoot(host).render(<OnlineRadio/>)
+
+            import("./OnlineRadio").then(({OnlineRadio})=> {
+                createRoot(host).render(<OnlineRadio  />)
+            })
             
             return ()=>{ 
                 createRoot(host).unmount()
@@ -63,7 +67,9 @@ define<MenuDeroulantType>({
         value:"menu_deroulant",
         connect(host) {
 
-            createRoot(host).render(<MenuDeroulant/>)
+            import("./MenuDeroulant").then(({MenuDeroulant})=> {
+                createRoot(host).render(<MenuDeroulant  />)
+            })
             
             return ()=>{ 
                 createRoot(host).unmount()

@@ -112,8 +112,18 @@ h1,h2,h3{
     word-break: break-all;
     line-height: 2.5rem;
 }
+
 #wrapper img   {
    margin-inline: auto;
+}
+
+#wrapper video   {
+   margin-inline: auto;
+}
+
+#wrapper audio   {
+   margin-inline: auto;
+
 }
 
 #wrapper h1.bn-inline-content:not(:empty)   {

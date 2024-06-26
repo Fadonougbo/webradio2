@@ -2,7 +2,9 @@
     $ID='my_auth_modal_'.$communique->id;
 @endphp
 <div class="flex flex-col items-center whitespace-nowrap text-center lg:flex-row lg:justify-center" >
-    <span class="capitalize mr-4 font-semibold" >{{auth()->user()->last_name}} {{auth()->user()->first_name}}</span>
+
+    <span class="capitalize mr-4 font-semibold" >{{$communique->user->last_name}} {{$communique->user->first_name}}</span>
+
     <button class="btn btn-neutral btn-sm w-full rounded-none lg:w-1/4" onclick="{{$ID}}.showModal();" type="button"> <!-- type="button" est ajouté pour ne pas déclencher la soumission du formulaire -->
             Info
     </button>

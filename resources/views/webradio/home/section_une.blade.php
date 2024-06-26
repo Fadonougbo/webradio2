@@ -15,7 +15,7 @@
         $img=$article->article_principal_image;
         $date=now('africa/porto-novo')->locale('fr-FR')->setDateTimeFrom(new DateTime($article->created_at))->format('d/m/Y');
         $title=Str::limit($article->article_title,'100');
-        $author=$article->user->last_name .' '. $article->user->first_name;
+        $author=$article->user?$article->user->last_name .' '. $article->user->first_name:'rtu';
         
     @endphp
 

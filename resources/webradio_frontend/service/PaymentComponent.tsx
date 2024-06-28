@@ -39,7 +39,7 @@ define<PaymentModule>({
 
 			const fedapay = FedaPay.init("payment-module", {
 
-				public_key: "pk_live_R_6_AGsm-9nQTcwZ2kLXTbd-",
+				public_key: import.meta.env.VITE_FEDAPAY_PUBLIC_KEY,
 
                 transaction: {
 

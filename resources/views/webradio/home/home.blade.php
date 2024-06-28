@@ -99,7 +99,7 @@
             
         </section> --}}
 
-        <div class="my-6 bg-[url('../../../../public/images/pic5.jpg')]  bg-center bg-cover p-4 rounded flex flex-col items-center  text-basic_white_color lg:w-[90%] lg:mx-auto" >
+        <!-- <div class="my-6 bg-[url('../../../../public/images/pic5.jpg')]  bg-center bg-cover p-4 rounded flex flex-col items-center  text-basic_white_color lg:w-[90%] lg:mx-auto" >
             <h2 class=" my-2 text-2xl text-center font-bold lg:text-4xl" >Abonnez-vous à la notre newsletter</h2>
             <p class=" my-2 text-base text-center lg:text-lg" >Restez informé de toutes les actualités de votre radio préférée en temps réél</p>
             <div class="my-1 w-3/4 md:w-2/3 lg:w-2/5" >
@@ -109,7 +109,7 @@
                 <button type="submit" class="p-2 rounded-lg text-lg shadow w-full bg-black text-basic_white_color "  >S'abonner</button>
             </div>
 
-        </div>
+        </div> -->
  
     </main>
 

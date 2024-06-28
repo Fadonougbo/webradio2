@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
+
+    <link rel="icon" href="{{asset('images/rtulogo1.jpg')}}">
+
     @viteReactRefresh
     @vite(['resources/css/app.css',
     'resources/ts/index.ts',

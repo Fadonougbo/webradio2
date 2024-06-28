@@ -51,7 +51,7 @@ Route::post('/load/file',[CommuniqueController::class,'loadFile'])->name('commun
 
 
 
-Route::get('service/payment',[PaymentController::class,'index'])->name('service.payment')->middleware(['auth','verified']);
+/* Route::get('service/payment',[PaymentController::class,'index'])->name('service.payment')->middleware(['auth','verified']); */
 
 
 Route::prefix('/service')->name('service.')->middleware(['auth','verified'])->group(function() {
@@ -101,7 +101,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() 
 
 
     //Page configuration
-    Route::get('/administration/configuration',[DashboadController::class,'configuration'])->name('dashboard.configuration')->can('show_superadmin_interface');
+    Route::get('/administration/configuration',[DashboadController::class,'configuration'])->name('dashboard.configuration')->can('show_administration');
 
     Route::patch('/administration/configuration/update/price',[DashboadController::class,'price'])->name('dashboard.configuration.price')->can('show_superadmin_interface');
 
@@ -133,13 +133,14 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function() 
 
     Route::delete('/administration/delete/article/{article}',[BlogController::class,'delete'])->name('dashboard.blog.delete.article')->can('show_administration');
 
+    //Modification d'un article
     Route::get('/administration/update/article/{article}',[BlogController::class,'update'])->name('dashboard.blog.update.article')->can('show_administration');
 
     Route::patch('/administration/update/article/{article}',[BlogController::class,'saveUpdate'])->name('dashboard.blog.update.save')->can('show_administration');
-
+    //Affiche l'editeur et son contenu lors de la modification
     Route::patch('/administration/article/htmx/{article}',[BlogController::class,'getHtmxData'])->name('dashboard.blog.htmx')->can('show_administration');
 
-    //uploadFile via ajax
+    //uploadFile via ajax (au niveau de l'editeur)
     Route::post('/administration/blog/upload/file',[BlogController::class,'uploadFile'])->name('dashboard.blog.upload.file')->can('show_administration');
 
 

@@ -32,7 +32,10 @@ class HomeController extends Controller
             return redirect()->route('home.show',['article'=>$article,'slug'=>$article->article_slug]);
         }
 
-        return view('webradio.home.show',['article'=>$article]);
+        $nextArticle=$article->forPageAfterId(1,$article->id)->get()->first();
+
+
+        return view('webradio.home.show',['article'=>$article,'nextArticle'=>$nextArticle]);
     }
 
     public function showCategorie(Categorie $categorie,string $name) {

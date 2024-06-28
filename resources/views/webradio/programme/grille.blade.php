@@ -1,6 +1,6 @@
 @extends('webradio.programme.base')
 
-@section('title',"Grille des programmes")
+@section('title',"Grille tarifaire")
 
 @section('content')
     

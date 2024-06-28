@@ -1,7 +1,7 @@
 <div class="p-6  overflow-x-scroll sm:overflow-x-hidden">
-    <details open>
+    <details>
 
-        <summary class="text-md cursor-pointer p-2" >
+        <summary class="text-md cursor-pointer p-1  " >
                 Informmation à propos de ce service
         </summary>
 

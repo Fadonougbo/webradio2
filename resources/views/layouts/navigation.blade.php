@@ -24,19 +24,18 @@
 
                     @can('show_administration')
                         <x-nav-link class="text-white text-xl whitespace-nowrap" :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
-                            administration
+                            Administration
                         </x-nav-link>
 
                         <x-nav-link class="text-white text-xl whitespace-nowrap hidden lg:flex" :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
                             Blog administration
                         </x-nav-link>
-                    @endcan
-                    
-                    @can('show_superadmin_interface')
-                         <x-nav-link class="text-white text-xl hidden xl:flex " :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
+
+                        <x-nav-link class="text-white text-xl hidden xl:flex " :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
                                 Configuration
                         </x-nav-link>
                     @endcan
+                    
                        
 
                     
@@ -110,20 +109,19 @@
             @can('show_administration')
 
                 <x-responsive-nav-link class="sm:hidden" :href="route('dashboard.administration')" :active="request()->routeIs('dashboard.administration')">
-                 administration
+                 Administration
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link class="lg:hidden" :href="route('dashboard.blog.index')" :active="request()->routeIs('dashboard.blog.index')">
                 Blog administration
                 </x-responsive-nav-link>
-                
-            @endcan
 
-            @can('show_superadmin_interface')
                 <x-responsive-nav-link :href="route('dashboard.configuration')" :active="request()->routeIs('dashboard.configuration')">
                 Configuration
                 </x-responsive-nav-link>
+                
             @endcan
+
             
 
             

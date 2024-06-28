@@ -1,6 +1,7 @@
 import {
 	Album,
 	ArrowBigRight,
+	ArrowRight,
 	AtSign,
 	CalendarDays,
 	CirclePlus,
@@ -33,6 +34,16 @@ createIcons({
 		File,
 		CalendarDays,
 		ExternalLink,
-		Album
+		Album,
+		ArrowRight
 	},
 });
+
+const content_loader=document.querySelector('#content_loader') as HTMLDivElement
+
+//Supprime le l'effet chargement
+if(content_loader) {
+	window.addEventListener('load',()=> {
+		content_loader.style.display='none'
+	})
+}

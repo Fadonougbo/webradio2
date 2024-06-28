@@ -17,7 +17,7 @@
                 <!-- <section class="w-full flex justify-center" >
                     <h2 class="text-xl w-full  my-4 p-1 rounded uppercase bg-basic_primary_color text-basic_white_color text-center font-semibold  md:text-2xl " >{{$otherCategorie->name}}</h2>
                 </section> -->
-                <div class="divider divider-rigth divider-error p-6 font-semibold before:h-2 after:h-2 before:bg-basic_primary_color/90 after:bg-basic_primary_color/90 uppercase text-lg">
+                <div class="divider divider-start divider-error p-6 font-semibold before:h-2 after:h-2 before:bg-basic_primary_color/90 after:bg-basic_primary_color/90 uppercase text-lg">
                     
                     {{$otherCategorie->name}}
                 </div>

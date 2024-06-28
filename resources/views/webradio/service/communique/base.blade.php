@@ -21,7 +21,9 @@
 <body>
     
     @include('webradio.shared.header')
-
+    
+    @include('webradio.shared.content_loader')
+    
     @yield('content')
 
     <scroll-to></scroll-to>

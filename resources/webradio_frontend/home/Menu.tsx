@@ -49,38 +49,40 @@ export const Menu = () => {
 				<MenuIcon className="text-basic_white_color size-10" />
 			</SheetTrigger>
 			<SheetContent side="top" className="z-50 bg-black/75 h-full">
-				<nav className="flex flex-col justify-around items-center w-full h-full text-basic_white_color text-xl uppercase">
-					<div className="items-center border-basic_white_color text-lg">
-            {
-              user?
-			  <div className="flex flex-wrap justify-center items-center w-full" >
-				<a href="/dashboard" className="mx-2 font-bold hover:text-basic_primary_color transition-all" >dashboard</a>
-				<form action="/logout" method="POST" >
-					<input type="hidden" name="_token" value={token}  />
-					<button type="submit" className="bg-basic_primary_color p-1 rounded font-bold" >
-					Deconnexion
-					</button>
-				</form>
-			  </div>
-              :
-              <>
-                  <a
-                    href="/login"
-                    className="mx-2 font-bold hover:text-basic_primary_color transition-all"
-                  >
-                    se connecter
-                  </a>
-                  <a
-                    href="/register"
-                    className="bg-basic_primary_color p-1 rounded font-bold"
-                  >
-                    Créer un compte
-                  </a>
-              </>
-
-            }
-		
+			<nav className="flex flex-col justify-around items-center w-full h-full text-basic_white_color text-xl uppercase">
+				<div className="items-center border-basic_white_color text-lg">
+					{
+					user?
+					<div className="flex flex-wrap justify-center items-center w-full text-sm" >
+						<a href="/dashboard" className="mx-2 font-bold hover:text-basic_primary_color transition-all" >dashboard</a>
+						<form action="/logout" method="POST" >
+							<input type="hidden" name="_token" value={token}  />
+							<button type="submit" className="bg-basic_primary_color p-1 rounded font-bold" >
+							Deconnexion
+							</button>
+						</form>
 					</div>
+					:
+					<>
+						<div className="flex flex-wrap justify-center items-center w-full text-sm" >
+							<a
+								href="/login"
+								className="mx-2 font-bold hover:text-basic_primary_color transition-all"
+							>
+								se connecter
+							</a>
+							<a
+								href="/register"
+								className="bg-basic_primary_color p-1 rounded font-bold"
+							>
+								Créer un compte
+							</a>
+						</div>
+					</>
+
+					}
+				
+				</div>
 
 					<a href="/" className={`${getActiveElementClass("/")}`}>
 						Accueil
@@ -107,7 +109,7 @@ export const Menu = () => {
 					</a>
 
 					
-				</nav>
+			</nav>
 			</SheetContent>
 		</Sheet>
 	);

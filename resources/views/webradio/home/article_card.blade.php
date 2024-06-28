@@ -1,4 +1,4 @@
-<a class=" transition-all group block" href="{{route('home.show',['article'=>$article,'slug'=>$article->article_slug])}}" >
+<a class=" transition-all group block " href="{{route('home.show',['article'=>$article,'slug'=>$article->article_slug])}}" >
 
     <div class="my-10  rounded mx-6 hover:opacity-85 " >
         <section class="w-full  h-48 my-4 relative" >

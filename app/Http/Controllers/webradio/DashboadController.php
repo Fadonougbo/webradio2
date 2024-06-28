@@ -10,7 +10,9 @@ use App\Models\Service;
 use App\Models\User;
 use App\Models\webradio\Communique;
 use Auth;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DashboadController extends Controller
 {
@@ -59,8 +61,62 @@ class DashboadController extends Controller
     //Configuration home
     public function configuration() {
        
+       $this->removeOldTmpFiles();
+        
+        
+
         $services=Service::all();
         return view('configuration_dashboard',['services'=>$services]);
+    }
+
+    //Supprime les vieux fichier du dossier tmp
+    private function removeOldTmpFiles() {
+
+        $currentDate=(int)now('africa/porto-novo')->format('j');
+
+        //La function de suppression sera lancé  du 25 au 27
+        $dateIsValide=$currentDate>=24 && $currentDate<=27;
+
+        if(!$dateIsValide) {
+
+            return false;
+        
+        }
+       
+
+        $disk=Storage::disk('public');
+
+        if(!$disk->exists('tmp')) {
+            return false;
+        }
+    
+        $dirData=$disk->files('tmp');
+
+        if(empty($dirData)) {
+            return false;
+        }
+
+
+        //Je retourn les fichiers creer avant la date 20
+        $res=array_filter($dirData,function($data) use($disk) {
+            
+            $lastModification=$disk->lastModified($data);
+
+            $date=new DateTime("@{$lastModification}",new \DateTimeZone('africa/porto-novo'));
+            
+            $fileDate=(int)$date->format('j');
+            return $fileDate<20;
+        });
+
+        //Je les supprimes
+        if(!empty($res)) {
+
+            foreach($res as $path) {
+                $disk->delete($path);
+            }
+
+        }
+
     }
 
     public function price(ChangePriceRequest $request) {

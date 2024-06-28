@@ -1,5 +1,3 @@
-@can('show_superadmin_interface')
-    
 
 <x-app-layout  >
 
@@ -18,7 +16,7 @@
             <message-toast type="error" msg="{{session('error')}}" delay="3000" ></message-toast>
     @endsession
 
-   
+    @can('show_superadmin_interface')
 
     <section class="flex flex-col w-full lg:flex-row lg:items-start space-y-16 lg:space-y-0" >
         <div class="w-full" >
@@ -53,6 +51,7 @@
         
             </form>
         </div>
+        @endcan
         
         <div class="pb-10 w-full" id="create_categorie" >
 
@@ -85,7 +84,9 @@
         </div>
     </section>
 
-
+    @can('show_superadmin_interface')
+        
+    
     <div class="py-20" >
 
         <div class="py-12">
@@ -142,11 +143,12 @@
 
         </section>
 
-        </div>
+    </div>
+    @endcan
 
 
 
    
 </x-app-layout>
 
-@endcan
+

@@ -157,7 +157,7 @@ class CommuniqueController extends Controller
     
             },$programmes); 
                
-          //Add new programme
+          //Add new programme in database
            $communique->programmes()->createMany($programmeFields);
                
            

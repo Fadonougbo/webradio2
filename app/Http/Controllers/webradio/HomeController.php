@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\webradio\Article;
 use App\Models\webradio\Categorie;
 use Auth;
-use DateTime;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,6 +15,7 @@ class HomeController extends Controller
 
         $categories=Categorie::orderBy('id')->get();
 
+        
 
         $firstCategorie=$categories[0];
 

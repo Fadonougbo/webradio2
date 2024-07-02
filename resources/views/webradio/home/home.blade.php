@@ -29,7 +29,6 @@
 
          </div>
 
-
         @if (!$firstCategorie->articles->isEmpty())
 
             <div class="my-10 " id="actu" >

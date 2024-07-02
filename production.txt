@@ -1,3 +1,5 @@
 - Change la taille du fichier.ini pour uplader des fichiers de grande taille 
 
--ajoute les fichiers dans le config vite
+-ajoute les fichiers dans la config vite pour le build
+-creer un compte gitlab et transfer les fichiers vers gitlab 
+-associe le compte de l'hebergeur en ligne avec le compte gitlab

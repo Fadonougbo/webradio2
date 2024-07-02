@@ -87,8 +87,8 @@
                 @if ($nextArticle)
                     <div class="w-full mb-16 flex justify-center sm:justify-end" >
                  
-                        <button class="join-item btn btn-outline w-auto">
-                            <a href="{{route('home.show',['article'=>$nextArticle->id,'slug'=>$nextArticle->article_slug])}}" class="flex items-center" >
+                        <button class="w-auto  text-basic_white_color">
+                            <a href="{{route('home.show',['article'=>$nextArticle->id,'slug'=>$nextArticle->article_slug])}}" class="flex rounded-lg items-center p-2 bg-slate-950" >
                                 {{Str::limit($nextArticle->article_title,30)}}
                                 
                                 <i data-lucide="arrow-right" class="mx-2 size-6 text-basic_primary_color"></i>
@@ -133,6 +133,7 @@
                 <section class=" p-4 sm:grid sm:grid-cols-2 lg:grid-cols-4" >
 
                     @foreach ($articles as $article)
+                    
                         @php
                     
                             $img=$article->article_principal_image;
@@ -145,6 +146,7 @@
                         @include('webradio.home.article_card')
 
                     @endforeach
+
                 </section>
 
             </div>

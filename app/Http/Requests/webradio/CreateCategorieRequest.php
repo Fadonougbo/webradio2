@@ -3,6 +3,7 @@
 namespace App\Http\Requests\webradio;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class CreateCategorieRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CreateCategorieRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('show_administration');
     }
 
     /**

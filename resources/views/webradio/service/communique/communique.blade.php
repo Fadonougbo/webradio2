@@ -30,6 +30,8 @@
 
             @include('webradio.service.communique.info_detail')
 
+            
+
             <div class="w-full flex my-6 justify-center" >
                 <button type="submit" class="w-full bg-green-900 hover:bg-green-900/80  md:w-3/4 lg:w-1/2 p-2 text-basic_white_color text-xl rounded-sm" >Soumettre</button>
             </div>

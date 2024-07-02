@@ -10,11 +10,14 @@ use App\Models\webradio\Categorie;
 class CategorieController extends Controller
 {
     public function create(CreateCategorieRequest $request) {
+
         $name=$request->input('categorie_name');
 
         $res=Categorie::create(['name'=>$name]);
 
-        return $res?redirect()->route('dashboard.blog.index')->with('success','La categorie a été créé avec succès.'):redirect()->route('dashboard.blog.index')->with('error',"Une erreur est survenue lors de la creation d'une categorie. Veuillez réessayer plus tard.");
+        return $res?
+        redirect()->route('dashboard.blog.index')->with('success','La categorie a été créé avec succès.'):
+        redirect()->route('dashboard.blog.index')->with('error',"Une erreur est survenue lors de la creation d'une categorie. Veuillez réessayer plus tard.");
     }
 
     //Page de modification
@@ -30,14 +33,18 @@ class CategorieController extends Controller
 
         $res=$categorie->update(['name'=>$name]);
 
-        return $res?redirect()->route('dashboard.blog.index')->with('success','La categorie a été modifiée avec succès.'):redirect()->route('dashboard.blog.index')->with('error',"Une erreur est survenue lors de la modification . Veuillez réessayer plus tard.");
+        return $res?
+        redirect()->route('dashboard.blog.index')->with('success','La categorie a été modifiée avec succès.'):
+        redirect()->route('dashboard.blog.index')->with('error',"Une erreur est survenue lors de la modification . Veuillez réessayer plus tard.");
     }
 
     public function delete(Categorie $categorie) {
 
         $res=$categorie->delete();
 
-        return $res?redirect()->route('dashboard.blog.index')->with('success','La categorie a été supprimé avec succès.'):redirect()->route('dashboard.blog.index')->with('error',"Une erreur est survenue lors de la suppression de cette categorie. Veuillez réessayer plus tard.");
+        return $res?
+        redirect()->route('dashboard.blog.index')->with('success','La categorie a été supprimé avec succès.'):
+        redirect()->route('dashboard.blog.index')->with('error',"Une erreur est survenue lors de la suppression de cette categorie. Veuillez réessayer plus tard.");
 
     }
 }

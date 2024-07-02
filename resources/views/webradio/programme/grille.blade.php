@@ -6,11 +6,14 @@
     
 
     <main class="p-4 w-full" >
-        <section class='w-full mt-20 tm:mt-32'>
-            <div class="my-4" >
-                <h1 class="text-lg lg:text-3xl uppercase text-center" >grille tarifaire de la RTU</h1>
-            </div>
-            <table class="w-full my-6 table table-zebra" >
+
+        <div class="mt-20 tm:mt-32" >
+            <h1 class="text-lg lg:text-3xl uppercase text-center" >grille tarifaire de la RTU</h1>
+        </div>
+
+        <section class='w-full overflow-x-scroll tm:overscroll-x-none'>
+      
+            <table class="w-full my-2 table table-zebra" >
                 <thead>
                     <tr class="text-lg"  >
                         <th class="border-solid border border-black capitalize" >désignation</th>
@@ -88,10 +91,40 @@
                     </tr>
 
                     <tr>
+                        <td class="border-solid border border-black" >Réalisation et diffusion d'émission de 30mn</td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" >75000 f</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border-solid border border-black" >Réalisation et diffusion d'émission de 60mn</td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" >1250000 f</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border-solid border border-black" >Réalisation et diffusion d'émission à caractere politique de 60mn</td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" >200000 f</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border-solid border border-black" >Réalisation et diffusion d'émission culturelles de 30mn</td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" >50000 f</td>
+                    </tr>
+
+                  
+
+                    <tr>
                         <td class="border-solid border border-black" >Dédicace du dimanche </td>
                         <td class="border-solid border border-black" ></td>
                         <td class="border-solid border border-black" >4 noms</td>
-                        <td class="border-solid border border-black" >250</td>
+                        <td class="border-solid border border-black" >250 f</td>
                     </tr>
                     <tr>
                         <td class="border-solid border border-black" >Invité du journal ordinaire </td>
@@ -111,6 +144,22 @@
                         <td class="border-solid border border-black" ></td>
                         <td class="border-solid border border-black" >75000</td>
                     </tr>
+
+                    <tr>
+                        <td class="border-solid border border-black" >Émission grand public (ATCHAKPODJI) d'une heur</td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" >200000 f</td>
+                    </tr>
+
+                    <tr>
+                        <td class="border-solid border border-black" >Intervention dans les jeux radiophoniques 15mn</td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" ></td>
+                        <td class="border-solid border border-black" >35000 f</td>
+                    </tr>
+
+                    
                 </tbody>
             </table>
         </section>

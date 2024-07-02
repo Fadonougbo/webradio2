@@ -3,6 +3,7 @@
 namespace App\Http\Requests\webradio;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rules\File ;
 
 class CreateArticleFormRequest extends FormRequest
@@ -12,7 +13,7 @@ class CreateArticleFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('show_administration');
     }
 
     /**

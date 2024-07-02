@@ -47,5 +47,3 @@ if(content_loader) {
 		content_loader.style.display='none'
 	})
 }
-
-console.log('okok');

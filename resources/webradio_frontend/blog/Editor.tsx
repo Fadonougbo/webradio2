@@ -112,8 +112,6 @@ export const Editor = ({content}:{content:string}) => {
 
 	//const [editorData,setEditorData]=useState({})
 
-	const [isLoad,setIsLoad]=useState(false)
-
 	let editorData={}
 
 	if(content!=='') {
@@ -133,14 +131,6 @@ export const Editor = ({content}:{content:string}) => {
 	});
 
 
-
-	
-
-	useEffect(()=> {
-
-		
-
-	},[])
 
 	const click=(e:MouseEvent)=> {
 

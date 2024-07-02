@@ -278,8 +278,6 @@ class BlogController extends Controller
 
         }
 
-        
-
 
         //Case:image is uploaded and old image exist in DB
   

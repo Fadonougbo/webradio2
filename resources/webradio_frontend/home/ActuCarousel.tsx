@@ -35,6 +35,7 @@ export const ActuCarousel=({data}:{data:string})=> {
       const carouselData=JSON.parse(data) as dataType[]
 
       const carouselDiv=carouselData.map((el,key)=> {
+               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                return  <CarouselCard carddata={el} key={key} />
 
       }) 
@@ -49,99 +50,14 @@ export const ActuCarousel=({data}:{data:string})=> {
       pauseOnHover={true}
      
    >
+
+          <div className='relative bg-green-600 mx-2 rounded h-56 cursor-pointer' title="publicite"  >
+          <img src="http://localhost:8000/images/hegj.jpg" className="object-fill size-full" alt='publicite' />
+            <span className="top-4 left-4 absolute bg-basic_primary_color px-1 rounded-full text-basic_white_color text-sm uppercase" >publicite</span>
+         </div>
          {[...carouselDiv]}
         
     </Carousel>)
 
 }
 
-/*  */
-
-/* import Autoplay from "embla-carousel-autoplay"
-import useEmblaCarousel from 'embla-carousel-react'
-import { useCallback, useEffect } from 'react'
-
-export const ActuCarousel=()=> {
-
-    const [emblaRef,emblaApi] = useEmblaCarousel({loop:true},[]) 
-
-    useEffect(() => {
-        if (emblaApi) {
-          console.log(emblaApi.slideNodes()) // Access API
-        }
-      }, [emblaApi])
-
-
-      const scrollPrev = useCallback(() => {
-        if (emblaApi) emblaApi.scrollPrev()
-      }, [emblaApi])
-    
-      const scrollNext = useCallback(() => {
-        if (emblaApi) emblaApi.scrollNext()
-      }, [emblaApi])
-
-    return (
-      <div className="overflow-hidden"  >
-
-        <div className="embla__viewport" ref={emblaRef}>
-            <div className="flex">
-              <div className="flex-grow-0 flex-shrink-0 bg-green-400 lg:basis-1/2 min-w-full lg:min-w-0 h-40 basis-full">
-
-              </div>
-              <div className="flex-grow-0 flex-shrink-0 bg-blue-400 min-w-full lg:min-w-0 h-40 basis-full lg:basis-1/3">
-            
-              </div>
-              <div className="flex-grow-0 flex-shrink-0 bg-yellow-300 min-w-full lg:min-w-0 h-40 basis-full lg:basis-1/3">
-         
-              </div>
-            </div>
-        </div>
-        <button className="embla__prev" onClick={scrollPrev}>
-            Prev
-        </button>
-        <button className="embla__next" onClick={scrollNext}>
-            Next
-        </button>
-      </div>
-    )
-} */
-
-/* import Autoplay from "embla-carousel-autoplay"
-
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import { useRef } from "react"
-
-export function ActuCarousel() {
-  const plugin = useRef(
-    Autoplay({ delay: 3000 })
-  )
-
-  return (
-    <Carousel
-      plugins={[plugin.current]}
-      className="w-full max-w-xs"
-      onMouseLeave={plugin.current.reset}
-    >
-      <CarouselContent>
-      <CarouselPrevious className="bg-blue-500" />
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3" >
-            <div className="">
-              <h1>okok {index} </h1>
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious className="bg-blue-500" />
-      <CarouselNext className="bg-green-400" />
-    </Carousel>
-  )
-}
- */

@@ -16,14 +16,13 @@ class HomeController extends Controller
         $categories=Categorie::orderBy('id')->get();
 
         
+        $firstCategorie=$categories[0]??null;
 
-        $firstCategorie=$categories[0];
-
-        $firstCategorieId=$firstCategorie->id;
+        $firstCategorieId=$firstCategorie->id??null;
 
         $otherCategories=$categories->where('id','!=',$firstCategorieId);
 
-        return view('webradio.home.home',['otherCategories'=>$otherCategories,'firstCategorie'=>$firstCategorie,]);
+        return view('webradio.home.home',['otherCategories'=>$otherCategories,'firstCategorie'=>$firstCategorie]);
     }
 
     public function show(Article $article,string $slug) {

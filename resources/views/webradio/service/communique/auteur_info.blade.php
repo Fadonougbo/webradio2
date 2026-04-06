@@ -33,7 +33,8 @@
             </li>
             <li class="text-start flex items-center" >
                  <i data-lucide="phone" class="size-8 mr-4" ></i>
-                {{$communique->communique_tel}}
+                 <a href="tel:{{$communique->communique_tel}}" class="text-blue-500 underline">{{$communique->communique_tel}}</a> 
+                
             </li>
         </ul>
         

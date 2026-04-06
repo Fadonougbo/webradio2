@@ -17,7 +17,8 @@ export  const ScrollTo=()=> {
 
     const debouncedFunction = useDebounceCallback(showScrollToTopArrow, 240,{})
     
-    useEffect(()=> {
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+        useEffect(()=> {
 
         debouncedFunction()
 

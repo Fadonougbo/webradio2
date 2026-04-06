@@ -21,9 +21,9 @@ class BlogController extends Controller
     public function index() {
 
         
-        $categories=Categorie::orderByDesc('id')->paginate(perPage:20,pageName:'categorie');
+        $categories=Categorie::with('articles')->orderByDesc('id')->paginate(perPage:20,pageName:'categorie');
 
-        $articles=Article::orderByDesc('id')->paginate(perPage:10,pageName:'article');
+        $articles=Article::with(['categorie','user','blogfiles'])->orderByDesc('id')->paginate(perPage:10,pageName:'article');
 
         return view('webradio.blog.blog',['categories'=>$categories,'articles'=>$articles]); 
     }
@@ -36,7 +36,7 @@ class BlogController extends Controller
 
         $this->dropOldEditorFiles($data);
 
-        $categories=Categorie::all();
+        $categories=Categorie::with('articles')->get();
 
         return view('webradio.blog.new_article',['categories'=>$categories]);
     }
@@ -107,12 +107,11 @@ class BlogController extends Controller
 
     //Afficher le formulaire pour une mise a jour
     public function update(Request $request,Article $article) {
-        
         $data=json_decode($request->old('blog_files_need_drop'))??[];
 
         $this->dropOldEditorFiles($data);
 
-        $categories=Categorie::all();
+        $categories=Categorie::with('articles')->get();
 
         return view('webradio.blog.update_article',['article'=>$article,'categories'=>$categories]);
     }

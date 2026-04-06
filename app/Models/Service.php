@@ -10,6 +10,8 @@ class Service extends Model
 {
     use HasFactory;
 
+    public $fillable=['name'];
+
     /**
      * Donne le prix total en fonction du prix du communique
      *

@@ -34,7 +34,8 @@ export const OnlineRadio=()=> {
     return (
        
 
-        <div  className='flex justify-center items-center cursor-pointer'  onClick={playAudio}  >
+        // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+<div  className='flex justify-center items-center cursor-pointer'  onClick={playAudio}  >
           
              <p className='sm:block hidden mx-4 text-basic_white_color text-md uppercase' > Ecoutez rtu en direct</p> 
 
@@ -51,6 +52,8 @@ export const OnlineRadio=()=> {
 
             </span>
             
+            {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
+            {/* biome-ignore lint/a11y/useMediaCaption: <explanation> */}
             <audio src="https://stream.zeno.fm/qyfhx0ijbzuvv" ref={audioRef} className='absolute opacity-0 size-1'  controls></audio>
 
         </div>

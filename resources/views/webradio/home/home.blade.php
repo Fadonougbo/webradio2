@@ -11,7 +11,7 @@
 
     <main class="p-1 overflow-x-hidden" >
         <!-- Carousel -->
-         <div class="mt-20 tm:mt-32 min-h-44 " >
+        <div class="mt-20 tm:mt-32 min-h-44 " >
             <!-- Cet element sera remplacer par le carousel  -->
            <section class="w-full flex justify-evenly"
              hx-get="{{route('home.carousel.htmx')}}"
@@ -27,29 +27,32 @@
 
             </section>
 
-         </div>
+        </div>
 
-        @if (!$firstCategorie->articles->isEmpty())
+        @if (!$firstCategorie?->articles?->isEmpty())
 
             <div class="my-10 " id="actu" >
                 
                     {{--<section class="w-full flex justify-center" >
                         <h2 class="text-xl w-full shadow-2xl my-4 p-1 rounded uppercase bg-basic_primary_color text-basic_white_color text-center font-semibold  md:text-2xl sm:w-[90%]" >{{$firstCategorie->name}}</h2>
                     </section>--}}
+                   
+                    @if ($firstCategorie?->name)
+                        <div class="divider divider-center divider-error p-6 font-semibold before:h-2 after:h-2 before:bg-basic_primary_color/90 after:bg-basic_primary_color/90 uppercase text-lg">
+                            {{$firstCategorie?->name}}
+                        </div>
+                    @endif
                     
-                    <div class="divider divider-center divider-error p-6 font-semibold before:h-2 after:h-2 before:bg-basic_primary_color/90 after:bg-basic_primary_color/90 uppercase text-lg">
-                    
-                        {{$firstCategorie->name}}
-                    </div>
-                    
-            
                 
 
-            @include('webradio.home.section_une')
+                 @include('webradio.home.section_une')
 
-                <section class="flex justify-center uppercase" >
-                    <a class="text-basic_primary_color border-solid border-[1px] border-basic_primary_color font-semibold  p-2 rounded-sm text-lg text-center hover:opacity-75 " href="{{route('home.show.categorie',['categorie'=>$firstCategorie,'name'=>$firstCategorie->name])}}" >Afficher plus </a>
-                </section>
+                @if ( $firstCategorie?->articles?->count() > 8 )
+                    <section class="flex justify-center uppercase" >
+                        <a class="text-basic_primary_color border-solid border-[1px] border-basic_primary_color font-semibold  p-2 rounded-sm text-lg text-center hover:opacity-75 " href="{{route('home.show.categorie',['categorie'=>$firstCategorie,'name'=>$firstCategorie?->name])}}" >Afficher plus </a>
+                    </section>
+                @endif
+                
                 
             </div>
 
@@ -58,17 +61,17 @@
         
         @include('webradio.home.other_section')
 
-        <div class="w-full flex justify-center flex-wrap"  >
+        {{--<div class="w-full flex justify-center flex-wrap"  >
 
-           {{--  <a class="p-1 bg-indigo-800 text-basic_white_color rounded  inline-block" href="{{route('home.show.categorie',['categorie'=>$firstCategorie->id,'name'=>$firstCategorie->name])}}">{{$firstCategorie->name}}</a>
+            <a class="p-1 bg-indigo-800 text-basic_white_color rounded  inline-block" href="{{route('home.show.categorie',['categorie'=>$firstCategorie->id,'name'=>$firstCategorie->name])}}">{{$firstCategorie->name}}</a>
 
             @foreach ($otherCategories as $other) 
 
                 <a class="p-1 bg-indigo-800 text-basic_white_color rounded  inline-block" href="{{route('home.show.categorie',['categorie'=>$other->id,'name'=>$other->name])}}">{{$other->name}}</a>
 
-            @endforeach --}}
+            @endforeach
 
-        </div>
+        </div>--}}
        
 
        {{--  <div class="my-6" id="replay" >

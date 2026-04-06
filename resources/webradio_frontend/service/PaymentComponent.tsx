@@ -37,8 +37,11 @@ define<PaymentModule>({
                 location.assign(on_error_url)
             }
 
+			
+			
 			const fedapay = FedaPay.init("payment-module", {
 
+				
 				public_key: import.meta.env.VITE_FEDAPAY_PUBLIC_KEY,
 
                 transaction: {
@@ -57,7 +60,7 @@ define<PaymentModule>({
 					}
 				  },
 
-				onComplete(x) {
+				onComplete(x: { reason: string; }) {
 					
                     if (x.reason === "DIALOG DISMISSED") {
 						location.assign(on_error_url)

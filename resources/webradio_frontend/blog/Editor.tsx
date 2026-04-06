@@ -4,7 +4,7 @@ import "@blocknote/mantine/style.css";
 import { type DefaultReactSuggestionItem, SuggestionMenuController,getDefaultReactSlashMenuItems, useCreateBlockNote } from "@blocknote/react";
 
 import { type BlockNoteEditor, filterSuggestionItems } from "@blocknote/core";
-import { type MouseEvent, useEffect, useRef, useState } from "react";
+import { type MouseEvent, useRef } from "react";
 
 import ky from 'ky'
 
@@ -65,7 +65,8 @@ const csrfToken = document
 
 
   //Determine si il  y a du text dans l'editeur
-  const editorNotEmpty=(document:any[]):boolean=> {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    const editorNotEmpty=(document:any[]):boolean=> {
 
 	//cas ou on n'a du plusieur contenu dans l'editeur
 	if(document.length>2) {
@@ -142,9 +143,11 @@ export const Editor = ({content}:{content:string}) => {
 		//Apres soumision je conserve les medias de l'utilisateur
 		const valideType=['image','audio','video']
 		// biome-ignore lint/complexity/noForEach: <explanation>
-		editor.document.forEach((item)=> {
+		// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+				editor.document.forEach((item:{type:any,props:any })=> {
 			
 			if(valideType.includes(item.type)) {
+				
 				utilsFile.push(item.props.url)
 				
 			}

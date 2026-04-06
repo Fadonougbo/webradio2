@@ -6,11 +6,11 @@ import '../../css/showContent.css'
  
 export  const EditorContent=({content}:{content:string})=> {
   // Stores the editor's contents as HTML.
-  const [html, setHTML] = useState<string>("");
+  const [, setHTML] = useState<string>("");
 
   const containerRef=useRef<HTMLDivElement|null>(null)
 
-  const [body,setBody]=useState({initialContent:JSON.parse(content)})
+  const [body]=useState({initialContent:JSON.parse(content)})
 
   //console.log(JSON.parse(content));
 
@@ -18,6 +18,7 @@ export  const EditorContent=({content}:{content:string})=> {
     ...body
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(()=> {
 
    

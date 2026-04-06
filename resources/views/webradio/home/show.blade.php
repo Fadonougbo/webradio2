@@ -20,6 +20,7 @@
                 <div class="mt-20 w-full tm:mt-28 " >
 
                     <h1 class="text-3xl lg:text-4xl font-semibold" >{{$article->article_title}}</h1>
+                   
 
                     @php
                         $author=$article->user?$article->user->last_name .' '. $article->user->first_name:'rtu';
@@ -58,6 +59,12 @@
                 <div class="w-full h-52 my-8 sm:h-80"  >
                     <img src="{{asset("storage/$img")}}" loading="lazy" class="w-full h-full" alt="image principale de l'article">
                 </div>
+
+                <section class="w-full overflow-y-hidden h-28" title="publicite" >
+                    <em class="text-[0.8rem]" >Publicite</em>
+                    <img src="/images/hegj.jpg" className="object-fill size-full " alt='publicite' />
+                </section>
+                
                 
                 <!-- Affiche le contenu -->
                 <div

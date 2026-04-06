@@ -30,9 +30,9 @@ export const FileUploader = ({
 	service,
 }: FileUploaderType) => {
 	const [files, setFiles] = useState<
-		{ source: string; options: { type: string } }[]
+		string[]
 	>([]);
-
+	/* { source: string; options: { type: string } }[] */
 	const [token, setToken] = useState<string>("");
 
 	useEffect(() => {
@@ -69,7 +69,7 @@ export const FileUploader = ({
 			})
             .then((res) => res.json())
             .then((data) => {
-				console.log(data);
+				
                 setFiles(()=> {
                     return [...data]
                 })
@@ -88,11 +88,16 @@ export const FileUploader = ({
 				
 				maxFiles={2}
 				
-				minFileSize={1}
+				minFileSize={'1'}
 				
 				name="communique_files[]"
 				
-				onupdatefiles={setFiles}
+				onupdatefiles={(files)=>{
+					//remplace ce callback par setFiles en ca d'erreur
+					//setFiles(()=> [...files])	
+					
+					return files
+				}}
 				
 				acceptedFileTypes={[
 					"application/pdf",

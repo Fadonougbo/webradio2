@@ -4,7 +4,8 @@ interface BasicInterface {
 	data: string;
 }
 
-const click=(host,event:MouseEvent)=> {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const click=(_host:any,event:MouseEvent)=> {
 	
 	const response=confirm('Confirmez-vous la suppression ?')
 

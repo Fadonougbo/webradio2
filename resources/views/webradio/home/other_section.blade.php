@@ -7,7 +7,7 @@
 
             @php
                 $articles=$otherCategorie->articles()->where('isOnline',true)->orderByDesc('created_at')->limit(5)->get();  
-                //dump($articles);
+                
             @endphp
 
             @if (!$articles->isEmpty())                
@@ -40,10 +40,13 @@
         
         
                 </section>
-
-                <section class="flex justify-center uppercase" >
-                    <a class="text-basic_primary_color border-solid border-[1px] border-basic_primary_color font-semibold  p-2 rounded-sm text-lg text-center hover:opacity-75 " href="{{route('home.show.categorie',['categorie'=>$firstCategorie,'name'=>$firstCategorie->name])}}" >Afficher plus </a>
-                </section>
+                
+                @if ($articles->count()>5)
+                    <section class="flex justify-center uppercase" >
+                        <a class="text-basic_primary_color border-solid border-[1px] border-basic_primary_color font-semibold  p-2 rounded-sm text-lg text-center hover:opacity-75 " href="{{route('home.show.categorie',['categorie'=>$otherCategorie,'name'=>$otherCategorie->name])}}" >Afficher plus </a>
+                    </section>
+                @endif
+               
         
             </div>
             @endif

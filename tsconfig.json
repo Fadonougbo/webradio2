@@ -27,7 +27,7 @@
       "noUnusedParameters": true,
       "noFallthroughCasesInSwitch": true
     },
-    "include": ["src","resources/webradio_frontend","resources/ts"],
+    "include": ["src","resources/webradio_frontend","resources/ts","resources/ts_d"],
     "references": [{ "path": "./tsconfig.node.json" }]
   }
   

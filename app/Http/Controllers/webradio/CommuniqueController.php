@@ -367,7 +367,7 @@ class CommuniqueController extends Controller
 
     // Send file Info to filePond
     public function loadFile(Request $request) {
-
+        
         $type=$request->input('type');
         $id=(int)$request->input('id');
 
@@ -377,7 +377,7 @@ class CommuniqueController extends Controller
             return response()->json([],headers:['Contente-Type'=>'application/json']);
         }
 
-        $communique=Communique::find($id);
+        $communique=Communique::with('servicefiles')->find($id);
 
         $files=$communique->servicefiles->toArray();
 

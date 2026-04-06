@@ -2,7 +2,7 @@
 
 
 @php
-    $articles=$firstCategorie->articles()->where('isOnline',true)->where('categorie_id','!=',null)->orderByDesc('created_at')->limit(8)->get();  
+    $articles=$firstCategorie?->articles()?->where('isOnline',true)->where('categorie_id','!=',null)->orderByDesc('created_at')->limit(8)->get()??[];  
     //dump($articles);
 @endphp
 

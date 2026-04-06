@@ -28,6 +28,8 @@
 
             @include('webradio.service.communique.info_programme')
 
+            @include('webradio.service.communique.pub')
+
             @include('webradio.service.communique.info_detail')
 
             

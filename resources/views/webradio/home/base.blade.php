@@ -75,7 +75,7 @@
     
     @include('webradio.shared.header')
     
-    @include('webradio.shared.content_loader')
+    {{--@include('webradio.shared.content_loader')--}}
 
     @yield('content')
 

@@ -17,12 +17,14 @@
                 <section class="my-8" >
                     <p class=" text-black my-3 flex items-center" >
                         PRIX:
-                        @if ($communique->price)
+                        @if ($communique->isPaid)
             
-                            {{$communique->price}}</p>
+                            {{$communique->price}}
                         @else
-                            {{$communique->getPrice()}}
+                        
+                        {{ ( new App\Models\Service() )->getAmount('communique',$communique->id)}}
                         @endif
+                        
                         fcfa
                     </p>
                 </section>
@@ -65,7 +67,7 @@
             
             <section class="my-8" >
                 <span class="text-black text-2xl underline font-semibold" >Informations supplémentaires</span>
-                <p class="py-4 text-black">{{$communique->communique_details}} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolor omnis ratione iure voluptatibus iste commodi voluptas excepturi? Aut consequatur velit cumque natus, commodi suscipit cupiditate voluptatem at quos sequi officiis harum eius cum repellendus. Reprehenderit, repellendus aut! Laborum laudantium delectus molestiae error placeat libero architecto assumenda in corporis accusantium suscipit iste, sint explicabo ipsam, nihil dicta, iusto eveniet dolore itaque vel vero voluptatibus consequuntur recusandae. Minima quibusdam distinctio iusto dolor voluptates maxime. Laudantium voluptates sed iure, recusandae ullam totam ex molestiae odio iusto, dignissimos adipisci est? Officiis commodi dicta, ea illo excepturi architecto ipsum reprehenderit sint nihil eveniet accusamus consequatur?</p>
+                <p class="py-4 text-black">{{$communique->communique_details}} </p>
             </section>
         </div>
         
